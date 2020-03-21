@@ -1,0 +1,11 @@
+.shoppingcart {
+    width: 40px;
+    height: auto;
+    padding-top: .5%;
+    padding-right: 1%;
+    float: right;
+}
+
+.menubar a {
+    display: block;
+}

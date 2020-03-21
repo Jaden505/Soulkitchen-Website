@@ -1,0 +1,16 @@
+{% extends "Base.html" %}
+{% load static %}
+
+{% block content %}
+
+    <div class="menubar">
+        <a href="/">Home</a>
+        <a href="/about">About</a>
+        <a href="/menu">Menu</a>
+    </div>
+
+    <a href="/order">
+        <input type="image" src="{% static 'Images/ShoppingCart.png' %}" alt="Shopping cart" class="shoppingcart">
+    </a>
+
+{% endblock %}
