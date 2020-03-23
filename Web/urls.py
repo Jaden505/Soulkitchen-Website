@@ -16,7 +16,8 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 from Main import views
-from django.contrib.staticfiles.urls import staticfiles_urlpatterns
+from django.conf import settings
+from django.conf.urls.static import static
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -25,6 +26,4 @@ urlpatterns = [
     path('checkout/', views.checkout_view),
     path('menu/', views.menu_view),
     path('order/', views.order_view),
-]
-
-urlpatterns += staticfiles_urlpatterns()
+] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

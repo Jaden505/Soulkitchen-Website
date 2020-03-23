@@ -1,4 +1,5 @@
 from django.contrib import admin
+from .models import AddProduct
 
 # Register your models here.
-admin.site.site_header = "Sassies Soulkitchen"
+admin.site.register(AddProduct)

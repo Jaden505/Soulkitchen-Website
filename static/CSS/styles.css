@@ -9,3 +9,8 @@
 .menubar a {
     display: block;
 }
+
+.article {
+    padding: 250px 500px;
+    background-color: burlywood;
+}

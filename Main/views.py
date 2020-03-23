@@ -1,4 +1,5 @@
 from django.shortcuts import render
+from .models import AddProduct
 
 # Create your views here.
 
@@ -12,7 +13,8 @@ def order_view(request):
     return render(request, "Order.html")
 
 def menu_view(request):
-    return render(request, "Menu.html")
+    products = AddProduct.objects.all()
+    return render(request, "Menu.html", {'products': products})
 
 def checkout_view(request):
     return render(request, "Checkout.html")

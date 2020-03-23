@@ -13,4 +13,15 @@
         <input type="image" src="{% static 'Images/ShoppingCart.png' %}" alt="Shopping cart" class="shoppingcart">
     </a>
 
+    <div class="products">
+        {% for product in products %}
+            <div class="article">
+                <h2>{{ product.title }}</h2>
+                <img src="{{ product.image.url }}" width="200px" height="auto">
+                <p>{{ product.description }}</p>
+                <p1>{{ product.price }}</p1>
+            </div>
+        {% endfor %}
+    </div>
+
 {% endblock %}
