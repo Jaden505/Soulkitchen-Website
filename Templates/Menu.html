@@ -16,12 +16,21 @@
     <div class="products">
         {% for product in products %}
             <div class="article">
+                <a class="add_basket" href="{% url 'addon' product.title product.price %}">+</a>
+                <br>
                 <h2>{{ product.title }}</h2>
-                <img src="{{ product.image.url }}" width="200px" height="auto">
+                <img src="{{ product.image.url }}" width="100px" height="150">
                 <p>{{ product.description }}</p>
                 <p1>{{ product.price }}</p1>
+                <br>
             </div>
         {% endfor %}
     </div>
+
+    <script>
+        var basket = localStorage.getItem("basket")
+        var result = JSON.parse(basket)
+        console.log(result)
+    </script>
 
 {% endblock %}

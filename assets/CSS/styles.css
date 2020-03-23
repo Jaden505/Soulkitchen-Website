@@ -1,0 +1,20 @@
+.shoppingcart {
+    width: 40px;
+    height: auto;
+    padding-top: .5%;
+    padding-right: 1%;
+    float: right;
+}
+
+.menubar a {
+    display: block;
+}
+
+.article {
+    padding: 250px 500px;
+    background-color: burlywood;
+}
+
+body {
+    background-color: #5b80b2;
+}

@@ -11,6 +11,18 @@
 }
 
 .article {
-    padding: 250px 500px;
-    background-color: burlywood;
+    padding: 25px 50px;
+    background-color: lightgrey;
+    display: inline-block;
+    border-style: solid;
+    border-color: white;
+}
+
+.add_basket {
+    float: right;
+    color: #5b80b2;
+}
+
+.add_basket:hover {
+    cursor: pointer;
 }
