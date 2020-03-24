@@ -3,6 +3,13 @@
 
 {% block content %}
 
+    <script>
+        var stored = localStorage.getItem("basket")
+        var result = JSON.parse(stored)
+
+        console.log(result)
+    </script>
+
     <div class="menubar">
         <a href="/">Home</a>
         <a href="/about">About</a>
@@ -16,7 +23,7 @@
     <div class="products">
         {% for product in products %}
             <div class="article">
-                <a class="add_basket" href="{% url 'addon' product.title product.price %}">+</a>
+                <a class="add_basket" onclick="addBasket('{{product.title}}', '{{product.price}}')">+</a>
                 <br>
                 <h2>{{ product.title }}</h2>
                 <img src="{{ product.image.url }}" width="100px" height="150">
@@ -26,11 +33,5 @@
             </div>
         {% endfor %}
     </div>
-
-    <script>
-        var basket = localStorage.getItem("basket")
-        var result = JSON.parse(basket)
-        console.log(result)
-    </script>
 
 {% endblock %}

@@ -10,9 +10,15 @@
     display: block;
 }
 
+@import url('https://fonts.googleapis.com/css?family=Bowlby+One+SC');
+
 .article {
-    padding: 25px 50px;
-    background-color: lightgrey;
+    cursive;
+        width: 280px;
+        height: 320px;
+        margin: 0 auto;
+        background: lightgrey;
+
     display: inline-block;
     border-style: solid;
     border-color: white;

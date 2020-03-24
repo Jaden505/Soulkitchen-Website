@@ -13,7 +13,7 @@ def about_view(request):
     return render(request, "About.html")
 
 def order_view(request):
-    return render(request, "Order.html", {'shopping_items': shopping_cart})
+    return render(request, "Order.html")
 
 def menu_view(request):
     products = AddProduct.objects.all()

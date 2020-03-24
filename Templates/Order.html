@@ -5,18 +5,14 @@
 <h1>Basket</h1>
 
 <script>
-    var basket = localStorage.getItem("basket")
-    var result = JSON.parse(basket)
-    console.log(result)
+    var stored = localStorage.getItem("basket")
+    var result = JSON.parse(stored)
 
-    showBasket()
+    showBasket(result)
+    totalAmount(result)
 </script>
 
-{% for product in shopping_items %}
-            <div class="basket">
-                <p>{{ product }}</p>
-            </div>
-{% endfor %}
+<button onclick="emptyBasket()">Empty basket</button> <br><br>
 
 <a href="/checkout">Checkout</a>
 <br>
