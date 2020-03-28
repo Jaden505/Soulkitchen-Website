@@ -4,18 +4,23 @@
 
 <h1>Basket</h1>
 
+<form>
+    Name: <input>
+    <br><br>
+    e-mail: <input>
+    <br><br>
+</form>
+
+<a onclick="tryCheckout()"><u>Checkout</u></a>
+<br>
+<a onclick="goBack()"><u>Go back</u></a>
+
 <script>
     var stored = localStorage.getItem("basket")
     var result = JSON.parse(stored)
 
-    showBasket(result)
+    showBasket(stored)
     totalAmount(result)
 </script>
-
-<button onclick="emptyBasket()">Empty basket</button> <br><br>
-
-<a href="/checkout">Checkout</a>
-<br>
-<a onclick="goBack()"><u>Go back</u></a>
 
 {% endblock %}

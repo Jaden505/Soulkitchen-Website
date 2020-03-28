@@ -3,13 +3,6 @@
 
 {% block content %}
 
-    <script>
-        var stored = localStorage.getItem("basket")
-        var result = JSON.parse(stored)
-
-        console.log(result)
-    </script>
-
     <div class="menubar">
         <a href="/">Home</a>
         <a href="/about">About</a>
@@ -28,10 +21,27 @@
                 <h2>{{ product.title }}</h2>
                 <img src="{{ product.image.url }}" width="100px" height="150">
                 <p>{{ product.description }}</p>
-                <p1>{{ product.price }}</p1>
+                <p1>€{{ product.price }}</p1>
                 <br>
             </div>
         {% endfor %}
     </div>
+
+    <div class="basket">
+        <p id="products"></p>
+        <p id="prices"></p>
+    </div>
+
+    <button onclick="emptyBasket()">Empty basket</button>
+
+    <script>
+        var stored = localStorage.getItem("basket")
+        var result = JSON.parse(stored)
+
+        console.log(result)
+
+        totalAmount(result)
+        updateBasket()
+    </script>
 
 {% endblock %}

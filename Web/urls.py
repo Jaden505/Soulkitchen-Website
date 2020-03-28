@@ -24,9 +24,10 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('', views.home_view),
     path('about/', views.about_view),
-    path('checkout/', views.checkout_view),
+    path('checkout/', views.checkout_view, name='checkout_view'),
     path('menu/', views.menu_view),
-    path('menu/<item_id>/<item_price>/', views.add_to_cart, name='addon'),
     path('order/', views.order_view),
-    #re_path(r'^(?P<item_id>\w+)/(?P<item_price>(\d+\.\d+))$', views.add_to_cart, name='addon'),
+    path('order/<amount>/', views.amount_view, name='amount_view'),
+    path('confirmation/', views.confirmation_view),
+    #re_path(r'^order/(?P<amount>\d+\.\d{1})/$', views.decimal_view, name='decimal_view'),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

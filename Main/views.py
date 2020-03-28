@@ -1,10 +1,10 @@
 from django.shortcuts import render, redirect
 from .models import AddProduct
 from django.shortcuts import get_object_or_404
+import stripe
+
 
 # Create your views here.
-
-shopping_cart = []
 
 def home_view(request):
     return render(request, "Home.html")
@@ -17,17 +17,24 @@ def order_view(request):
 
 def menu_view(request):
     products = AddProduct.objects.all()
-    return render(request, "Menu.html", {'products': products})
+    return render(request, "Menu.html",  {'products': products})
 
 def checkout_view(request):
-    return render(request, "Checkout.html")
+    stripe.api_key = 'sk_test_r6FwtlBtj8JiMSxLcz4DlaRH00yErwoh8S'
+    amt = request.session['amount']
 
-def add_to_cart(request, **kwargs):
-    product = kwargs.get('item_id')
-    product_price = kwargs.get('item_price')
+    payment = stripe.PaymentIntent.create(
+        amount=amt,
+        currency='eur',
+        payment_method_types=['ideal']
+    )
 
-    shopping_cart.append(product)
-    shopping_cart.append(product_price)
+    return render(request, "Checkout.html", {'payment': payment.client_secret})
 
-    return redirect(menu_view)
+def confirmation_view(request):
+    return request(request, 'Confirmation.html')
 
+def amount_view(request, amount):
+    request.session['amount'] = amount
+
+    return redirect(checkout_view)

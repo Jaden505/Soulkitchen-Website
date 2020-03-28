@@ -29,6 +29,26 @@
     color: #5b80b2;
 }
 
-.add_basket:hover {
+a:hover {
     cursor: pointer;
+}
+
+.add_basket {
+  background-color: #3498DB;
+  color: white;
+  padding: 16px;
+  font-size: 16px;
+  border: none;
+  cursor: pointer;
+}
+
+.add_basket:hover {
+    background-color: steelblue;
+}
+
+.add_remove {
+      background-color: #3498DB;
+  color: white;
+  padding: 16px;
+  font-size: 16px;
 }
