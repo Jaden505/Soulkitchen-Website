@@ -31,10 +31,10 @@ def checkout_view(request):
 
     return render(request, "Checkout.html", {'payment': payment.client_secret})
 
-def confirmation_view(request):
-    return request(request, 'Confirmation.html')
-
 def amount_view(request, amount):
     request.session['amount'] = amount
 
     return redirect(checkout_view)
+
+def confirmation_view(request):
+    return render(request, 'Confirmation.html')

@@ -29,5 +29,4 @@ urlpatterns = [
     path('order/', views.order_view),
     path('order/<amount>/', views.amount_view, name='amount_view'),
     path('confirmation/', views.confirmation_view),
-    #re_path(r'^order/(?P<amount>\d+\.\d{1})/$', views.decimal_view, name='decimal_view'),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

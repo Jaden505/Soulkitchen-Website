@@ -32,7 +32,8 @@
 </form>
 
 <script>
-    var stripe = Stripe('pk_test_qTDCI2FBELcygSPxiOZhLdlV00n6MGDokQ');
+
+  var stripe = Stripe('pk_test_qTDCI2FBELcygSPxiOZhLdlV00n6MGDokQ');
 var elements = stripe.elements();
 
 var options = {
@@ -72,7 +73,7 @@ form.addEventListener('submit', function(event) {
           name: accountholderName.value,
         },
       },
-      return_url: 'http://127.0.0.1:8000/',
+      return_url: 'http://127.0.0.1:8000/confirmation/',
     }
   );
 });
