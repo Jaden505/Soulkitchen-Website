@@ -7,13 +7,10 @@ function goBack() {
 }
 
 function addBasket(item, price) {
-    var int_price = JSON.parse(price)
-    var rounded = Math.round((int_price + 0.00001) * 100) / 100
-    var stored = localStorage.getItem("basket")
-    var result = JSON.parse(stored)
+    var rounded = Math.round((JSON.parse(price) + 0.00001) * 100) / 100
+    var result = JSON.parse(localStorage.getItem("basket"))
 
-    var stored_amounts = localStorage.getItem("amounts")
-    var amounts = JSON.parse(stored_amounts)
+    var amounts = JSON.parse(localStorage.getItem("amounts"))
 
     if (item in amounts) {
         result[item] = result[item] / amounts[item]
@@ -38,6 +35,28 @@ function addBasket(item, price) {
 
     result[item] = rounded
     console.log(result)
+
+    // Update global basket
+    localStorage.setItem("basket", JSON.stringify(result))
+    localStorage.setItem("amounts", JSON.stringify(amounts))
+
+    updateBasket()
+}
+
+function removeAmount(item, price, amount) {
+    var result = JSON.parse(localStorage.getItem("basket"))
+
+    var amounts = JSON.parse(localStorage.getItem("amounts"))
+
+    if (item in amounts) {
+        result[item] = result[item] * (amount-1) / amount
+        amounts[item] -= 1
+    }
+
+    if (amounts[item] === 0) {
+        delete result[item]
+        delete amounts[item]
+    }
 
     // Update global basket
     localStorage.setItem("basket", JSON.stringify(result))
@@ -98,8 +117,10 @@ function updateBasket() {
       console.log(arr[index])
     });
 
+    document.getElementById('basket').innerHTML = ''
+
     if (Object.keys(result).length === 0) {
-        document.getElementById('products').innerHTML = ('<p>Your basket is empty</p>')
+        document.getElementById('basket').innerHTML = ('<p>Your basket is empty</p>')
 
         return
     }
@@ -112,28 +133,15 @@ function updateBasket() {
 
 function createProduct(product, price, amount) {
     var div = document.createElement("div")
+
     div.className = 'product'
 
-    div.innerHTML = (`<br><p class="product">${product}</p><p class="price">${price}</p><p class="amount">${amount}</p><br>`)
+    div.innerHTML = (
+        `<br><p class="prod">${product}</p><p class="pric">${price}</p><p class="am">${amount}</p>` +
+        `<button onclick="addBasket(\`${product}\`, \`${price}\`)">plus</button>` +
+        `<button onclick="removeAmount(\`${product}\`, \`${price}\`, \`${amount}\`)">minus</button><br><br>`
+)
 
-    //div.appendChild(content)
-    document.body.appendChild(div)
+    document.getElementById('basket').appendChild(div)
 }
 
-function addAmount(item) {
-    var stored_amounts = localStorage.getItem("amounts")
-    var amounts = JSON.parse(stored_amounts)
-
-    amounts[item] += 1
-}
-
-function removeAmount(item) {
-    var stored_amounts = localStorage.getItem("amounts")
-    var amounts = JSON.parse(stored_amounts)
-
-    amounts[item] += 1
-}
-
-function sendMail() {
-
-}
