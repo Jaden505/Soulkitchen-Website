@@ -65,16 +65,10 @@ function removeAmount(item, price, amount) {
     updateBasket()
 }
 
-function showBasket(stored) {
-    console.log(stored)
-}
-
 function totalAmount(result) {
     var prices = Object.values(result)
     var sum = prices.reduce((a,b) => a + b, 0) * 100
     var rounded_sum = Math.round((sum + 0.00001) * 100) / 10000
-
-    console.log(rounded_sum)
 
     return rounded_sum
 }
@@ -85,19 +79,30 @@ function emptyBasket() {
     localStorage.setItem("basket", string_dict)
     localStorage.setItem("amounts", string_dict)
 
+    document.getElementById('total').innerHTML = ''
+
     updateBasket()
 }
 
 function tryCheckout() {
-    var stored = localStorage.getItem("basket")
-    var result = JSON.parse(stored)
+    var result = JSON.parse(localStorage.getItem("basket"))
+    var amounts = JSON.parse(localStorage.getItem("amounts"))
     var total = totalAmount(result)
 
-    console.log(total)
-
-    if (Object.keys(result).length !== 0) {
-        console.log()
+    if (Object.keys(result).length !== 0 && Object.keys(amounts).length !== 0) {
         window.location.href = "/order/" + (total * 100)
+    }
+}
+
+function tryOrder() {
+    var result = JSON.parse(localStorage.getItem("basket"))
+    var amounts = JSON.parse(localStorage.getItem("amounts"))
+
+    if (Object.keys(result).length !== 0 && Object.keys(amounts).length !== 0) {
+        window.location.href = "/order"
+    }
+    else {
+        alert('Your basket is empty')
     }
 }
 
@@ -111,10 +116,12 @@ function updateBasket() {
     var prices = Object.values(result)
     var amounts = Object.values(parsed_amounts)
 
+    var total = totalAmount(result)
+    document.getElementById('total').innerHTML = 'Total: ' + total
+
     // Round up the price
     prices.forEach(function(part, index, arr) {
       arr[index] = Math.round((arr[index] + 0.00001) * 100) / 100;
-      console.log(arr[index])
     });
 
     document.getElementById('basket').innerHTML = ''
@@ -145,3 +152,15 @@ function createProduct(product, price, amount) {
     document.getElementById('basket').appendChild(div)
 }
 
+var counter = 0
+function Categorize(product) {
+    var articles = document.getElementsByClassName('article')
+
+    if (product === '1') {product = 'broodjes'}
+    else if (product === '2') {product = 'drinken'}
+    else if (product === '3') {product = 'extras'}
+    else if (product === 'bvdw') {product = 'bvdw'}
+
+    document.getElementById(product).appendChild(articles[counter])
+    counter++
+}

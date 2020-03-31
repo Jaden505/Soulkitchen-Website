@@ -1,3 +1,5 @@
+@import url('htps://fonts.googleapis.com/css?family=Bowlby+One+SC');
+
 .shoppingcart {
     width: 40px;
     height: auto;
@@ -11,10 +13,70 @@
 }
 
 .article {
-    padding: 250px 500px;
-    background-color: burlywood;
+    cursive;
+        width: 280px;
+        height: 320px;
+        margin: 0 auto;
+        background: lightgrey;
+
+    display: inline-block;
+    border-style: solid;
+    border-color: white;
 }
 
-body {
-    background-color: #5b80b2;
+.add_basket {
+    float: right;
+    color: #5b80b2;
 }
+
+a:hover {
+    cursor: pointer;
+}
+
+.add_basket {
+  background-color: #3498DB;
+  color: white;
+  padding: 16px;
+  font-size: 16px;
+  border: none;
+  cursor: pointer;
+}
+
+.add_basket:hover {
+    background-color: steelblue;
+}
+
+.add_remove {
+      background-color: #3498DB;
+  color: white;
+  padding: 16px;
+  font-size: 16px;
+}
+
+body {margin: 0;}
+
+ul.topnav {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+  background-color: #f1f1f1;
+}
+
+ul.topnav li {float: left;}
+
+ul.topnav li a {
+  display: block;
+  text-align: center;
+  padding: 24px 26px;
+    font-size: 18px;
+  text-decoration: none;
+}
+
+ul.topnav li a:hover:not(.active) {background-color: #bfbfbf;}
+
+@media screen and (max-width: 600px) {
+  ul.topnav li.right,
+  ul.topnav li {float: none;}
+}
+

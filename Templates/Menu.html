@@ -3,39 +3,76 @@
 
 {% block content %}
 
-    <div class="menubar">
-        <a href="/">Home</a>
-        <a href="/about">About</a>
-        <a href="/menu">Menu</a>
-    </div>
+    <!-- Header -->
+    <header>
+      <ul class="topnav">
+        <li><a href="/">Home</a></li>
+        <li><a href="/about">About</a></li>
+        <li><a href="/menu">Menu</a></li>
+      </ul>
+    </header>
 
-    <a href="/order">
-        <input type="image" src="{% static 'Images/ShoppingCart.png' %}" alt="Shopping cart" class="shoppingcart">
+    <a href="#">
+        <input type="image" src="{% static 'Images/ShoppingCart.png' %}" alt="Shopping cart" class="shoppingcart" onclick="tryOrder()">
     </a>
 
-    <div class="products">
-        {% for product in products %}
-            <div class="article">
-                <a class="add_basket" onclick="addBasket('{{product.title}}', '{{product.price}}')">+</a>
-                <br>
-                <h2>{{ product.title }}</h2>
-                <img src="{{ product.image.url }}" width="100px" height="150">
-                <p>{{ product.description }}</p>
-                <p1>€{{ product.price }}</p1>
-                <br>
-            </div>
-        {% endfor %}
+    <div id="categories">
+        <div id="bvdw">
+            <h1>Broodje van de week</h1>
+        </div>
+        <br>
+        <div id="broodjes">
+            <h1>Broodjes</h1>
+        </div>
+        <br>
+        <div id="drinken">
+            <h1>Drinken</h1>
+        </div>
+        <br>
+        <div id="extras">
+            <h1>Extra's</h1>
+        </div>
+        <br>
     </div>
+
+    {% for product in products %}
+        <div class="article">
+            <a class="add_basket" onclick="addBasket('{{product.title}}', '{{product.price}}')">+</a>
+            <br>
+            <h2>{{ product.title }}</h2>
+            <img src="{{ product.image.url }}" width="100px" height="150">
+            <p>{{ product.description }}</p>
+            <p1>€{{ product.price }}</p1>
+            <br>
+        </div>
+
+        <script>Categorize('{{product.category}}')</script>
+    {% endfor %}
+
+    {% for broodje in bvdw %}
+        <div class="article">
+            <a class="add_basket" onclick="addBasket('{{broodje.title}}', '{{broodje.price}}')">+</a>
+            <br>
+            <h2>{{ broodje.title }}</h2>
+            <img src="{{ broodje.image.url }}" width="100px" height="150">
+            <p>{{ broodje.description }}</p>
+            <p1>€{{ broodje.price }}</p1>
+            <br>
+        </div>
+
+        <script>Categorize('bvdw')</script>
+    {% endfor %}
 
     <div id="basket"></div>
 
+    <p id="total"></p>
+
     <button onclick="emptyBasket()">Empty basket</button>
 
-    <script>
-        var stored = localStorage.getItem("basket")
-        var result = JSON.parse(stored)
+    <br><br><br><br>
 
-        console.log(result)
+    <script>
+        var result = JSON.parse(localStorage.getItem("basket"))
 
         totalAmount(result)
         updateBasket()

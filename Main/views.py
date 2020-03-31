@@ -1,8 +1,7 @@
 from django.shortcuts import render, redirect
-from .models import AddProduct
-from django.shortcuts import get_object_or_404
+from .models import AddProduct, Broodje_vdw
 import stripe
-
+from django.core.mail import send_mail
 
 # Create your views here.
 
@@ -17,14 +16,15 @@ def order_view(request):
 
 def menu_view(request):
     products = AddProduct.objects.all()
-    return render(request, "Menu.html",  {'products': products})
+    bvdw = Broodje_vdw.objects.all()
+    return render(request, "Menu.html", {'products': products, 'bvdw': bvdw})
 
 def checkout_view(request):
     stripe.api_key = 'sk_test_r6FwtlBtj8JiMSxLcz4DlaRH00yErwoh8S'
-    amt = request.session['amount']
+    amount = request.session['amount']
 
     payment = stripe.PaymentIntent.create(
-        amount=amt,
+        amount=amount,
         currency='eur',
         payment_method_types=['ideal']
     )
@@ -37,4 +37,15 @@ def amount_view(request, amount):
     return redirect(checkout_view)
 
 def confirmation_view(request):
+    # total = request.session['total']
+    # basket = request.session['basket']
+    #
+    # send_mail(
+    #     'Subject here',
+    #     'Here is the message. \n{}. \n{}'.format(total, basket),
+    #     'from@example.com',
+    #     ['to@example.com'],
+    #     fail_silently=False,
+    # )
+
     return render(request, 'Confirmation.html')
