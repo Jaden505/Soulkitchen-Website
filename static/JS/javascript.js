@@ -89,7 +89,7 @@ function tryCheckout() {
     var amounts = JSON.parse(localStorage.getItem("amounts"))
     var total = totalAmount(result)
 
-    if (Object.keys(result).length !== 0 && Object.keys(amounts).length !== 0) {
+    if (Object.keys(result).length !== 0 && Object.keys(amounts).length !== 0 && total > 10) {
         window.location.href = "/order/" + (total * 100)
     }
 }
@@ -97,12 +97,13 @@ function tryCheckout() {
 function tryOrder() {
     var result = JSON.parse(localStorage.getItem("basket"))
     var amounts = JSON.parse(localStorage.getItem("amounts"))
+    var total = totalAmount(result)
 
-    if (Object.keys(result).length !== 0 && Object.keys(amounts).length !== 0) {
+    if (Object.keys(result).length !== 0 && Object.keys(amounts).length !== 0 && total > 10) {
         window.location.href = "/order"
     }
     else {
-        alert('Your basket is empty')
+        alert('The minimum is 10 euro')
     }
 }
 

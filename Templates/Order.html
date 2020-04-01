@@ -5,6 +5,10 @@
 <h1>Basket</h1>
 
     <button type="submit" value="Submit" onclick="tryCheckout()">Submit</button>
+    <form action="/menu">
+        <input type="submit" value="Go back"/>
+    </form>
+
 
 <script>
     var result = JSON.parse(localStorage.getItem("basket"))
