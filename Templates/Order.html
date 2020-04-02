@@ -1,19 +1,25 @@
 {% extends "Base.html" %}
+{% load crispy_forms_tags %}
 
 {% block content %}
 
-<h1>Basket</h1>
+  <h1>Basket</h1>
 
-    <button type="submit" value="Submit" onclick="tryCheckout()">Submit</button>
-    <form action="/menu">
-        <input type="submit" value="Go back"/>
-    </form>
+    <div id="basket"></div>
 
+    <p id="total"></p>
 
-<script>
+  <form onsubmit="return tryCheckout()" method="post">
+    {% csrf_token %}
+    {{ form|crispy }}
+    <button type="submit" class="btn btn-primary">Checkout</button>
+  </form>
+
+  <script>
     var result = JSON.parse(localStorage.getItem("basket"))
 
     totalAmount(result)
-</script>
+    updateBasket()
+  </script>
 
 {% endblock %}

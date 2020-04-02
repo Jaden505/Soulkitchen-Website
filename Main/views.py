@@ -1,7 +1,8 @@
 from django.shortcuts import render, redirect
 from .models import AddProduct, Broodje_vdw
+from .forms import *
+from django import forms
 import stripe
-from django.core.mail import send_mail
 
 # Create your views here.
 
@@ -12,7 +13,8 @@ def about_view(request):
     return render(request, "About.html")
 
 def order_view(request):
-    return render(request, "Order.html")
+    form = UserInfo
+    return render(request, "Order.html", {'form': form})
 
 def menu_view(request):
     products = AddProduct.objects.all()

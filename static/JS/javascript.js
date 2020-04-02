@@ -90,8 +90,12 @@ function tryCheckout() {
     var total = totalAmount(result)
 
     if (Object.keys(result).length !== 0 && Object.keys(amounts).length !== 0 && total > 10) {
-        window.location.href = "/order/" + (total * 100)
+        location.href = "/order/" + (total * 100)
     }
+    else {
+        alert('The minimum is 10 euro')
+    }
+    return false
 }
 
 function tryOrder() {
@@ -100,7 +104,7 @@ function tryOrder() {
     var total = totalAmount(result)
 
     if (Object.keys(result).length !== 0 && Object.keys(amounts).length !== 0 && total > 10) {
-        window.location.href = "/order"
+        location.href = "/order"
     }
     else {
         alert('The minimum is 10 euro')
@@ -165,3 +169,4 @@ function Categorize(product) {
     document.getElementById(product).appendChild(articles[counter])
     counter++
 }
+

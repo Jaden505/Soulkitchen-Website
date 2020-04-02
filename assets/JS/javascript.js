@@ -89,7 +89,7 @@ function tryCheckout() {
     var amounts = JSON.parse(localStorage.getItem("amounts"))
     var total = totalAmount(result)
 
-    if (Object.keys(result).length !== 0 && Object.keys(amounts).length !== 0) {
+    if (Object.keys(result).length !== 0 && Object.keys(amounts).length !== 0 && total > 10) {
         window.location.href = "/order/" + (total * 100)
     }
 }
@@ -97,12 +97,13 @@ function tryCheckout() {
 function tryOrder() {
     var result = JSON.parse(localStorage.getItem("basket"))
     var amounts = JSON.parse(localStorage.getItem("amounts"))
+    var total = totalAmount(result)
 
-    if (Object.keys(result).length !== 0 && Object.keys(amounts).length !== 0) {
+    if (Object.keys(result).length !== 0 && Object.keys(amounts).length !== 0 && total > 10) {
         window.location.href = "/order"
     }
     else {
-        alert('Your basket is empty')
+        alert('The minimum is 10 euro')
     }
 }
 
@@ -156,16 +157,11 @@ var counter = 0
 function Categorize(product) {
     var articles = document.getElementsByClassName('article')
 
-    if (product === '1') {product = 'bvdw'}
-    else if (product === '2') {product = 'broodjes'}
-    else if (product === '3') {product = 'drinken'}
-    else if (product === '4') {product = 'extras'}
+    if (product === '1') {product = 'broodjes'}
+    else if (product === '2') {product = 'drinken'}
+    else if (product === '3') {product = 'extras'}
+    else if (product === 'bvdw') {product = 'bvdw'}
 
     document.getElementById(product).appendChild(articles[counter])
     counter++
 }
-
-var element = document.getElementById("broodjes");
- var numberOfChildren = element.getElementsByTagName('*').length
- console.log(numberOfChildren)
- console.log(element.children.length)
