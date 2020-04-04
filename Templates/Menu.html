@@ -4,17 +4,26 @@
 {% block content %}
 
     <!-- Header -->
-    <header>
+    <header id="navbar">
       <ul class="topnav">
         <li><a href="/">Home</a></li>
         <li><a href="/about">About</a></li>
         <li><a href="/menu">Menu</a></li>
-      </ul>
-    </header>
 
-    <a href="#">
-        <input type="image" src="{% static 'Images/ShoppingCart.png' %}" alt="Shopping cart" class="shoppingcart" onclick="tryOrder()">
-    </a>
+        <div class="dropdown">
+            <div class="numberBasket"></div>
+            <img src="{% static 'Images/ShoppingCart.png' %}" alt="Shopping cart" class="shoppingcart" onclick="basketShowToggle()">
+        </div>
+      </ul>
+
+        <div class="dropdown-content">
+            <div id="basket"></div>
+            <p id="total"></p>
+            <button onclick="emptyBasket()">Empty basket</button>
+            <br>
+            <button onclick="tryOrder()">Order</button>
+        </div>
+    </header>
 
     <div id="categories">
         <div id="bvdw">
@@ -63,16 +72,11 @@
         <script>Categorize('bvdw')</script>
     {% endfor %}
 
-    <div id="basket"></div>
-
-    <p id="total"></p>
-
-    <button onclick="emptyBasket()">Empty basket</button>
-
     <br><br><br><br>
 
     <script>
         updateBasket()
+        stickyNavbar()
     </script>
 
 {% endblock %}

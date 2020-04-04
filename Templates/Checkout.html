@@ -4,12 +4,6 @@
 <a onclick="goBack()"><u>Go back</u></a>
 
 <form id="payment-form">
-  <div class="form-row">
-    <label for="accountholder-name">
-      Name
-    </label>
-    <input id="accountholder-name"  name="accountholder-name">
-  </div>
 
   <div class="form-row">
     <!--
@@ -32,52 +26,7 @@
 </form>
 
 <script>
-
-  var stripe = Stripe('pk_test_qTDCI2FBELcygSPxiOZhLdlV00n6MGDokQ');
-var elements = stripe.elements();
-
-var options = {
-  // Custom styling can be passed to options when creating an Element
-  style: {
-    base: {
-      padding: '10px 12px',
-      color: '#32325d',
-      fontSize: '16px',
-      '::placeholder': {
-        color: '#aab7c4'
-      },
-    },
-  },
-};
-
-// Create an instance of the idealBank Element
-var idealBank = elements.create('idealBank', options);
-
-// Add an instance of the idealBank Element into
-// the `ideal-bank-element` <div>
-idealBank.mount('#ideal-bank-element');
-
-var form = document.getElementById('payment-form');
-var accountholderName = document.getElementById('accountholder-name');
-
-form.addEventListener('submit', function(event) {
-  event.preventDefault();
-
-  // Redirects away from the client
-  stripe.confirmIdealPayment(
-    '{{payment}}',
-    {
-      payment_method: {
-        ideal: idealBank,
-        billing_details: {
-          name: accountholderName.value,
-        },
-      },
-      return_url: 'http://127.0.0.1:8000/confirmation/',
-    }
-  );
-});
-
+  Payment('{{payment}}', '{{public_key}}')
 </script>
 
 {% endblock %}

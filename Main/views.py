@@ -3,6 +3,7 @@ from .models import AddProduct, Broodje_vdw
 from .forms import *
 from django import forms
 import stripe
+from django.core.mail import send_mail
 
 # Create your views here.
 
@@ -22,7 +23,8 @@ def menu_view(request):
     return render(request, "Menu.html", {'products': products, 'bvdw': bvdw})
 
 def checkout_view(request):
-    stripe.api_key = 'sk_test_r6FwtlBtj8JiMSxLcz4DlaRH00yErwoh8S'
+    stripe.api_key = 'sk_test_r6FwtlBtj8JiMSxLcz4DlaRH00yErwoh8S' # Secret
+    public_key = 'pk_test_qTDCI2FBELcygSPxiOZhLdlV00n6MGDokQ' # Public
     amount = request.session['amount']
 
     payment = stripe.PaymentIntent.create(
@@ -31,7 +33,7 @@ def checkout_view(request):
         payment_method_types=['ideal']
     )
 
-    return render(request, "Checkout.html", {'payment': payment.client_secret})
+    return render(request, "Checkout.html", {'payment': payment.client_secret, 'public_key': public_key})
 
 def amount_view(request, amount):
     request.session['amount'] = amount
@@ -41,12 +43,13 @@ def amount_view(request, amount):
 def confirmation_view(request):
     # total = request.session['total']
     # basket = request.session['basket']
+    # user_details = request.session['user_details']
     #
     # send_mail(
-    #     'Subject here',
+    #     'Thank you for ordering at our restaurant.',
     #     'Here is the message. \n{}. \n{}'.format(total, basket),
-    #     'from@example.com',
-    #     ['to@example.com'],
+    #     'info@sassies-soulkitchen.nl',
+    #     [user_details['email']],
     #     fail_silently=False,
     # )
 

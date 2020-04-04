@@ -135,5 +135,3 @@ MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'static/media')
 
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
-
-GOOGLE_API_KEY = 'AIzaSyC6GlVU8znqPpbnJj_pzNOm90ndXUs90r0'
