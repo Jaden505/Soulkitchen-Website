@@ -1,9 +1,22 @@
 {% extends "Base.html" %}
 
 {% block content %}
+
+{% load static %}
 {% load crispy_forms_tags %}
 
-  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+  <!-- HEAD IMG SHOW -->
+  <div class="hero-wrap hero-bread" style="background-image: url('{% static 'Images/Eettent.jpg' %}');">
+    <div class="container">
+      <div class="row no-gutters slider-text align-items-center justify-content-center">
+        <div class="col-md-9 ftco-animate text-center">
+          <p class="breadcrumbs"><span class="mr-2">Winkelmandje</span></p>
+          <h1 class="mb-0 bread">Winkel</h1>
+        </div>
+      </div>
+    </div>
+  </div>
+
 
   <h1>Basket</h1>
 
@@ -14,7 +27,7 @@
 
   <form onsubmit="return tryCheckout()" method="post">
     {% csrf_token %}
-    {{ form|crispy }}
+    {{form|crispy}}
     <button type="submit" class="btn btn-primary">Checkout</button>
   </form>
 

@@ -1,9 +1,27 @@
-{% extends "Base.html" %}
+{% load static %}
+{% load crispy_forms_tags %}
 
-{% block content %}
-<a onclick="goBack()"><u>Go back</u></a>
+<!-- MY IMPORTS -->
+<link rel="shortcut icon" type="image/png" href="{% static 'Images/People.png' %}"/>
+<link rel="stylesheet" href="{% static 'CSS/styles.css' %}" type="text/css">
+<script src="https://js.stripe.com/v3/"></script>
+<script type="text/javascript" src="{% static 'JS/javascript.js' %}"></script>
 
-<form id="payment-form">
+<style>
+  body {
+    font-size:20px;
+  }
+  button {
+    font-size:15px;
+    background-color: steelblue;
+    color: white;
+  }
+</style>
+
+
+<form id="payment-form" onsubmit="return Payment.RedirectPayment()">
+
+  {% csrf_token %}
 
   <div class="form-row">
     <!--
@@ -11,9 +29,14 @@
       Element container enables the Element to automatically gain focus
       when the customer clicks on the label.
     -->
-    <label for="ideal-bank-element">
-      iDEAL Bank
-    </label>
+    <h2>
+      <label for="ideal-bank-element">
+        iDEAL Bank
+      </label>
+    </h2>
+
+    <hr>
+
     <div id="ideal-bank-element">
       <!-- A Stripe Element will be inserted here. -->
     </div>
@@ -25,8 +48,8 @@
   <div id="error-message" role="alert"></div>
 </form>
 
+<button onclick="goBack()">Go back</button>
+
 <script>
   Payment('{{payment}}', '{{public_key}}')
 </script>
-
-{% endblock %}

@@ -75,7 +75,7 @@ function emptyBasket() {
     localStorage.setItem("amounts", string_dict)
 
     document.getElementById('total').innerHTML = ''
-    document.querySelector('.numberBasket').innerHTML = ''
+    document.getElementById('cart_amount').innerHTML = '[0]'
 
     updateBasket()
 }
@@ -85,11 +85,11 @@ function tryCheckout() {
     var amounts = JSON.parse(localStorage.getItem("amounts"))
     var total = totalAmount(result)
 
-    if (Object.keys(result).length !== 0 && Object.keys(amounts).length !== 0 && total > 10) {
+    if (Object.keys(result).length > 0 && Object.keys(amounts).length > 0 && total > 10) {
         location.href = "/order/" + (total * 100) // Goes to amount page and gives amount to checkout page
     }
     else {
-        alert('The minimum is 10 euro')
+        location.href = "/checkout"
     }
     return false
 }
@@ -103,25 +103,24 @@ function tryOrder() {
         location.href = "/order"
     }
     else {
-        alert('The minimum is 10 euro')
+        location.href = "/menu"
     }
 }
 
 function updateBasket() {
-    var stored = localStorage.getItem("basket")
-    var result = JSON.parse(stored)
-    var stored_amounts = localStorage.getItem("amounts")
-    var parsed_amounts = JSON.parse(stored_amounts)
+    var result = JSON.parse(localStorage.getItem("basket"))
+    var many = JSON.parse(localStorage.getItem("amounts"))
 
     var products = Object.keys(result)
     var prices = Object.values(result)
-    var amounts = Object.values(parsed_amounts)
+    var amounts = Object.values(many)
 
     var basket_products_amounts = amounts.reduce((a,b) => a + b, 0)
 
     var total = totalAmount(result)
 
-    document.getElementById('total').innerHTML = 'Total: ' + total
+    // Basket counter
+    document.getElementById('cart_amount').innerHTML = basket_products_amounts
 
     //Round up the price 2 decimals
     prices.forEach(function(part, index, arr) {
@@ -129,6 +128,7 @@ function updateBasket() {
       arr[index].toFixed(2)
     });
 
+    document.getElementById('total').innerHTML = 'Total: ' + total
     document.getElementById('basket').innerHTML = ''
 
     if (Object.keys(result).length === 0) {
@@ -142,12 +142,6 @@ function updateBasket() {
         createProduct(products[i], prices[i], amounts[i])
     }
 
-    // Basket counter
-    if (basket_products_amounts !== 0) {
-        document.querySelector('.numberBasket').innerHTML = basket_products_amounts
-    } else {
-        document.querySelector('.numberBasket').innerHTML = ''
-    }
 }
 
 function createProduct(product, price, amount) {
@@ -167,7 +161,7 @@ function createProduct(product, price, amount) {
 
 var counter = 0
 function Categorize(product) {
-    var articles = document.getElementsByClassName('article')
+    var articles = document.getElementsByClassName('product')
 
     if (product === '1') {product = 'broodjes'}
     else if (product === '2') {product = 'drinken'}
@@ -225,9 +219,9 @@ function Payment(pay_details, public_key) {
   // Custom styling can be passed to options when creating an Element
   style: {
     base: {
-      padding: '10px 12px',
+      padding: '12px 2px',
       color: '#32325d',
-      fontSize: '16px',
+      fontSize: '18px',
       '::placeholder': {
         color: '#aab7c4'
       },
@@ -242,18 +236,45 @@ function Payment(pay_details, public_key) {
   // the `ideal-bank-element` <div>
   idealBank.mount('#ideal-bank-element');
 
-  addEventListener('submit', function(event) {
-  event.preventDefault();
+  function RedirectPayment() {
+    addEventListener('submit', function(event) {
+    event.preventDefault();
 
-  // Redirects away from the client
-  stripe.confirmIdealPayment(
-    pay_details,
-    {
-      payment_method: {
-        ideal: idealBank,
-      },
-      return_url: 'http://127.0.0.1:8000/confirmation/',
+    // Redirects away from the client
+    stripe.confirmIdealPayment(
+      pay_details,
+      {
+        payment_method: {
+          ideal: idealBank,
+        },
+        return_url: 'http://127.0.0.1:8000/confirmation/',
+      }
+    )
+    })
+    return false
+  }
+  Payment.RedirectPayment = RedirectPayment
+}
+
+function Display() {
+    document.getElementById("bvdw").style.display = 'none'
+    document.getElementById("broodjes").style.display = 'none'
+    document.getElementById("drinken").style.display = 'none'
+    document.getElementById("extras").style.display = 'none'
+
+    if(document.getElementById('cat_alles').checked) {
+      document.getElementById("bvdw").style.display = 'block'
+      document.getElementById("broodjes").style.display = 'block'
+      document.getElementById("drinken").style.display = 'block'
+      document.getElementById("extras").style.display = 'block'
     }
-  );
-  });
+    else if(document.getElementById('cat_broodjes').checked) {
+      document.getElementById("broodjes").style.display = 'block'
+    }
+    else if(document.getElementById('cat_drinken').checked) {
+      document.getElementById("drinken").style.display = 'block'
+    }
+    else if(document.getElementById('cat_extras').checked) {
+      document.getElementById("extras").style.display = 'block'
+    }
 }
