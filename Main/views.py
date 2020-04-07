@@ -32,7 +32,7 @@ def checkout_view(request):
         currency='eur',
         payment_method_types=['ideal'],
     )
-    
+
     return render(request, "Checkout.html", {'payment': payment.client_secret, 'public_key': public_key})
 
 def amount_view(request, amount):

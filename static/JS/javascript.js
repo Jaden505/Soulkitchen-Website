@@ -74,7 +74,8 @@ function emptyBasket() {
     localStorage.setItem("basket", string_dict)
     localStorage.setItem("amounts", string_dict)
 
-    document.getElementById('total').innerHTML = ''
+    document.querySelectorAll(".total")[0].innerHTML = ''
+    if (document.querySelectorAll(".total").length > 1) {document.querySelectorAll(".total")[1].innerHTML = ''}
     document.getElementById('cart_amount').innerHTML = '[0]'
 
     updateBasket()
@@ -129,11 +130,14 @@ function updateBasket() {
       arr[index].toFixed(2)
     });
 
-    document.getElementById('total').innerHTML = 'Total: €' + total
-    document.getElementById('basket').innerHTML = ''
+    document.querySelectorAll(".total")[0].innerHTML = 'Total: €' + total
+    if (document.querySelectorAll(".total").length > 1) {document.querySelectorAll(".total")[1].innerHTML = 'Total: €' + total}
+    document.querySelectorAll(".basket")[0].innerHTML = ''
+    if (document.querySelectorAll(".basket").length > 1) {document.querySelectorAll(".basket")[1].innerHTML = ''}
 
     if (Object.keys(result).length === 0) {
-        document.getElementById('basket').innerHTML = ('<p>Je winkel mandje is leeg</p>')
+        document.querySelectorAll(".basket")[0].innerHTML = ('<p>Je winkel mandje is leeg</p>')
+    if (document.querySelectorAll(".basket").length > 1) {document.querySelectorAll(".basket")[1].innerHTML = '<p>Je winkel mandje is leeg</p>'}
 
         return
     }
@@ -156,8 +160,8 @@ function createProduct(product, price, amount) {
         `<button class="minus" onclick="removeAmount(\`${product}\`, \`${price}\`, \`${amount}\`)">-</button>` +
         `<span class="pric"> €${price} </span><br><br>`
 )
-
-    document.getElementById('basket').appendChild(div)
+    document.querySelectorAll(".basket")[0].appendChild(div)
+    if (document.querySelectorAll(".basket").length > 1) {document.querySelectorAll(".basket")[1].appendChild(div)}
 }
 
 var counter = 0
