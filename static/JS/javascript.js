@@ -74,8 +74,9 @@ function emptyBasket() {
     localStorage.setItem("basket", string_dict)
     localStorage.setItem("amounts", string_dict)
 
-    document.getElementById('total').innerHTML = ''
-    document.querySelector('.numberBasket').innerHTML = ''
+    document.querySelectorAll(".total")[0].innerHTML = ''
+    if (document.querySelectorAll(".total").length > 1) {document.querySelectorAll(".total")[1].innerHTML = ''}
+    document.getElementById('cart_amount').innerHTML = '[0]'
 
     updateBasket()
 }
@@ -85,11 +86,11 @@ function tryCheckout() {
     var amounts = JSON.parse(localStorage.getItem("amounts"))
     var total = totalAmount(result)
 
-    if (Object.keys(result).length !== 0 && Object.keys(amounts).length !== 0 && total > 10) {
+    if (Object.keys(result).length > 0 && Object.keys(amounts).length > 0 && total > 10) {
         location.href = "/order/" + (total * 100) // Goes to amount page and gives amount to checkout page
     }
     else {
-        alert('The minimum is 10 euro')
+        location.href = "/checkout"
     }
     return false
 }
@@ -103,25 +104,25 @@ function tryOrder() {
         location.href = "/order"
     }
     else {
-        alert('The minimum is 10 euro')
+        location.href = "/menu"
     }
 }
 
 function updateBasket() {
-    var stored = localStorage.getItem("basket")
-    var result = JSON.parse(stored)
-    var stored_amounts = localStorage.getItem("amounts")
-    var parsed_amounts = JSON.parse(stored_amounts)
+    var result = JSON.parse(localStorage.getItem("basket"))
+    var many = JSON.parse(localStorage.getItem("amounts"))
 
     var products = Object.keys(result)
     var prices = Object.values(result)
-    var amounts = Object.values(parsed_amounts)
+    var amounts = Object.values(many)
 
     var basket_products_amounts = amounts.reduce((a,b) => a + b, 0)
 
     var total = totalAmount(result)
 
-    document.getElementById('total').innerHTML = 'Total: ' + total
+    // Basket counter
+    document.getElementById('cart_amount').innerHTML = basket_products_amounts
+    if (document.getElementById('cart_amount').innerHTML == 1) {document.getElementsByClassName("dropdown-content")[0].style.display = 'block'}
 
     //Round up the price 2 decimals
     prices.forEach(function(part, index, arr) {
@@ -129,10 +130,14 @@ function updateBasket() {
       arr[index].toFixed(2)
     });
 
-    document.getElementById('basket').innerHTML = ''
+    document.querySelectorAll(".total")[0].innerHTML = 'Total: €' + total
+    if (document.querySelectorAll(".total").length > 1) {document.querySelectorAll(".total")[1].innerHTML = 'Total: €' + total}
+    document.querySelectorAll(".basket")[0].innerHTML = ''
+    if (document.querySelectorAll(".basket").length > 1) {document.querySelectorAll(".basket")[1].innerHTML = ''}
 
     if (Object.keys(result).length === 0) {
-        document.getElementById('basket').innerHTML = ('<p>Your basket is empty</p>')
+        document.querySelectorAll(".basket")[0].innerHTML = ('<p>Je winkel mandje is leeg</p>')
+    if (document.querySelectorAll(".basket").length > 1) {document.querySelectorAll(".basket")[1].innerHTML = '<p>Je winkel mandje is leeg</p>'}
 
         return
     }
@@ -142,12 +147,6 @@ function updateBasket() {
         createProduct(products[i], prices[i], amounts[i])
     }
 
-    // Basket counter
-    if (basket_products_amounts !== 0) {
-        document.querySelector('.numberBasket').innerHTML = basket_products_amounts
-    } else {
-        document.querySelector('.numberBasket').innerHTML = ''
-    }
 }
 
 function createProduct(product, price, amount) {
@@ -156,18 +155,18 @@ function createProduct(product, price, amount) {
     div.className = 'product'
 
     div.innerHTML = (
-        `<br><span class="am">${amount} </span><span class="prod">${product} </span>` +
-        `<button class="plus" onclick="addBasket(\`${product}\`, \`${price}\`)">+</button>` +
+        `<br><i class="fa fa-trash-o" onclick="removeProduct(\`${product}\`)"></i> <span class="prod">${product} </span>` +
+        `<button class="plus" onclick="addBasket(\`${product}\`, \`${price}\`)">+</button><span class="am"> ${amount} </span>` +
         `<button class="minus" onclick="removeAmount(\`${product}\`, \`${price}\`, \`${amount}\`)">-</button>` +
-        `<span class="pric"> ${price} </span><button onclick="removeProduct(\`${product}\`)">Remove</button><br><br>`
+        `<span class="pric"> €${price} </span><br><br>`
 )
-
-    document.getElementById('basket').appendChild(div)
+    document.querySelectorAll(".basket")[0].appendChild(div)
+    if (document.querySelectorAll(".basket").length > 1) {document.querySelectorAll(".basket")[1].appendChild(div)}
 }
 
 var counter = 0
 function Categorize(product) {
-    var articles = document.getElementsByClassName('article')
+    var articles = document.getElementsByClassName('product')
 
     if (product === '1') {product = 'broodjes'}
     else if (product === '2') {product = 'drinken'}
@@ -205,7 +204,7 @@ function basketShowToggle() {
 function stickyNavbar() {
   window.onscroll = function() {Moving()};
 
-  var header = document.getElementById("navbar");
+  var header = document.getElementById("ftco-navbar");
   var sticky = header.offsetTop;
 
   function Moving() {
@@ -225,9 +224,9 @@ function Payment(pay_details, public_key) {
   // Custom styling can be passed to options when creating an Element
   style: {
     base: {
-      padding: '10px 12px',
+      padding: '12px 2px',
       color: '#32325d',
-      fontSize: '16px',
+      fontSize: '18px',
       '::placeholder': {
         color: '#aab7c4'
       },
@@ -237,12 +236,13 @@ function Payment(pay_details, public_key) {
 
   // Create an instance of the idealBank Element
   var idealBank = elements.create('idealBank', options);
+  var form = document.getElementById('payment-form');
 
   // Add an instance of the idealBank Element into
   // the `ideal-bank-element` <div>
   idealBank.mount('#ideal-bank-element');
 
-  addEventListener('submit', function(event) {
+  form.addEventListener('submit', function(event) {
   event.preventDefault();
 
   // Redirects away from the client
@@ -254,6 +254,49 @@ function Payment(pay_details, public_key) {
       },
       return_url: 'http://127.0.0.1:8000/confirmation/',
     }
-  );
-  });
+  )
+  })
+}
+
+function Display() {
+    document.getElementById("bvdw").style.display = 'none'
+    document.getElementById("broodjes").style.display = 'none'
+    document.getElementById("drinken").style.display = 'none'
+    document.getElementById("extras").style.display = 'none'
+
+    if(document.getElementById('cat_alles').checked) {
+      document.getElementById("bvdw").style.display = 'block'
+      document.getElementById("broodjes").style.display = 'block'
+      document.getElementById("drinken").style.display = 'block'
+      document.getElementById("extras").style.display = 'block'
+    }
+    else if(document.getElementById('cat_broodjes').checked) {
+      document.getElementById("broodjes").style.display = 'block'
+    }
+    else if(document.getElementById('cat_drinken').checked) {
+      document.getElementById("drinken").style.display = 'block'
+    }
+    else if(document.getElementById('cat_extras').checked) {
+      document.getElementById("extras").style.display = 'block'
+    }
+}
+
+function dropdownBasket() {
+    var modal = document.getElementsByClassName("dropdown-content")[0];
+    var basket = document.getElementById("basket_icon");
+    var close = document.getElementsByClassName("close")[0];
+
+    basket.onclick = function() {
+      modal.style.display = "block";
+    }
+
+    close.onclick = function() {
+      modal.style.display = "none";
+    }
+
+    window.onclick = function(event) {
+      if (event.target == modal) {
+        modal.style.display = "none";
+      }
+    }
 }

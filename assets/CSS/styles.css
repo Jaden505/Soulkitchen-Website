@@ -122,12 +122,6 @@ ul.topnav li a:hover:not(.active) {background-color: #bfbfbf;}
     display: block;
 } */
 
-a:focus img + .dropdown-content {
-    display: block;
-    /* background-color: red; */
-    padding-top: 50px;
-}
-
 .numberBasket {
     color: mediumpurple;
     font: 20px Arial, sans-serif;
@@ -142,4 +136,28 @@ a:focus img + .dropdown-content {
   position: fixed;
   top: 0;
   width: 100%;
+}
+
+/* Add a gray background color and some padding to the footer */
+footer {
+  background-color: #f2f2f2;
+  padding: 25px;
+}
+
+.carousel-inner img {
+  width: 100%; /* Set width to 100% */
+  margin: auto;
+  min-height:200px;
+  max-height:500px;
+}
+
+/* Hide the carousel text when the screen is less than 600 pixels wide */
+@media (max-width: 600px) {
+.carousel-caption {
+  display: none;
+}
+}
+
+body {
+  background-color: red;
 }

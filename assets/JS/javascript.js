@@ -86,7 +86,7 @@ function tryCheckout() {
     var total = totalAmount(result)
 
     if (Object.keys(result).length !== 0 && Object.keys(amounts).length !== 0 && total > 10) {
-        location.href = "/order/" + (total * 100)
+        location.href = "/order/" + (total * 100) // Goes to amount page and gives amount to checkout page
     }
     else {
         alert('The minimum is 10 euro')
@@ -193,14 +193,14 @@ function removeProduct(item) {
     updateBasket()
 }
 
-// function basketShowToggle() {
-//     var toggle = document.querySelector(".dropdown-content");
-//     if (toggle.style.display == "block"){
-//       toggle.style.display = "none";
-//     } else {
-//        toggle.style.display = "block";
-//     }
-// }
+function basketShowToggle() {
+    var toggle = document.querySelector(".dropdown-content");
+    if (toggle.style.display == "block"){
+      toggle.style.display = "none";
+    } else {
+       toggle.style.display = "block";
+    }
+}
 
 function stickyNavbar() {
   window.onscroll = function() {Moving()};
@@ -215,4 +215,45 @@ function stickyNavbar() {
       header.classList.remove("sticky");
     }
   }
+}
+
+function Payment(pay_details, public_key) {
+  var stripe = Stripe(public_key);
+  var elements = stripe.elements();
+
+  var options = {
+  // Custom styling can be passed to options when creating an Element
+  style: {
+    base: {
+      padding: '10px 12px',
+      color: '#32325d',
+      fontSize: '16px',
+      '::placeholder': {
+        color: '#aab7c4'
+      },
+    },
+  },
+  };
+
+  // Create an instance of the idealBank Element
+  var idealBank = elements.create('idealBank', options);
+
+  // Add an instance of the idealBank Element into
+  // the `ideal-bank-element` <div>
+  idealBank.mount('#ideal-bank-element');
+
+  addEventListener('submit', function(event) {
+  event.preventDefault();
+
+  // Redirects away from the client
+  stripe.confirmIdealPayment(
+    pay_details,
+    {
+      payment_method: {
+        ideal: idealBank,
+      },
+      return_url: 'http://127.0.0.1:8000/confirmation/',
+    }
+  );
+  });
 }
