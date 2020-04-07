@@ -1,1 +1,1 @@
-web: gunicorn Webshop.wsgi
+web: gunicorn Web.wsgi
