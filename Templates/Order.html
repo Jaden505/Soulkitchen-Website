@@ -10,13 +10,12 @@
     <div class="container">
       <div class="row no-gutters slider-text align-items-center justify-content-center">
         <div class="col-md-9 ftco-animate text-center">
-          <p class="breadcrumbs"><span class="mr-2">Winkelmandje</span></p>
-          <h1 class="mb-0 bread">Winkel</h1>
+          <p class="breadcrumbs"><span class="mr-2">Winkel</span></p>
+          <h1 class="mb-0 bread">Winkelmandje</h1>
         </div>
       </div>
     </div>
   </div>
-
 
   <h1>Basket</h1>
 
@@ -25,20 +24,12 @@
 
   <br>
 
-  <form onsubmit="return tryCheckout()" method="post">
+  <form onsubmit="return tryCheckout()" method="post" class="form_inputs">
     {% csrf_token %}
     {{form|crispy}}
     <button type="submit" class="btn btn-primary">Checkout</button>
   </form>
 
   <br>
-
-  <form action="/menu/">
-    <button>Go back</button>
-  </form>
-
-  <script>
-    updateBasket()
-  </script>
 
 {% endblock %}

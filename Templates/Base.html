@@ -18,6 +18,7 @@
     <link href="https://fonts.googleapis.com/css?family=Poppins:200,300,400,500,600,700,800&display=swap" rel="stylesheet" type="text/css">
     <link href="https://fonts.googleapis.com/css?family=Lora:400,400i,700,700i&display=swap" rel="stylesheet" type="text/css">
     <link href="https://fonts.googleapis.com/css?family=Amatic+SC:400,700&display=swap" rel="stylesheet" type="text/css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
     <link rel="stylesheet" href="{% static 'CSS/css/open-iconic-bootstrap.min.css' %}" type="text/css">
     <link rel="stylesheet" href="{% static 'CSS/css/animate.css' %}" type="text/css">
@@ -70,10 +71,9 @@
 
           <div class="collapse navbar-collapse" id="ftco-nav">
             <ul class="navbar-nav ml-auto">
-              <li class="nav-item active"><a href="/" class="nav-link">Home</a></li>
-              <li class="nav-item active"><a href="/menu/" class="nav-link">Shop</a></li>
-              <li class="nav-item"><a href="/about/" class="nav-link">About</a></li>
-              <li class="nav-item cta cta-colored"><a onclick="tryOrder()" class="nav-link"><span class="icon-shopping_cart" id="cart_amount">[0]</span></a></li>
+              <li class="nav-item"><a href="/menu/" class="nav-link">Menu</a></li>
+              <li class="nav-item"><a href="/about/" class="nav-link">Info</a></li>
+              <li class="nav-item cta cta-colored" id="basket_icon"><a style="background-color: white;" class="nav-link"><h5 class="icon-shopping_cart" id="cart_amount">[0]</h5></a></li>
             </ul>
           </div>
         </div>
@@ -81,13 +81,32 @@
   </header>
   <!-- HEADER END -->
 
-  <!-- Keeps basket updated on page change -->
-  <script>
-    updateBasket()
-  </script>
+  <!-- BASKET SHOW -->
+  <div class="dropdown-content">
+      <div class="basket-header">
+        <span class="close">&times;</span>
+        <h2>Winkel mandje</h2>
+      </div>
+
+      <div id="basket"></div>
+      <br>
+      <p id="total"></p>
+
+      <div class="dropdown-footer">
+        <button onclick="emptyBasket()">Empty basket</button>
+        <br>
+        <button onclick="tryOrder()">Order</button>
+      </div>
+  </div>
 
   <!-- CONTENT -->
   {% block content %}{% endblock %}
+
+    <!-- Keeps basket updated on page change -->
+  <script>
+    updateBasket()
+    dropdownBasket()
+  </script>
 
   <!-- FOOTER -->
   <footer class="ftco-footer ftco-section">

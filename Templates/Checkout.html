@@ -19,9 +19,7 @@
 </style>
 
 
-<form id="payment-form" onsubmit="return Payment.RedirectPayment()">
-
-  {% csrf_token %}
+<form id="payment-form">
 
   <div class="form-row">
     <!--
@@ -31,7 +29,7 @@
     -->
     <h2>
       <label for="ideal-bank-element">
-        iDEAL Bank
+        Checkout
       </label>
     </h2>
 
@@ -42,13 +40,11 @@
     </div>
   </div>
 
-  <button>Submit Payment</button>
+  <button>Bevestig betaling</button>
 
   <!-- Used to display form errors. -->
   <div id="error-message" role="alert"></div>
 </form>
-
-<button onclick="goBack()">Go back</button>
 
 <script>
   Payment('{{payment}}', '{{public_key}}')

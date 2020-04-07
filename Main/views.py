@@ -30,9 +30,9 @@ def checkout_view(request):
     payment = stripe.PaymentIntent.create(
         amount=amount,
         currency='eur',
-        payment_method_types=['ideal']
+        payment_method_types=['ideal'],
     )
-
+    
     return render(request, "Checkout.html", {'payment': payment.client_secret, 'public_key': public_key})
 
 def amount_view(request, amount):

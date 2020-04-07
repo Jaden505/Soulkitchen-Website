@@ -8,21 +8,22 @@
     <div class="container">
       <div class="row no-gutters slider-text align-items-center justify-content-center">
         <div class="col-md-9 ftco-animate text-center">
-          <p class="breadcrumbs"><span class="mr-2">Menu</span></p>
-          <h1 class="mb-0 bread">Winkel</h1>
+          <p class="breadcrumbs"><span class="mr-2">Winkel</span></p>
+          <h1 class="mb-0 bread">Menu</h1>
         </div>
       </div>
     </div>
   </div>
   <!-- HEAD IMG SHOW END -->
 
+  <!-- CATEGORIES -->
   <section class="ftco-section">
     <div class="container">
       <div class="row justify-content-center">
         <div class="col-md-10 mb-5 text-center">
           <ul class="product-category">
 
-            <label class="rad" onclick="Display()"">Alles
+            <label class="rad" onclick="Display()">Alles
               <input type="radio" checked="checked" name="radio" id="cat_alles">
               <span class="checkmark"></span>
             </label>
@@ -43,14 +44,6 @@
         </div>
       </div>
   </section>
-
-  <div class="dropdown-content">
-      <div id="basket"></div>
-      <p id="total"></p>
-      <button onclick="emptyBasket()">Empty basket</button>
-      <br>
-      <button onclick="tryOrder()">Order</button>
-  </div>
 
   <div id="categories">
       <div id="bvdw">
@@ -103,7 +96,7 @@
   {% for broodje in bvdw %}
   <!-- PRODUCT -->
   <div class="col-md-6 col-lg-3 ftco-animate">
-    <div class="product">
+    <div class="product" style="display: inline-block;">
       <a class="img-prod"><img class="img-fluid" src="{{ broodje.image.url }}" alt="Colorlib Template"></a>
       <div class="text py-3 pb-4 px-3 text-center">
         <h3><a>{{ broodje.title }}</a></h3>
@@ -129,9 +122,5 @@
   {% endfor %}
 
   <br><br><br><br>
-
-  <script>
-      updateBasket()
-  </script>
 
 {% endblock %}

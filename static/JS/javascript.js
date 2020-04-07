@@ -121,6 +121,7 @@ function updateBasket() {
 
     // Basket counter
     document.getElementById('cart_amount').innerHTML = basket_products_amounts
+    if (document.getElementById('cart_amount').innerHTML == 1) {document.getElementsByClassName("dropdown-content")[0].style.display = 'block'}
 
     //Round up the price 2 decimals
     prices.forEach(function(part, index, arr) {
@@ -128,11 +129,11 @@ function updateBasket() {
       arr[index].toFixed(2)
     });
 
-    document.getElementById('total').innerHTML = 'Total: ' + total
+    document.getElementById('total').innerHTML = 'Total: €' + total
     document.getElementById('basket').innerHTML = ''
 
     if (Object.keys(result).length === 0) {
-        document.getElementById('basket').innerHTML = ('<p>Your basket is empty</p>')
+        document.getElementById('basket').innerHTML = ('<p>Je winkel mandje is leeg</p>')
 
         return
     }
@@ -150,10 +151,10 @@ function createProduct(product, price, amount) {
     div.className = 'product'
 
     div.innerHTML = (
-        `<br><span class="am">${amount} </span><span class="prod">${product} </span>` +
-        `<button class="plus" onclick="addBasket(\`${product}\`, \`${price}\`)">+</button>` +
+        `<br><i class="fa fa-trash-o" onclick="removeProduct(\`${product}\`)"></i> <span class="prod">${product} </span>` +
+        `<button class="plus" onclick="addBasket(\`${product}\`, \`${price}\`)">+</button><span class="am"> ${amount} </span>` +
         `<button class="minus" onclick="removeAmount(\`${product}\`, \`${price}\`, \`${amount}\`)">-</button>` +
-        `<span class="pric"> ${price} </span><button onclick="removeProduct(\`${product}\`)">Remove</button><br><br>`
+        `<span class="pric"> €${price} </span><br><br>`
 )
 
     document.getElementById('basket').appendChild(div)
@@ -199,7 +200,7 @@ function basketShowToggle() {
 function stickyNavbar() {
   window.onscroll = function() {Moving()};
 
-  var header = document.getElementById("navbar");
+  var header = document.getElementById("ftco-navbar");
   var sticky = header.offsetTop;
 
   function Moving() {
@@ -231,29 +232,26 @@ function Payment(pay_details, public_key) {
 
   // Create an instance of the idealBank Element
   var idealBank = elements.create('idealBank', options);
+  var form = document.getElementById('payment-form');
 
   // Add an instance of the idealBank Element into
   // the `ideal-bank-element` <div>
   idealBank.mount('#ideal-bank-element');
 
-  function RedirectPayment() {
-    addEventListener('submit', function(event) {
-    event.preventDefault();
+  form.addEventListener('submit', function(event) {
+  event.preventDefault();
 
-    // Redirects away from the client
-    stripe.confirmIdealPayment(
-      pay_details,
-      {
-        payment_method: {
-          ideal: idealBank,
-        },
-        return_url: 'http://127.0.0.1:8000/confirmation/',
-      }
-    )
-    })
-    return false
-  }
-  Payment.RedirectPayment = RedirectPayment
+  // Redirects away from the client
+  stripe.confirmIdealPayment(
+    pay_details,
+    {
+      payment_method: {
+        ideal: idealBank,
+      },
+      return_url: 'http://127.0.0.1:8000/confirmation/',
+    }
+  )
+  })
 }
 
 function Display() {
@@ -276,5 +274,25 @@ function Display() {
     }
     else if(document.getElementById('cat_extras').checked) {
       document.getElementById("extras").style.display = 'block'
+    }
+}
+
+function dropdownBasket() {
+    var modal = document.getElementsByClassName("dropdown-content")[0];
+    var basket = document.getElementById("basket_icon");
+    var close = document.getElementsByClassName("close")[0];
+
+    basket.onclick = function() {
+      modal.style.display = "block";
+    }
+
+    close.onclick = function() {
+      modal.style.display = "none";
+    }
+
+    window.onclick = function(event) {
+      if (event.target == modal) {
+        modal.style.display = "none";
+      }
     }
 }
