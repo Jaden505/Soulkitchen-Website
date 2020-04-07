@@ -3,80 +3,124 @@
 
 {% block content %}
 
-    <!-- Header -->
-    <header id="navbar">
-      <ul class="topnav">
-        <li><a href="/">Home</a></li>
-        <li><a href="/about">About</a></li>
-        <li><a href="/menu">Menu</a></li>
-
-        <div class="dropdown">
-            <div class="numberBasket"></div>
-            <img src="{% static 'Images/ShoppingCart.png' %}" alt="Shopping cart" class="shoppingcart" onclick="basketShowToggle()">
+  <!-- HEAD IMG SHOW -->
+  <div class="hero-wrap hero-bread" style="background-image: url('{% static 'Images/Eettent.jpg' %}');">
+    <div class="container">
+      <div class="row no-gutters slider-text align-items-center justify-content-center">
+        <div class="col-md-9 ftco-animate text-center">
+          <p class="breadcrumbs"><span class="mr-2">Winkel</span></p>
+          <h1 class="mb-0 bread">Menu</h1>
         </div>
-      </ul>
-
-        <div class="dropdown-content">
-            <div id="basket"></div>
-            <p id="total"></p>
-            <button onclick="emptyBasket()">Empty basket</button>
-            <br>
-            <button onclick="tryOrder()">Order</button>
-        </div>
-    </header>
-
-    <div id="categories">
-        <div id="bvdw">
-            <h1>Broodje van de week</h1>
-        </div>
-        <br>
-        <div id="broodjes">
-            <h1>Broodjes</h1>
-        </div>
-        <br>
-        <div id="drinken">
-            <h1>Drinken</h1>
-        </div>
-        <br>
-        <div id="extras">
-            <h1>Extra's</h1>
-        </div>
-        <br>
+      </div>
     </div>
+  </div>
+  <!-- HEAD IMG SHOW END -->
 
-    {% for product in products %}
-        <div class="article">
-            <a class="add_basket" onclick="addBasket('{{product.title}}', '{{product.price}}')">+</a>
-            <br>
-            <h2>{{ product.title }}</h2>
-            <img src="{{ product.image.url }}" width="100px" height="150">
-            <p>{{ product.description }}</p>
-            <p1>€{{ product.price }}</p1>
-            <br>
+  <!-- CATEGORIES -->
+  <section class="ftco-section">
+    <div class="container">
+      <div class="row justify-content-center">
+        <div class="col-md-10 mb-5 text-center">
+          <ul class="product-category">
+
+            <label class="rad" onclick="Display()">Alles
+              <input type="radio" checked="checked" name="radio" id="cat_alles">
+              <span class="checkmark"></span>
+            </label>
+            <label class="rad" onclick="Display()">Broodjes
+              <input type="radio" name="radio" id="cat_broodjes">
+              <span class="checkmark"></span>
+            </label>
+            <label class="rad" onclick="Display()">Drinken
+              <input type="radio" name="radio" id="cat_drinken">
+              <span class="checkmark"></span>
+            </label>
+            <label class="rad" onclick="Display()">Extra's
+              <input type="radio" name="radio" id="cat_extras">
+              <span class="checkmark"></span>
+            </label>
+
+          </ul>
         </div>
+      </div>
+  </section>
+
+  <div id="categories">
+      <div id="bvdw">
+          <h1>Broodje van de week</h1>
+      </div>
+      <br>
+      <div id="broodjes">
+          <h1>Broodjes</h1>
+      </div>
+      <br>
+      <div id="drinken">
+          <h1>Drinken</h1>
+      </div>
+      <br>
+      <div id="extras">
+          <h1>Extra's</h1>
+      </div>
+      <br>
+  </div>
+
+  <div class="row">
+  {% for product in products %}
+        <!-- PRODUCT -->
+        <div class="col-md-6 col-lg-3 ftco-animate">
+          <div class="product" style="display: inline-block;">
+            <a class="img-prod"><img class="img-fluid" src="{{ product.image.url }}" alt="Colorlib Template">
+            </a>
+            <div class="text py-3 pb-4 px-3 text-center">
+              <h3><a>{{ product.title }}</a></h3>
+              <div class="d-flex">
+                <div class="pricing">
+                  <p><span class="price">€{{ product.price }}</span></p>
+                </div>
+              </div>
+              <div class="bottom-area d-flex px-3">
+                <div class="m-auto d-flex">
+                  <a class="buy-now d-flex justify-content-center align-items-center mx-1" onclick="addBasket('{{product.title}}', '{{product.price}}')">
+                    <span ><i class="ion-ios-cart"></i></span>
+                  </a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- END-PRODUCT -->
 
         <script>Categorize('{{product.category}}')</script>
-    {% endfor %}
+  {% endfor %}
 
-    {% for broodje in bvdw %}
-        <div class="article">
-            <a class="add_basket" onclick="addBasket('{{broodje.title}}', '{{broodje.price}}')">+</a>
-            <br>
-            <h2>{{ broodje.title }}</h2>
-            <img src="{{ broodje.image.url }}" width="100px" height="150">
-            <p>{{ broodje.description }}</p>
-            <p1>€{{ broodje.price }}</p1>
-            <br>
+  {% for broodje in bvdw %}
+  <!-- PRODUCT -->
+  <div class="col-md-6 col-lg-3 ftco-animate">
+    <div class="product" style="display: inline-block;">
+      <a class="img-prod"><img class="img-fluid" src="{{ broodje.image.url }}" alt="Colorlib Template"></a>
+      <div class="text py-3 pb-4 px-3 text-center">
+        <h3><a>{{ broodje.title }}</a></h3>
+        <div class="d-flex">
+          <div class="pricing">
+            <p><span class="price">€{{ broodje.price }}</span></p>
+          </div>
         </div>
+        <div class="bottom-area d-flex px-3">
+          <div class="m-auto d-flex">
+            <a class="buy-now d-flex justify-content-center align-items-center mx-1" onclick="addBasket('{{broodje.title}}', '{{broodje.price}}')">
+              <span><i class="ion-ios-cart"></i></span>
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- END-PRODUCT -->
+  </div>
 
-        <script>Categorize('bvdw')</script>
-    {% endfor %}
+  <script>Categorize('bvdw')</script>
+  {% endfor %}
 
-    <br><br><br><br>
-
-    <script>
-        updateBasket()
-        stickyNavbar()
-    </script>
+  <br><br><br><br>
 
 {% endblock %}
