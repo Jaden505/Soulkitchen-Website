@@ -23,8 +23,8 @@ def menu_view(request):
     return render(request, "Menu.html", {'products': products, 'bvdw': bvdw})
 
 def checkout_view(request):
-    stripe.api_key = 'sk_test_r6FwtlBtj8JiMSxLcz4DlaRH00yErwoh8S' # Secret
-    public_key = 'pk_test_qTDCI2FBELcygSPxiOZhLdlV00n6MGDokQ' # Public
+    stripe.api_key = 'SECRET KEY' # Secret
+    public_key = 'PUBLIC KEY' # Public
     amount = request.session['amount']
 
     payment = stripe.PaymentIntent.create(
