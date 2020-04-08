@@ -232,36 +232,42 @@ function Payment(pay_details, public_key) {
   var stripe = Stripe(public_key);
   var elements = stripe.elements();
 
-      // Custom styling can be passed to options when creating an Element.
-    var style = {
-      base: {
-        // Add your base input styles here. For example:
-        fontSize: '16px',
-        color: '#32325d',
+  var options = {
+  // Custom styling can be passed to options when creating an Element
+  style: {
+    base: {
+      padding: '12px 2px',
+      color: '#32325d',
+      fontSize: '18px',
+      '::placeholder': {
+        color: '#aab7c4'
       },
-    };
+    },
+  },
+  };
 
-    // Create an instance of the card Element.
-    var card = elements.create('card', {style: style});
+  // Create an instance of the idealBank Element
+  var idealBank = elements.create('idealBank', options);
+  var form = document.getElementById('payment-form');
 
-    // Add an instance of the card Element into the `card-element` <div>.
-    card.mount('#card-element');
-    // Create a token or display an error when the form is submitted.
-    var form = document.getElementById('payment-form');
-    form.addEventListener('submit', function(event) {
-      event.preventDefault();
+  // Add an instance of the idealBank Element into
+  // the `ideal-bank-element` <div>
+  idealBank.mount('#ideal-bank-element');
 
-      stripe.createToken(card).then(function(result) {
-        if (result.error) {
-          // Inform the customer that there was an error.
-          var errorElement = document.getElementById('card-errors');
-          errorElement.textContent = result.error.message;
-        } else {
-          // Send the token to your server.
-          stripeTokenHandler(result.token);
-        }
-      });
-    });
+  form.addEventListener('submit', function(event) {
+  event.preventDefault();
+
+  // Redirects away from the client
+  stripe.confirmIdealPayment(
+    pay_details,
+    {
+      payment_method: {
+        ideal: idealBank,
+      },
+      return_url: 'https://sassies-soulkitchen.herokuapp.com/confirmation/',
+    }
+  )
+  })
 }
 
 function Display() {
