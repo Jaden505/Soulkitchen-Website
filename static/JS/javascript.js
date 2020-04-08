@@ -232,42 +232,36 @@ function Payment(pay_details, public_key) {
   var stripe = Stripe(public_key);
   var elements = stripe.elements();
 
-  var options = {
-  // Custom styling can be passed to options when creating an Element
-  style: {
-    base: {
-      padding: '12px 2px',
-      color: '#32325d',
-      fontSize: '18px',
-      '::placeholder': {
-        color: '#aab7c4'
+      // Custom styling can be passed to options when creating an Element.
+    var style = {
+      base: {
+        // Add your base input styles here. For example:
+        fontSize: '16px',
+        color: '#32325d',
       },
-    },
-  },
-  };
+    };
 
-  // Create an instance of the idealBank Element
-  var idealBank = elements.create('idealBank', options);
-  var form = document.getElementById('payment-form');
+    // Create an instance of the card Element.
+    var card = elements.create('card', {style: style});
 
-  // Add an instance of the idealBank Element into
-  // the `ideal-bank-element` <div>
-  idealBank.mount('#ideal-bank-element');
+    // Add an instance of the card Element into the `card-element` <div>.
+    card.mount('#card-element');
+    // Create a token or display an error when the form is submitted.
+    var form = document.getElementById('payment-form');
+    form.addEventListener('submit', function(event) {
+      event.preventDefault();
 
-  form.addEventListener('submit', function(event) {
-  event.preventDefault();
-
-  // Redirects away from the client
-  stripe.confirmIdealPayment(
-    pay_details,
-    {
-      payment_method: {
-        ideal: idealBank,
-      },
-      return_url: 'https://sassies-soulkitchen.herokuapp.com/confirmation/',
-    }
-  )
-  })
+      stripe.createToken(card).then(function(result) {
+        if (result.error) {
+          // Inform the customer that there was an error.
+          var errorElement = document.getElementById('card-errors');
+          errorElement.textContent = result.error.message;
+        } else {
+          // Send the token to your server.
+          stripeTokenHandler(result.token);
+        }
+      });
+    });
 }
 
 function Display() {

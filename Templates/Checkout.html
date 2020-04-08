@@ -19,31 +19,20 @@
 </style>
 
 
-<form id="payment-form">
-
+<form action="/charge" method="post" id="payment-form">
   <div class="form-row">
-    <!--
-      Using a label with a for attribute that matches the ID of the
-      Element container enables the Element to automatically gain focus
-      when the customer clicks on the label.
-    -->
-    <h2>
-      <label for="ideal-bank-element">
-        Checkout
-      </label>
-    </h2>
-
-    <hr>
-
-    <div id="ideal-bank-element">
+    <label for="card-element">
+      Credit or debit card
+    </label>
+    <div id="card-element">
       <!-- A Stripe Element will be inserted here. -->
     </div>
+
+    <!-- Used to display Element errors. -->
+    <div id="card-errors" role="alert"></div>
   </div>
 
-  <button>Bevestig betaling</button>
-
-  <!-- Used to display form errors. -->
-  <div id="error-message" role="alert"></div>
+  <button>Submit Payment</button>
 </form>
 
 <script>

@@ -24,7 +24,7 @@ def menu_view(request):
     return render(request, "Menu.html", {'products': products, 'bvdw': bvdw})
 
 def checkout_view(request):
-    stripe.api_key = 'sk_test_r6FwtlBtj8JiMSxLcz4DlaRH00yErwoh8S' # Secret
+    stripe.api_key = 'sk_live_Z37IuBar2N3xzo6jLDpyF5dY00XyY0Gu9J' # Secret
     public_key = 'pk_live_n0KEXVBkq1aVwMbZ1JMrO6ID00dRVeza24' # Public
     amount = request.session['amount']
 
@@ -56,5 +56,11 @@ def confirmation_view(request):
     #     [user_details['email']],
     #     fail_silently=False,
     # )
+
+    stripe.api_key = "sk_live_Z37IuBar2N3xzo6jLDpyF5dY00XyY0Gu9J"
+
+    stripe.PaymentIntent.confirm(
+        payment_method="ideal",
+    )
 
     return render(request, 'Confirmation.html')
