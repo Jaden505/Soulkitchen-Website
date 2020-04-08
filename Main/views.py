@@ -25,7 +25,7 @@ def menu_view(request):
 
 def checkout_view(request):
     stripe.api_key = 'sk_test_r6FwtlBtj8JiMSxLcz4DlaRH00yErwoh8S' # Secret
-    public_key = 'pk_test_qTDCI2FBELcygSPxiOZhLdlV00n6MGDokQ' # Public
+    public_key = 'pk_live_n0KEXVBkq1aVwMbZ1JMrO6ID00dRVeza24' # Public
     amount = request.session['amount']
 
     payment = stripe.PaymentIntent.create(

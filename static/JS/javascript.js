@@ -264,7 +264,7 @@ function Payment(pay_details, public_key) {
       payment_method: {
         ideal: idealBank,
       },
-      return_url: 'http://127.0.0.1:8000/confirmation/',
+      return_url: 'https://sassies-soulkitchen.herokuapp.com/confirmation/',
     }
   )
   })
