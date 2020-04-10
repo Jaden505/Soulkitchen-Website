@@ -142,3 +142,8 @@ django_heroku.settings(locals())
 mimetypes.add_type("text/css", ".css", True)
 mimetypes.add_type("javascript/css", ".js", True)
 
+# Absolute path to the project directory
+BASE_PATH = os.path.dirname(os.path.abspath(__file__))
+
+# URL prefix for admin media -- CSS, JavaScript and images.
+ADMIN_MEDIA_PREFIX = "%sadmin/" % MEDIA_URL
