@@ -1,10 +1,9 @@
 from django.shortcuts import render, redirect
 from .models import AddProduct, Broodje_vdw
 from .forms import *
-from django import forms
+import os
 import stripe
-from django.core.mail import send_mail
-from decimal import Decimal
+import psycopg2
 
 # Create your views here.
 
@@ -21,11 +20,19 @@ def order_view(request):
 def menu_view(request):
     products = AddProduct.objects.all()
     bvdw = Broodje_vdw.objects.all()
+
+    for product in products:
+        if getFile('images', product.title) != False:
+            product.image = getFile('images', product.title)
+        else:
+            #print('Doesnt exist')
+            pass
+
     return render(request, "Menu.html", {'products': products, 'bvdw': bvdw})
 
 def checkout_view(request):
-    stripe.api_key = 'sk_live_Z37IuBar2N3xzo6jLDpyF5dY00XyY0Gu9J' # Secret
-    public_key = 'pk_live_n0KEXVBkq1aVwMbZ1JMrO6ID00dRVeza24' # Public
+    stripe.api_key = os.environ.get('STRIPE_PUBLIC_KEY') # Secret
+    public_key = os.environ.get('STRIPE_SECRET_KEY') # Public
     amount = request.session['amount']
 
     payment = stripe.PaymentIntent.create(
@@ -64,3 +71,38 @@ def confirmation_view(request):
     )
 
     return render(request, 'Confirmation.html')
+
+
+def getFile(table, name):
+
+    def retrieve():
+        cursor.execute(f"""SELECT * FROM {table}
+            WHERE name = {name};
+        """)
+
+        rett = cursor.fetchall()
+        print(rett)
+
+        return rett
+
+    try:
+        connection = psycopg2.connect(port="5432", database="WebshopDB")
+        cursor = connection.cursor()
+        #print('Connection is open')
+
+        try:
+            retrieve()
+        except:
+            return False
+
+    except (Exception, psycopg2.Error) as error:
+        print("Error while connecting to PostgreSQL", error)
+        return False
+
+    finally:
+        #closing database connection.
+        if connection:
+            cursor.close()
+            connection.close()
+            #print("PostgreSQL connection is closed")
+

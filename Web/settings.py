@@ -21,13 +21,12 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # See https://docs.djangoproject.com/en/3.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = '4e93eeada67756ea5f787ea50dd3be6e3fd115c834c94c56'
+SECRET_KEY = os.environ.get('DJANGO_SECRET')
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
 
 ALLOWED_HOSTS = ['sassies-soulkitchen.herokuapp.com']
-
 
 # Application definition
 
@@ -81,8 +80,10 @@ WSGI_APPLICATION = 'Web.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'WebshopDB',
+        'PORT': '5432',
+        'HOST': 'localhost',
     }
 }
 
@@ -141,9 +142,3 @@ django_heroku.settings(locals())
 
 mimetypes.add_type("text/css", ".css", True)
 mimetypes.add_type("javascript/css", ".js", True)
-
-# Absolute path to the project directory
-BASE_PATH = os.path.dirname(os.path.abspath(__file__))
-
-# URL prefix for admin media -- CSS, JavaScript and images.
-ADMIN_MEDIA_PREFIX = "%sadmin/" % MEDIA_URL

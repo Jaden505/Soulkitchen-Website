@@ -30,4 +30,8 @@ urlpatterns = [
     path('order/', views.order_view, name='order_view'),
     path('order/<amount>/', views.amount_view, name='amount_view'),
     path('confirmation/', views.confirmation_view, name='confirmation_view'),
-] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+]
+
+if settings.DEBUG:
+    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+
