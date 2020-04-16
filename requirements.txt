@@ -1,4 +1,6 @@
 asgiref==3.2.5
+boto3==1.12.39
+botocore==1.15.39
 certifi==2019.11.28
 chardet==3.0.4
 closure==20191111
@@ -8,14 +10,20 @@ django-appconf==1.0.4
 django-classy-tags==1.0.0
 django-crispy-forms==1.9.0
 django-heroku==0.3.1
+django-storages==1.9.1
+docutils==0.15.2
 geographiclib==1.50
 geopy==1.21.0
 gunicorn==20.0.4
 idna==2.9
+jmespath==0.9.5
+mod-wsgi==4.7.1
 Pillow==7.0.0
 psycopg2==2.8.5
+python-dateutil==2.8.1
 pytz==2019.3
 requests==2.23.0
+s3transfer==0.3.3
 six==1.14.0
 sqlparse==0.3.1
 stripe==2.44.0

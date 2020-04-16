@@ -1,10 +1,8 @@
 from django.shortcuts import render, redirect
 from .models import AddProduct, Broodje_vdw
 from .forms import *
-from django import forms
 import stripe
-from django.core.mail import send_mail
-from decimal import Decimal
+from Web import settings
 
 # Create your views here.
 
@@ -16,16 +14,18 @@ def about_view(request):
 
 def order_view(request):
     form = UserInfo
+
     return render(request, "Order.html", {'form': form})
 
 def menu_view(request):
     products = AddProduct.objects.all()
     bvdw = Broodje_vdw.objects.all()
+
     return render(request, "Menu.html", {'products': products, 'bvdw': bvdw})
 
 def checkout_view(request):
-    stripe.api_key = 'sk_live_Z37IuBar2N3xzo6jLDpyF5dY00XyY0Gu9J' # Secret
-    public_key = 'pk_live_n0KEXVBkq1aVwMbZ1JMrO6ID00dRVeza24' # Public
+    stripe.api_key = settings.STRIPE_SECRET_KEY
+    public_key = settings.STRIPE_PUBLIC_KEY
     amount = request.session['amount']
 
     payment = stripe.PaymentIntent.create(

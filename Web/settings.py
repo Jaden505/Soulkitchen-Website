@@ -21,10 +21,10 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # See https://docs.djangoproject.com/en/3.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = os.environ.get('DJANGO_SECRET')
+SECRET_KEY = os.environ.get('DJANGO_SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
 ALLOWED_HOSTS = ['sassies-soulkitchen.herokuapp.com']
 
@@ -42,6 +42,7 @@ INSTALLED_APPS = [
     'Main',
     'stripe',
     'crispy_forms',
+    'storages',
 ]
 
 MIDDLEWARE = [
@@ -74,7 +75,6 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'Web.wsgi.application'
 
-
 # Database
 # https://docs.djangoproject.com/en/3.0/ref/settings/#databases
 
@@ -86,7 +86,6 @@ DATABASES = {
         'HOST': 'localhost',
     }
 }
-
 
 # Password validation
 # https://docs.djangoproject.com/en/3.0/ref/settings/#auth-password-validators
@@ -124,17 +123,18 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.0/howto/static-files/
 
+    # STATIC & MEDIA
 STATIC_URL = '/static/'
 
 STATICFILES_DIRS = (
     os.path.join(BASE_DIR, 'static'),
 )
 
-STATIC_ROOT = os.path.join(BASE_DIR, "assets")
+STATIC_ROOT = os.path.join(BASE_DIR, "static")
 
 MEDIA_URL = '/media/'
 
-MEDIA_ROOT = os.path.join(BASE_DIR, 'static/media')
+MEDIA_ROOT = os.path.join(BASE_DIR, 'static/media/')
 
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
 
@@ -142,3 +142,18 @@ django_heroku.settings(locals())
 
 mimetypes.add_type("text/css", ".css", True)
 mimetypes.add_type("javascript/css", ".js", True)
+
+    # AWS
+AWS_ACCESS_KEY_ID = os.environ.get('AWS_ACCESS_KEY_ID')
+AWS_SECRET_ACCESS_KEY = os.environ.get('AWS_SECRET_ACCESS_KEY')
+AWS_STORAGE_BUCKET_NAME = os.environ.get('AWS_STORAGE_BUCKET_NAME')
+
+AWS_S3_FILE_OVERWRITE = False
+AWS_DEFAULT_ACL = 'None'
+
+DEFAULT_FILE_STORAGE = 'Web.custom_storages.MediaStorage'
+
+    # STRIPE
+STRIPE_SECRET_KEY = os.environ.get('sk_live_z3VLDTqcaDvU9n7bkvBqzZL700ROOB79Gq')
+STRIPE_PUBLIC_KEY = os.environ.get('pk_live_n0KEXVBkq1aVwMbZ1JMrO6ID00dRVeza24')
+
