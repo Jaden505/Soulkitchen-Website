@@ -69,11 +69,11 @@
         <!-- PRODUCT -->
         <div class="col-md-6 col-lg-3 ftco-animate">
           <div class="product" style="display: inline-block;">
-            <a class="img-prod">
+            <a class="img-prod" onclick="addBasket('{{product.title}}', '{{product.price}}')">
               <img class="img-fluid" src="{{ product.image.url }}" alt="Colorlib Template">
             </a>
             <div class="text py-3 pb-4 px-3 text-center">
-              <h3><a>{{ product.title }}</a></h3>
+              <h3><a onclick="addBasket('{{product.title}}', '{{product.price}}')">{{ product.title }}</a></h3>
               <div class="d-flex">
                 <div class="pricing">
                   <p><span class="price">€{{ product.price }}</span></p>
@@ -98,9 +98,11 @@
   <!-- PRODUCT -->
   <div class="col-md-6 col-lg-3 ftco-animate">
     <div class="product" style="display: inline-block;">
-      <a class="img-prod"><img class="img-fluid" src="{{ broodje.image.url }}" alt="Colorlib Template"></a>
+      <a class="img-prod" onclick="addBasket('{{broodje.title}}', '{{broodje.price}}')">
+        <img class="img-fluid" src="{{ broodje.image.url }}" alt="Colorlib Template">
+      </a>
       <div class="text py-3 pb-4 px-3 text-center">
-        <h3><a>{{ broodje.title }}</a></h3>
+        <h3><a onclick="addBasket('{{broodje.title}}', '{{broodje.price}}')">{{ broodje.title }}</a></h3>
         <div class="d-flex">
           <div class="pricing">
             <p><span class="price">€{{ broodje.price }}</span></p>

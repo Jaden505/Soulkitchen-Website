@@ -1,12 +1,13 @@
 {% extends "Base.html" %}
 
 {% block content %}
+{% load static %}
 
   <!-- SLIDESHOW -->
   <section id="home-section" class="hero">
     <div class="home-slider owl-carousel">
 
-      <div class="slider-item" style="background-image: url(static/Images/Meals/Pom.jpg);">
+      <div class="slider-item" style="background-image: url('{% static 'Images/Meals/Pom.jpg' %}');">
         <div class="overlay"></div>
         <div class="container">
           <div class="row slider-text justify-content-center align-items-center" data-scrollax-parent="true">
@@ -19,7 +20,7 @@
         </div>
       </div>
 
-      <div class="slider-item" style="background-image: url(static/Images/Meals/BroodjePom.png);">
+      <div class="slider-item" style="background-image: url('{% static 'Images/Meals/BroodjePom.png' %}');">
         <div class="overlay"></div>
         <div class="container">
           <div class="row slider-text justify-content-center align-items-center" data-scrollax-parent="true">
@@ -83,7 +84,7 @@
 				<div class="col-md-8">
 					<div class="row">
 						<div class="col-md-6 order-md-last align-items-stretch d-flex">
-							<div class="category-wrap-2 ftco-animate img align-self-stretch d-flex" style="background-image: url(static/Images/meals/);">
+							<div class="category-wrap-2 ftco-animate img align-self-stretch d-flex" style="background-image: url();">
 								<div class="text text-center">
 									<h2>Broodjes</h2>
 									<p>Altijd lekker</p>
@@ -92,12 +93,12 @@
 							</div>
 						</div>
 						<div class="col-md-6">
-							<div class="category-wrap ftco-animate img mb-4 d-flex align-items-end" style="background-image: url(static/Images/meals/PomRijst.jpg);">
+							<div class="category-wrap ftco-animate img mb-4 d-flex align-items-end" style="background-image: url('{% static 'Images/Meals/PomRijst.jpg' %}');">
 								<div class="text px-3 py-1">
 									<h2 class="mb-0"><a href="/menu/">Surinaamse kip</a></h2>
 								</div>
 							</div>
-							<div class="category-wrap ftco-animate img d-flex align-items-end" style="background-image: url(static/Images/meals/BroodjeKip.jpg);">
+							<div class="category-wrap ftco-animate img d-flex align-items-end" style="background-image: url('{% static 'Images/Meals/BroodjeKip.jpg' %}');">
 								<div class="text px-3 py-1">
 									<h2 class="mb-0"><a href="/menu/">Broodjes</a></h2>
 								</div>
@@ -107,12 +108,12 @@
 				</div>
 
 				<div class="col-md-4">
-					<div class="category-wrap ftco-animate img mb-4 d-flex align-items-end" style="background-image: url(static/Images/meals/Drinken.jpg);">
+					<div class="category-wrap ftco-animate img mb-4 d-flex align-items-end" style="background-image: url('{% static 'Images/Meals/Drinken.jpg' %}');">
 						<div class="text px-3 py-1">
 							<h2 class="mb-0"><a href="/menu/">drinken</a></h2>
 						</div>
 					</div>
-					<div class="category-wrap ftco-animate img d-flex align-items-end" style="background-image: url(static/Images/meals/Peper.jpg);">
+					<div class="category-wrap ftco-animate img d-flex align-items-end" style="background-image: url('{% static 'Images/Meals/Peper.jpg' %}');">
 						<div class="text px-3 py-1">
 							<h2 class="mb-0"><a href="/menu/">Extra's</a></h2>
 						</div>
@@ -369,8 +370,8 @@
   <!-- BROODJE VAN DE WEEK -->
 	<section class="ftco-section img">
   	<div class="container">
-			<div class="row justify-content-end" style="padding-right: 100px;">
-        <img src="static/Images/meals/Nasi.jpg" alt="Broodje van de week" style="max-width: 400px; height: auto;">
+		<div class="row justify-content-end" style="padding-right: 100px;">
+        <img src="{% static 'Images/Meals/Nasi.jpg' %}" alt="Broodje van de week" style="max-width: 400px; height: auto;">
         <div class="col-md-6 heading-section ftco-animate deal-of-the-day ftco-animate" style="background-color: #f5f5f0;">
           <h2 class="mb-4">Broodje van de week</h2>
           <p>Ons broodje van de week, is onze lekkerste en meest verkochten product van de week.</p>

@@ -19,8 +19,7 @@
 .product {
     display: inline-block;
     overflow: hidden;
-    max-width: 380px;
-    min-width: 380px;
+    max-width: 280px;
 }
 
 /* CATEGORIES */
@@ -161,6 +160,10 @@
 
 #total {
     text-align: center;
+    color: #82AE47;
+}
+
+.pric {
     color: #82AE47;
 }
 

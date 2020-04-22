@@ -3,8 +3,12 @@ from .models import AddProduct, Broodje_vdw
 from .forms import *
 import stripe
 from Web import settings
+import logging
 
 # Create your views here.
+
+# Logs error
+logging.getLogger('error logger')
 
 def home_view(request):
     return render(request, "Home.html")
@@ -46,3 +50,4 @@ def amount_view(request, amount):
 
 def confirmation_view(request):
     return render(request, 'Confirmation.html')
+
