@@ -4,31 +4,163 @@
 
 {% block content %}
 
-  <!-- HEAD IMG SHOW -->
-  <div class="hero-wrap hero-bread" style="background-image: url('{% static 'Images/Eettent.jpg' %}');">
-    <div class="container">
-      <div class="row no-gutters slider-text align-items-center justify-content-center">
-        <div class="col-md-9 ftco-animate text-center">
-          <p class="breadcrumbs"><span class="mr-2">Winkel</span></p>
-          <h1 class="mb-0 bread">Winkelmandje</h1>
+    <!-- HEAD IMG SHOW -->
+    <div class="hero-wrap hero-bread" style="background-image: url('{% static 'Images/Eettent.jpg' %}');">
+      <div class="container">
+        <div class="row no-gutters slider-text align-items-center justify-content-center">
+          <div class="col-md-9 ftco-animate text-center">
+            <p class="breadcrumbs"><span class="mr-2">Winkel</span></p>
+            <h1 class="mb-0 bread">Winkelmandje</h1>
+          </div>
         </div>
       </div>
     </div>
-  </div>
 
-  <h1>Basket</h1>
+    <!-- PRODUCTS -->
+    <section class="ftco-section ftco-cart">
+			<div class="container">
+				<div class="row">
+    			<div class="col-md-12 ftco-animate">
+    				<div class="cart-list">
+	    				<table class="table">
+						    <thead class="thead-primary">
+						      <tr class="text-center">
+						        <th>&nbsp;</th>
+						        <th>&nbsp;</th>
+						        <th>Product</th>
+						        <th>Prijs</th>
+						        <th>Aantal</th>
+						        <th>Totaal</th>
+						      </tr>
+						    </thead>
+						    <tbody class="products_holder">
 
-  <div class="basket" style="display: block;"></div>
-  <p class="total" style="display: block;"></p>
+								<!-- LOOPS AND DISPLAYS PRODUCTS IN SHOPPING CART -->
+								<script>
 
-  <br>
+								function createProducts(products) {
+									var result = JSON.parse(localStorage.getItem("basket"))
+									var many = JSON.parse(localStorage.getItem("amounts"))
 
-  <form onsubmit="return tryCheckout()" method="post" class="form_inputs">
-    {% csrf_token %}
-    {{form|crispy}}
-    <button type="submit" class="btn btn-primary">Checkout</button>
-  </form>
+									products = safelyParseJSON(products)
 
-  <br>
+									for (product in products) {
+
+										if (products[product]['fields']['title'] in result) {
+											title = products[product]['fields']['title']
+											img = products[product]['fields']['image']
+											price = products[product]['fields']['price']
+
+											basket_display = (`
+													<!-- TR -->
+													  <tr class="text-center">
+														<td class="product-remove"><a onclick="removeProduct('${ title }')"><span class="ion-ios-close"></span></a></td>
+
+														<td class="image-prod"><div class="img" style="background-image: url('{% static 'Images/Meals/${img}' %}');"></div></td>
+
+														<td class="product-name">
+															<h3>${title}</h3>
+														</td>
+
+														<td class="price">€${price}</td>
+
+														<td class="quantity">
+															<div class="input-group mb-3">
+																<input type="number" name="quantity" class="quantity form-control input-number" value="${ many[title] }" min="1" max="12" onchange="changeAmount('${title}', '${price}', this.value)">
+															</div>
+														  </td>
+
+														<td class="total_product">
+															€${currency(result[title])}
+														</td>
+													  </tr>
+													  <!-- END TR-->
+											  `)
+
+									  document.querySelectorAll(".products_holder")[0].innerHTML += basket_display
+									  }
+									}
+								}
+
+								createProducts('{{ products|escapejs }}')
+								createProducts('{{ bvdw|escapejs }}')
+
+								</script>
+
+						    </tbody>
+						  </table>
+					  </div>
+    			</div>
+    		</div>
+            <!-- END PRODUCTS -->
+			<button onclick="emptyBasket()">EMPTY</button>
+            <!-- COUPON -->
+    		<div class="row justify-content-end">
+    			<div class="col-lg-4 mt-5 cart-wrap ftco-animate">
+    				<div class="cart-total mb-3">
+    					<h3>Coupon Code</h3>
+    					<p>Enter your coupon code if you have one</p>
+  						<form action="#" class="info">
+	              <div class="form-group">
+	              	<label for="">Coupon code</label>
+	                <input type="text" class="form-control text-left px-3" placeholder="">
+	              </div>
+	            </form>
+    				</div>
+    				<p><a href="checkout.html" class="btn btn-primary py-3 px-4">Apply Coupon</a></p>
+    			</div>
+
+                <!-- ESTIMATE -->
+    			<div class="col-lg-4 mt-5 cart-wrap ftco-animate">
+    				<div class="cart-total mb-3">
+    					<h3>Estimate shipping and tax</h3>
+    					<p>Enter your destination to get a shipping estimate</p>
+  						<form action="#" class="info">
+	              <div class="form-group">
+	              	<label for="">Country</label>
+	                <input type="text" class="form-control text-left px-3" placeholder="">
+	              </div>
+	              <div class="form-group">
+	              	<label for="country">State/Province</label>
+	                <input type="text" class="form-control text-left px-3" placeholder="">
+	              </div>
+	              <div class="form-group">
+	              	<label for="country">Zip/Postal Code</label>
+	                <input type="text" class="form-control text-left px-3" placeholder="">
+	              </div>
+	            </form>
+    				</div>
+    				<p><a href="checkout.html" class="btn btn-primary py-3 px-4">Estimate</a></p>
+    			</div>
+
+                <!-- TOTAL -->
+    			<div class="col-lg-4 mt-5 cart-wrap ftco-animate">
+    				<div class="cart-total mb-3">
+    					<h3>Cart Totals</h3>
+    					<p class="d-flex">
+    						<span>Subtotal</span>
+    						<span>$20.60</span>
+    					</p>
+    					<p class="d-flex">
+    						<span>Delivery</span>
+    						<span>$0.00</span>
+    					</p>
+    					<p class="d-flex">
+    						<span>Discount</span>
+    						<span>$3.00</span>
+    					</p>
+    					<hr>
+    					<p class="d-flex total-price">
+    						<span>Total</span>
+    						<span id="total_basket">$17.60</span>
+    					</p>
+    				</div>
+    				<p><a class="btn btn-primary py-3 px-4" onclick="tryCheckout()">Ga naar afrekenen</a></p>
+    			</div>
+    		</div>
+			</div>
+		</section>
+
+  <br><br>
 
 {% endblock %}

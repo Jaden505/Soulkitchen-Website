@@ -35,3 +35,10 @@ class Broodje_vdw(models.Model):
 
     def __str__(self):
         return self.title
+
+class CouponCodes(models.Model):
+    code = models.CharField(max_length=20, blank=False, default='')
+    discount = models.DecimalField(max_digits=6, decimal_places=2, blank=False, default=0)
+
+    def __str__(self):
+        return self.code

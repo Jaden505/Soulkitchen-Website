@@ -46,17 +46,13 @@ function addBasket(item, price) {
     updateBasket()
 }
 
-function changeAmount(item, price, amount) {
+function removeAmount(item, price, amount) {
     var result = JSON.parse(localStorage.getItem("basket"))
     var amounts = JSON.parse(localStorage.getItem("amounts"))
 
-    if (item in amounts && amounts[item] > amount) {
-        result[item] = result[item] * amount / currency(amount).add(1)
+    if (item in amounts) {
+        result[item] = result[item] * (amount-1) / amount
         amounts[item] -= 1
-    }
-    else if (item in amounts && amounts[item] < amount) {
-        result[item] = result[item] * amount / (amount-1)
-        amounts[item] += 1
     }
 
     if (amounts[item] === 0) {
@@ -130,9 +126,55 @@ function updateBasket() {
     prices.forEach(function(part, index, arr) {
         arr[index] = currency(arr[index])
     });
+}
 
-    // HTML ELEMENTS
-    document.getElementById('cart_amount').innerHTML = basket_products_amounts
+function createProducts() {
+    var result = JSON.parse(localStorage.getItem("basket"))
+    var many = JSON.parse(localStorage.getItem("amounts"))
+
+//            {% for product in products %}
+//                <td class="product-name">
+//                    <h3>{{product.title}}</h3>
+//                    <td class="image-prod"><div class="img" style="background-image:url({{product.image.url}});"></div></td>
+//                </td>
+//                <td class="total_product">
+//                    ${result[`{{product.title}}`]}
+//                </td>
+//            {% endfor %}
+
+    content = (
+      `
+      {% for product in products %}
+        {% if product.title in basket %}
+          <!-- TR -->
+          <tr class="text-center">
+            <td class="product-remove"><a onclick="removeProduct({{product.title}})"><span class="ion-ios-close"></span></a></td>
+
+            <td class="image-prod"><div class="img" style="background-image:url({{product.image.url}});"></div></td>
+
+            <td class="product-name">
+                <h3>{{product.title}}</h3>
+            </td>
+
+            <td class="price">€{{product.price}}</td>
+
+            <td class="quantity">
+                <div class="input-group mb-3">
+                    <input type="number" name="quantity" class="quantity form-control input-number" value="${many[ `{{product.title}}` ]}" min="1" max="6">
+                </div>
+              </td>
+
+            <td class="total_product">
+                ${result[`{{product.title}}`]}
+            </td>
+          </tr>
+          <!-- END TR-->
+        {% endif %}
+      {% endfor %}
+      `
+    )
+
+        document.querySelectorAll(".products_holder")[0].innerHTML = content
 }
 
 var counter = 0
@@ -158,8 +200,6 @@ function removeProduct(item) {
     // Update global basket
     localStorage.setItem("basket", JSON.stringify(result))
     localStorage.setItem("amounts", JSON.stringify(amounts))
-
-    updateBasket()
 }
 
 function Payment(pay_details, public_key) {
@@ -226,41 +266,3 @@ function Display() {
       document.getElementById("extras").style.display = 'block'
     }
 }
-
-function safelyParseJSON (json) {
-  // This function cannot be optimised, it's best to
-  // keep it small!
-  var parsed
-
-  try {
-    parsed = JSON.parse(json)
-  } catch (e) {
-    // Oh well, but whatever...
-  }
-
-  return parsed // Could be undefined!
-}
-
-function doAlotOfStuff () {
-  // ... stuff stuff stuff
-  var json = safelyParseJSON(data)
-  // Tadaa, I just got rid of an optimisation killer!
-}
-
-$(function() {
-  $( ".spin_btt" ).click(function() {
-    $( ".spin_btt" ).addClass( "onclic", 250, validate() );
-  });
-
-  function validate() {
-    setTimeout(function() {
-      $( ".spin_btt" ).removeClass( "onclic" );
-      $( ".spin_btt" ).addClass( "validate", 450, callback() );
-    }, 2250 );
-  }
-    function callback() {
-      setTimeout(function() {
-        $( ".spin_btt" ).removeClass( "validate" );
-      }, 1250 );
-    }
-  });

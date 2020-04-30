@@ -6,6 +6,13 @@ function goBack() {
     window.history.back()
 }
 
+/*
+ currency.js - v1.2.2
+ http://scurker.github.io/currency.js
+
+ Copyright (c) 2019 Jason Wilson
+ Released under MIT license
+*/
 (function(d,c){"object"===typeof exports&&"undefined"!==typeof module?module.exports=c():"function"===typeof define&&define.amd?define(c):(d=d||self,d.currency=c())})(this,function(){function d(b,a){if(!(this instanceof d))return new d(b,a);a=Object.assign({},m,a);var f=Math.pow(10,a.precision);this.intValue=b=c(b,a);this.value=b/f;a.increment=a.increment||1/f;a.groups=a.useVedic?n:p;this.s=a;this.p=f}function c(b,a){var f=2<arguments.length&&void 0!==arguments[2]?arguments[2]:!0,c=a.decimal,g=a.errorOnInvalid;
 var e=Math.pow(10,a.precision);var h="number"===typeof b;if(h||b instanceof d)e*=h?b:b.value;else if("string"===typeof b)g=new RegExp("[^-\\d"+c+"]","g"),c=new RegExp("\\"+c,"g"),e=(e*=b.replace(/\((.*)\)/,"-$1").replace(g,"").replace(c,"."))||0;else{if(g)throw Error("Invalid Input");e=0}e=e.toFixed(4);return f?Math.round(e):e}var m={symbol:"$",separator:",",decimal:".",formatWithSymbol:!1,errorOnInvalid:!1,precision:2,pattern:"!#",negativePattern:"-!#"},p=/(\d)(?=(\d{3})+\b)/g,n=/(\d)(?=(\d\d)+\d\b)/g;
 d.prototype={add:function(b){var a=this.s,f=this.p;return d((this.intValue+c(b,a))/f,a)},subtract:function(b){var a=this.s,f=this.p;return d((this.intValue-c(b,a))/f,a)},multiply:function(b){var a=this.s;return d(this.intValue*b/Math.pow(10,a.precision),a)},divide:function(b){var a=this.s;return d(this.intValue/c(b,a,!1),a)},distribute:function(b){for(var a=this.intValue,f=this.p,c=this.s,g=[],e=Math[0<=a?"floor":"ceil"](a/b),h=Math.abs(a-e*b);0!==b;b--){var k=d(e/f,c);0<h--&&(k=0<=a?k.add(1/f):k.subtract(1/
@@ -37,7 +44,7 @@ function addBasket(item, price) {
         return
     }
 
-    result[item] = currency(parsed_price)
+    result[item] = parsed_price
 
     // Update global basket
     localStorage.setItem("basket", JSON.stringify(result))
@@ -46,17 +53,13 @@ function addBasket(item, price) {
     updateBasket()
 }
 
-function changeAmount(item, price, amount) {
+function removeAmount(item, price, amount) {
     var result = JSON.parse(localStorage.getItem("basket"))
     var amounts = JSON.parse(localStorage.getItem("amounts"))
 
-    if (item in amounts && amounts[item] > amount) {
-        result[item] = result[item] * amount / currency(amount).add(1)
+    if (item in amounts) {
+        result[item] = result[item] * (amount-1) / amount
         amounts[item] -= 1
-    }
-    else if (item in amounts && amounts[item] < amount) {
-        result[item] = result[item] * amount / (amount-1)
-        amounts[item] += 1
     }
 
     if (amounts[item] === 0) {
@@ -84,6 +87,10 @@ function emptyBasket() {
     localStorage.setItem("basket", string_dict)
     localStorage.setItem("amounts", string_dict)
 
+    document.querySelectorAll(".total")[0].innerHTML = ''
+    if (document.querySelectorAll(".total").length > 1) {document.querySelectorAll(".total")[1].innerHTML = ''}
+    document.getElementById('cart_amount').innerHTML = '[0]'
+
     updateBasket()
 }
 
@@ -107,7 +114,7 @@ function tryOrder() {
     var total = totalAmount(result)
 
     if (Object.keys(result).length !== 0 && Object.keys(amounts).length !== 0 && total > 10) {
-        location.href = '/cart/' + localStorage.getItem("basket") + '/' + localStorage.getItem("amounts") + '/'
+        location.href = "/order"
     }
     else {
         location.href = "/menu"
@@ -126,13 +133,47 @@ function updateBasket() {
 
     var total = totalAmount(result)
 
+    // Basket counter
+    document.getElementById('cart_amount').innerHTML = basket_products_amounts
+    if (document.getElementById('cart_amount').innerHTML == 1) {document.getElementsByClassName("dropdown-content")[0].style.display = 'block'}
+
     //Round up the price 2 decimals
     prices.forEach(function(part, index, arr) {
         arr[index] = currency(arr[index])
     });
 
-    // HTML ELEMENTS
-    document.getElementById('cart_amount').innerHTML = basket_products_amounts
+    document.querySelectorAll(".total")[0].innerHTML = 'Total: €' + total
+    if (document.querySelectorAll(".total").length > 1) {document.querySelectorAll(".total")[1].innerHTML = 'Total: €' + total}
+    document.querySelectorAll(".basket")[0].innerHTML = ''
+    if (document.querySelectorAll(".basket").length > 1) {document.querySelectorAll(".basket")[1].innerHTML = ''}
+
+    if (Object.keys(result).length === 0) {
+        document.querySelectorAll(".basket")[0].innerHTML = ('<p>Je winkel mandje is leeg</p>')
+    if (document.querySelectorAll(".basket").length > 1) {document.querySelectorAll(".basket")[1].innerHTML = '<p>Je winkel mandje is leeg</p>'}
+
+        return
+    }
+
+    // Loops and creates div elements containing given products
+    for (let i = 0; i < products.length; i++) {
+        createProduct(products[i], prices[i], amounts[i])
+    }
+
+}
+
+function createProduct(product, price, amount) {
+    var div = document.createElement("div")
+
+    div.className = 'product_menu'
+
+    div.innerHTML = (
+        `<br><i class="fa fa-trash-o" onclick="removeProduct(\`${product}\`)"></i> <span class="prod">${product} </span>` +
+        `<button class="plus" onclick="addBasket(\`${product}\`, \`${price}\`)">+</button><span class="am"> ${amount} </span>` +
+        `<button class="minus" onclick="removeAmount(\`${product}\`, \`${price}\`, \`${amount}\`)">-</button>` +
+        `<span class="pric"> €${price} </span><br><br>`
+)
+    document.querySelectorAll(".basket")[0].appendChild(div)
+    if (document.querySelectorAll(".basket").length > 1) {document.querySelectorAll(".basket")[1].appendChild(div)}
 }
 
 var counter = 0
@@ -148,6 +189,7 @@ function Categorize(product) {
     counter++
 }
 
+
 function removeProduct(item) {
     var result = JSON.parse(localStorage.getItem("basket"))
     var amounts = JSON.parse(localStorage.getItem("amounts"))
@@ -160,6 +202,30 @@ function removeProduct(item) {
     localStorage.setItem("amounts", JSON.stringify(amounts))
 
     updateBasket()
+}
+
+function basketShowToggle() {
+    var toggle = document.querySelector(".dropdown-content");
+    if (toggle.style.display == "block"){
+      toggle.style.display = "none";
+    } else {
+       toggle.style.display = "block";
+    }
+}
+
+function stickyNavbar() {
+  window.onscroll = function() {Moving()};
+
+  var header = document.getElementById("ftco-navbar");
+  var sticky = header.offsetTop;
+
+  function Moving() {
+    if (window.pageYOffset > sticky) {
+      header.classList.add("sticky");
+    } else {
+      header.classList.remove("sticky");
+    }
+  }
 }
 
 function Payment(pay_details, public_key) {
@@ -227,40 +293,22 @@ function Display() {
     }
 }
 
-function safelyParseJSON (json) {
-  // This function cannot be optimised, it's best to
-  // keep it small!
-  var parsed
+function dropdownBasket() {
+    var modal = document.getElementsByClassName("dropdown-content")[0];
+    var basket = document.getElementById("basket_icon");
+    var close = document.getElementsByClassName("close")[0];
 
-  try {
-    parsed = JSON.parse(json)
-  } catch (e) {
-    // Oh well, but whatever...
-  }
-
-  return parsed // Could be undefined!
-}
-
-function doAlotOfStuff () {
-  // ... stuff stuff stuff
-  var json = safelyParseJSON(data)
-  // Tadaa, I just got rid of an optimisation killer!
-}
-
-$(function() {
-  $( ".spin_btt" ).click(function() {
-    $( ".spin_btt" ).addClass( "onclic", 250, validate() );
-  });
-
-  function validate() {
-    setTimeout(function() {
-      $( ".spin_btt" ).removeClass( "onclic" );
-      $( ".spin_btt" ).addClass( "validate", 450, callback() );
-    }, 2250 );
-  }
-    function callback() {
-      setTimeout(function() {
-        $( ".spin_btt" ).removeClass( "validate" );
-      }, 1250 );
+    basket.onclick = function() {
+      modal.style.display = "block";
     }
-  });
+
+    close.onclick = function() {
+      modal.style.display = "none";
+    }
+
+    window.onclick = function(event) {
+      if (event.target == modal) {
+        modal.style.display = "none";
+      }
+    }
+}

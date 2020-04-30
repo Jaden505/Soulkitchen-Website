@@ -30,6 +30,7 @@ urlpatterns = [
     path('order/', views.order_view, name='order_view'),
     path('order/<amount>/', views.amount_view, name='amount_view'),
     path('confirmation/', views.confirmation_view, name='confirmation_view'),
+    path('cart/<basket>/<many>/', views.basketAmount, name='basketAmount'),
 ]
 
 if settings.DEBUG:

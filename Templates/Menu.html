@@ -68,12 +68,12 @@
   {% for product in products %}
         <!-- PRODUCT -->
         <div class="col-md-6 col-lg-3 ftco-animate">
-          <div class="product" style="display: inline-block;">
-            <a class="img-prod" onclick="addBasket('{{product.title}}', '{{product.price}}')">
+          <div class="product" style="display: inline-block; min-width: 380px;">
+            <a class="img-prod" onclick="addBasket('{{product.title}}', '{{product.price}}');Notification()">
               <img class="img-fluid" src="{{ product.image.url }}" alt="Colorlib Template">
             </a>
             <div class="text py-3 pb-4 px-3 text-center">
-              <h3><a onclick="addBasket('{{product.title}}', '{{product.price}}')">{{ product.title }}</a></h3>
+              <h3><a onclick="addBasket('{{product.title}}', '{{product.price}}');Notification()">{{ product.title }}</a></h3>
               <div class="d-flex">
                 <div class="pricing">
                   <p><span class="price">€{{ product.price }}</span></p>
@@ -81,8 +81,10 @@
               </div>
               <div class="bottom-area d-flex px-3">
                 <div class="m-auto d-flex">
-                  <a class="buy-now d-flex justify-content-center align-items-center mx-1" onclick="addBasket('{{product.title}}', '{{product.price}}')">
-                    <span ><i class="ion-ios-cart"></i></span>
+                  <a onclick="addBasket('{{product.title}}', '{{product.price}}')">
+                      <div class="spin_class">
+                        <button class="spin_btt"></button>
+                      </div>
                   </a>
                 </div>
               </div>
@@ -91,18 +93,18 @@
         </div>
         <!-- END-PRODUCT -->
 
-        <script>Categorize('{{product.category}}')</script>
+    <script>Categorize('{{product.category}}')</script>
   {% endfor %}
 
   {% for broodje in bvdw %}
   <!-- PRODUCT -->
   <div class="col-md-6 col-lg-3 ftco-animate">
-    <div class="product" style="display: inline-block;">
-      <a class="img-prod" onclick="addBasket('{{broodje.title}}', '{{broodje.price}}')">
+    <div class="product" style="display: inline-block; min-width: 380px;">
+      <a class="img-prod" onclick="addBasket('{{broodje.title}}', '{{broodje.price}}');Notification()">
         <img class="img-fluid" src="{{ broodje.image.url }}" alt="Colorlib Template">
       </a>
       <div class="text py-3 pb-4 px-3 text-center">
-        <h3><a onclick="addBasket('{{broodje.title}}', '{{broodje.price}}')">{{ broodje.title }}</a></h3>
+        <h3><a onclick="addBasket('{{broodje.title}}', '{{broodje.price}}');Notification()">{{ broodje.title }}</a></h3>
         <div class="d-flex">
           <div class="pricing">
             <p><span class="price">€{{ broodje.price }}</span></p>
@@ -110,18 +112,20 @@
         </div>
         <div class="bottom-area d-flex px-3">
           <div class="m-auto d-flex">
-            <a class="buy-now d-flex justify-content-center align-items-center mx-1" onclick="addBasket('{{broodje.title}}', '{{broodje.price}}')">
-              <span><i class="ion-ios-cart"></i></span>
+            <a onclick="addBasket('{{broodje.title}}', '{{broodje.price}}')">
+                <div class="spin_class">
+                  <button class="spin_btt"></button>
+                </div>
             </a>
           </div>
         </div>
       </div>
     </div>
   </div>
-  <!-- END-PRODUCT -->
   </div>
+  <!-- END-PRODUCT -->
 
-  <script>Categorize('bvdw')</script>
+    <script>Categorize('bvdw')</script>
   {% endfor %}
 
   <br><br><br><br>

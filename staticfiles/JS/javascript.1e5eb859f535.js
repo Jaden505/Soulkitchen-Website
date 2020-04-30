@@ -247,20 +247,27 @@ function doAlotOfStuff () {
   // Tadaa, I just got rid of an optimisation killer!
 }
 
+function Animate() {
+   document.getElementById('successAnimation').classList.toggle("successAnimation");
+    setTimeout(function(){
+        document.getElementById('successAnimation').classList.remove("successAnimation");
+     }, 1000);
+}
+
 $(function() {
-  $( ".spin_btt" ).click(function() {
-    $( ".spin_btt" ).addClass( "onclic", 250, validate() );
+  $( "#button" ).click(function() {
+    $( "#button" ).addClass( "onclic", 250, validate);
   });
 
   function validate() {
     setTimeout(function() {
-      $( ".spin_btt" ).removeClass( "onclic" );
-      $( ".spin_btt" ).addClass( "validate", 450, callback() );
+      $( "#button" ).removeClass( "onclic" );
+      $( "#button" ).addClass( "validate", 450, callback );
     }, 2250 );
   }
     function callback() {
       setTimeout(function() {
-        $( ".spin_btt" ).removeClass( "validate" );
+        $( "#button" ).removeClass( "validate" );
       }, 1250 );
     }
   });

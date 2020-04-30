@@ -6,6 +6,13 @@
     <title>Sassies Soulkitchen</title>
     {% load static %}
 
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.2/jquery-ui.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <link rel="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.2/themes/smoothness/jquery-ui.css"/>
+    <link rel="https://netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css"/>
+    <link href='https://fonts.googleapis.com/css?family=Roboto' rel='stylesheet' type='text/css'>
+
     <!-- MY IMPORTS -->
     <link rel="shortcut icon" type="image/png" href="{% static 'Images/People.png' %}"/>
     <link rel="stylesheet" href="{% static 'CSS/styles.css' %}" type="text/css">
@@ -73,7 +80,7 @@
             <ul class="navbar-nav ml-auto">
               <li class="nav-item"><a href="/menu/" class="nav-link">Menu</a></li>
               <li class="nav-item"><a href="/about/" class="nav-link">Info</a></li>
-              <li class="nav-item cta cta-colored" id="basket_icon"><a style="background-color: white;" class="nav-link"><h5 class="icon-shopping_cart" id="cart_amount">[0]</h5></a></li>
+              <li class="nav-item cta cta-colored" id="basket_icon"><a style="background-color: white;" class="nav-link" onclick="tryOrder()"><h5 class="icon-shopping_cart" id="cart_amount">0</h5></a></li>
             </ul>
           </div>
         </div>
@@ -81,31 +88,12 @@
   </header>
   <!-- HEADER END -->
 
-  <!-- BASKET SHOW -->
-  <div class="dropdown-content">
-      <div class="basket-header">
-        <span class="close">&times;</span>
-        <h2>Winkel mandje</h2>
-      </div>
-
-      <div class="basket"></div>
-      <br>
-      <h5 class="total"></h5>
-
-      <div class="dropdown-footer">
-        <button onclick="emptyBasket()">Empty basket</button>
-        <br>
-        <button onclick="tryOrder()">Order</button>
-      </div>
-  </div>
-
   <!-- CONTENT -->
   {% block content %}{% endblock %}
 
-    <!-- Keeps basket updated on page change -->
+  <!-- Keeps basket updated on page change -->
   <script>
     updateBasket()
-    dropdownBasket()
   </script>
 
   <!-- FOOTER -->

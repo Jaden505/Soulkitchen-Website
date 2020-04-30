@@ -46,17 +46,13 @@ function addBasket(item, price) {
     updateBasket()
 }
 
-function changeAmount(item, price, amount) {
+function removeAmount(item, price, amount) {
     var result = JSON.parse(localStorage.getItem("basket"))
     var amounts = JSON.parse(localStorage.getItem("amounts"))
 
-    if (item in amounts && amounts[item] > amount) {
-        result[item] = result[item] * amount / currency(amount).add(1)
+    if (item in amounts) {
+        result[item] = result[item] * (amount-1) / amount
         amounts[item] -= 1
-    }
-    else if (item in amounts && amounts[item] < amount) {
-        result[item] = result[item] * amount / (amount-1)
-        amounts[item] += 1
     }
 
     if (amounts[item] === 0) {
@@ -131,7 +127,6 @@ function updateBasket() {
         arr[index] = currency(arr[index])
     });
 
-    // HTML ELEMENTS
     document.getElementById('cart_amount').innerHTML = basket_products_amounts
 }
 
@@ -227,6 +222,14 @@ function Display() {
     }
 }
 
+function changeAmount(product, val) {
+    var many = JSON.parse(localStorage.getItem("amounts"))
+
+    many[product] = val
+
+    updateBasket()
+}
+
 function safelyParseJSON (json) {
   // This function cannot be optimised, it's best to
   // keep it small!
@@ -247,20 +250,29 @@ function doAlotOfStuff () {
   // Tadaa, I just got rid of an optimisation killer!
 }
 
-$(function() {
-  $( ".spin_btt" ).click(function() {
-    $( ".spin_btt" ).addClass( "onclic", 250, validate() );
-  });
 
-  function validate() {
-    setTimeout(function() {
-      $( ".spin_btt" ).removeClass( "onclic" );
-      $( ".spin_btt" ).addClass( "validate", 450, callback() );
-    }, 2250 );
-  }
-    function callback() {
-      setTimeout(function() {
-        $( ".spin_btt" ).removeClass( "validate" );
-      }, 1250 );
-    }
-  });
+
+
+
+
+
+
+$("#success").click(function () {
+  $(".notify").toggleClass("active");
+  $("#notifyType").toggleClass("success");
+
+  setTimeout(function(){
+    $(".notify").removeClass("active");
+    $("#notifyType").removeClass("success");
+  },2000);
+});
+
+$("#failure").click(function () {
+  $(".notify").addClass("active");
+  $("#notifyType").addClass("failure");
+
+  setTimeout(function(){
+    $(".notify").removeClass("active");
+    $("#notifyType").removeClass("failure");
+  },2000);
+});
