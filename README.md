@@ -18,6 +18,14 @@ The static folder contains the files like CSS and JS. It also contains a media f
 The staticfiles and assets file are the same as static but needed for django and apache.\
 The Main folder contains the models and views. And the web folder contains settings and urls.
 
+## Changes to be made
+This project contains some external applications or API's, \
+so you will not be able to run it exectly like I do, but it should be relatively easy to adjust. \
+Change the ```os.environ.get()``` variables with your own generated keys and you should be all set.
+
+In the ```settings.py``` file be sure to change the database to your local or online database. \
+This can be either Postgres or SQL servers.
+
 ## Runnnig local
 Before you can run make sure you have installed the requirements.txt file!\
 This can be simply done by opening your terminal, navigating into the downloaded repo and typing.\
