@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect
-from .models import AddProduct, Broodje_vdw
+from .models import AddProduct, Broodje_vdw, CouponCodes
 from .forms import *
 import stripe
 from Web import settings
@@ -25,8 +25,10 @@ def order_view(request):
     json_serializer = serializers.get_serializer("json")()
     products = json_serializer.serialize(AddProduct.objects.all().order_by('id')[:5], ensure_ascii=False)
     bvdw = json_serializer.serialize(Broodje_vdw.objects.all().order_by('id')[:5], ensure_ascii=False)
+    coupons = json_serializer.serialize(CouponCodes.objects.all().order_by('id')[:5], ensure_ascii=False)
+    form = UserInfo
 
-    return render(request, "Order.html", {'products': products, 'bvdw': bvdw})
+    return render(request, "Order.html", {'products': products, 'bvdw': bvdw, 'coupons': coupons, 'form': form})
 
 def menu_view(request):
     products = AddProduct.objects.all()
@@ -38,7 +40,6 @@ def checkout_view(request):
     stripe.api_key = settings.STRIPE_SECRET_KEY
     public_key = settings.STRIPE_PUBLIC_KEY
     amount = request.session['amount']
-    form = UserInfo
 
     payment = stripe.PaymentIntent.create(
         amount=amount,
@@ -46,7 +47,7 @@ def checkout_view(request):
         payment_method_types=['ideal'],
     )
 
-    return render(request, "Checkout.html", {'payment': payment.client_secret, 'public_key': public_key, 'form': form})
+    return render(request, "Checkout.html", {'payment': payment.client_secret, 'public_key': public_key})
 
 def amount_view(request, amount):
     amount = round((float(amount) * 100), 0)
@@ -57,6 +58,8 @@ def amount_view(request, amount):
     return redirect(checkout_view)
 
 def confirmation_view(request):
+
+
     return render(request, 'Confirmation.html')
 
 def basketAmount(request, basket, many):
@@ -64,8 +67,3 @@ def basketAmount(request, basket, many):
     request.session['many'] = many
 
     return redirect(order_view)
-
-def jsonQuery():
-    data = list(AddProduct.objects.values())  # wrap in list(), because QuerySet is not JSON serializable
-    return JsonResponse(data, safe=False)  # or JsonResponse({'data': data})
-

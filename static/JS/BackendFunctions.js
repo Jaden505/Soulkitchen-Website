@@ -71,9 +71,26 @@ function changeAmount(item, price, amount) {
     updateBasket()
 }
 
-function totalAmount(result) {
+function totalAmount() {
+    var result = JSON.parse(localStorage.getItem("basket"))
     var prices = Object.values(result)
-    var sum = prices.reduce((a,b) => currency(a).add(b), 0)
+    var shipping_costs = 4
+    var sum = currency(prices.reduce((a,b) => currency(a).add(b), 0)).add(shipping_costs)
+    var coupon = JSON.parse(localStorage.getItem("couponcode"))
+
+    if (coupon !== null) {
+        var discount = 1- (coupon['couponcode'] / 100)
+        var discount_sum = currency(sum).multiply(discount)
+        var discount_price = currency(sum).subtract(discount_sum)
+
+        sum = discount_sum
+
+        displayDiscountPrices(sum, discount_sum, discount_price)
+    }
+
+    else {
+    displayPrices(sum)
+    }
 
     return sum
 }
@@ -90,7 +107,7 @@ function emptyBasket() {
 function tryCheckout() {
     var result = JSON.parse(localStorage.getItem("basket"))
     var amounts = JSON.parse(localStorage.getItem("amounts"))
-    var total = totalAmount(result)
+    var total = totalAmount()
 
     if (Object.keys(result).length > 0 && Object.keys(amounts).length > 0 && total > 10) {
         location.href = "/order/" + (total) // Goes to amount page and gives amount to checkout page
@@ -104,7 +121,7 @@ function tryCheckout() {
 function tryOrder() {
     var result = JSON.parse(localStorage.getItem("basket"))
     var amounts = JSON.parse(localStorage.getItem("amounts"))
-    var total = totalAmount(result)
+    var total = totalAmount()
 
     if (Object.keys(result).length !== 0 && Object.keys(amounts).length !== 0 && total > 10) {
         location.href = '/cart/' + localStorage.getItem("basket") + '/' + localStorage.getItem("amounts") + '/'
@@ -124,27 +141,30 @@ function updateBasket() {
 
     var basket_products_amounts = amounts.reduce((a,b) => a + b, 0)
 
-    var total = totalAmount(result)
-
     //Round up the price 2 decimals
     prices.forEach(function(part, index, arr) {
         arr[index] = currency(arr[index])
     });
 
     // HTML ELEMENTS
-    document.getElementById('cart_amount').innerHTML = basket_products_amounts
+    updateCartAmount(basket_products_amounts)
+
+    try {
+        Create()
+    }
+    catch {
+        //pass
+    }
 }
 
 var counter = 0
-function Categorize(product) {
-    var articles = document.getElementsByClassName('product')
+function Categorize(category) {
+    if (category === '1') {category = 'broodjes'}
+    else if (category === '2') {category = 'drinken'}
+    else if (category === '3') {category = 'extras'}
+    else if (category === 'bvdw') {category = 'bvdw'}
 
-    if (product === '1') {product = 'broodjes'}
-    else if (product === '2') {product = 'drinken'}
-    else if (product === '3') {product = 'extras'}
-    else if (product === 'bvdw') {product = 'bvdw'}
-
-    document.getElementById(product).appendChild(articles[counter])
+    sortProductsCategory(category, counter)
     counter++
 }
 
@@ -204,29 +224,6 @@ function Payment(pay_details, public_key) {
   })
 }
 
-function Display() {
-    document.getElementById("bvdw").style.display = 'none'
-    document.getElementById("broodjes").style.display = 'none'
-    document.getElementById("drinken").style.display = 'none'
-    document.getElementById("extras").style.display = 'none'
-
-    if(document.getElementById('cat_alles').checked) {
-      document.getElementById("bvdw").style.display = 'block'
-      document.getElementById("broodjes").style.display = 'block'
-      document.getElementById("drinken").style.display = 'block'
-      document.getElementById("extras").style.display = 'block'
-    }
-    else if(document.getElementById('cat_broodjes').checked) {
-      document.getElementById("broodjes").style.display = 'block'
-    }
-    else if(document.getElementById('cat_drinken').checked) {
-      document.getElementById("drinken").style.display = 'block'
-    }
-    else if(document.getElementById('cat_extras').checked) {
-      document.getElementById("extras").style.display = 'block'
-    }
-}
-
 function safelyParseJSON (json) {
   // This function cannot be optimised, it's best to
   // keep it small!
@@ -247,20 +244,38 @@ function doAlotOfStuff () {
   // Tadaa, I just got rid of an optimisation killer!
 }
 
-$(function() {
-  $( ".spin_btt" ).click(function() {
-    $( ".spin_btt" ).addClass( "onclic", 250, validate() );
-  });
+function Animate(classname) {
+    btt = document.getElementsByClassName(classname)[0].children[0].children[0]
+
+    $( btt ).addClass( "onclic", 250, validate() );
 
   function validate() {
     setTimeout(function() {
-      $( ".spin_btt" ).removeClass( "onclic" );
-      $( ".spin_btt" ).addClass( "validate", 450, callback() );
-    }, 2250 );
+      $( btt ).removeClass( "onclic" );
+      $( btt ).addClass( "validate", 450, callback() );
+    }, 0 );
   }
     function callback() {
       setTimeout(function() {
-        $( ".spin_btt" ).removeClass( "validate" );
+        $( btt ).removeClass( "validate" );
       }, 1250 );
     }
-  });
+  }
+
+function couponSuccess(discount) {
+    localStorage.setItem("couponcode", JSON.stringify({'couponcode': discount}))
+
+    totalAmount()
+
+    document.getElementById('coupon_error').innerHTML = ''
+    document.getElementById('coupon_success').innerHTML = 'Coupon added &#10004;'
+}
+
+function couponError() {
+    localStorage.setItem("couponcode", null)
+
+    document.getElementById('coupon_success').innerHTML = ''
+    document.getElementById('coupon_error').innerHTML = 'Invalid coupon code'
+
+    totalAmount()
+}

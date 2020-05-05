@@ -23,22 +23,19 @@
         <div class="col-md-10 mb-5 text-center">
           <ul class="product-category">
 
-            <label class="rad" onclick="Display()">Alles
-              <input type="radio" checked="checked" name="radio" id="cat_alles">
-              <span class="checkmark"></span>
-            </label>
-            <label class="rad" onclick="Display()">Broodjes
-              <input type="radio" name="radio" id="cat_broodjes">
-              <span class="checkmark"></span>
-            </label>
-            <label class="rad" onclick="Display()">Drinken
-              <input type="radio" name="radio" id="cat_drinken">
-              <span class="checkmark"></span>
-            </label>
-            <label class="rad" onclick="Display()">Extra's
-              <input type="radio" name="radio" id="cat_extras">
-              <span class="checkmark"></span>
-            </label>
+            <div class="radio-toolbar" onclick="displayCategory()">
+              <input type="radio" id="radio1" name="radios" value="all" checked>
+              <label for="radio1">Alles</label>
+
+              <input type="radio" id="radio2" name="radios" value="false">
+              <label for="radio2">Broodjes</label>
+
+              <input type="radio" id="radio3" name="radios" value="true">
+              <label for="radio3">Drinken</label>
+
+              <input type="radio" id="radio4" name="radios" value="true">
+              <label for="radio4">Extra's</label>
+            </div>
 
           </ul>
         </div>
@@ -46,23 +43,24 @@
   </section>
 
   <div id="categories">
-      <div id="bvdw">
-          <h1>Broodje van de week</h1>
+      <div id="bvdw" style="width: 100%;">
+          <p class="cat_name">Broodje van de week</p>
       </div>
       <br>
-      <div id="broodjes">
-          <h1>Broodjes</h1>
+      <div id="broodjes" style="width: 100%;">
+          <p class="cat_name">Broodjes</p>
       </div>
       <br>
-      <div id="drinken">
-          <h1>Drinken</h1>
+      <div id="drinken" style="width: 100%;">
+          <p class="cat_name">Drinken</p>
       </div>
       <br>
-      <div id="extras">
-          <h1>Extra's</h1>
+      <div id="extras" style="width: 100%;">
+          <p class="cat_name">Extra's</p>
       </div>
       <br>
   </div>
+  <!-- END CATEGORIES -->
 
   <div class="row">
   {% for product in products %}
@@ -79,12 +77,12 @@
                   <p><span class="price">€{{ product.price }}</span></p>
                 </div>
               </div>
-              <div class="bottom-area d-flex px-3">
+              <div class="bottom-area d-flex">
                 <div class="m-auto d-flex">
-                  <a onclick="addBasket('{{product.title}}', '{{product.price}}')">
-                      <div class="spin_class">
-                        <button class="spin_btt"></button>
-                      </div>
+                  <a class="{{product.title}}" onclick="addBasket('{{product.title}}', '{{product.price}}');Animate(this.className)">
+                    <div class="spin_class">
+                      <button class="spin_btt"></button>
+                    </div>
                   </a>
                 </div>
               </div>
@@ -112,7 +110,7 @@
         </div>
         <div class="bottom-area d-flex px-3">
           <div class="m-auto d-flex">
-            <a onclick="addBasket('{{broodje.title}}', '{{broodje.price}}')">
+            <a class="{{broodje.title}}" onclick="addBasket('{{broodje.title}}', '{{broodje.price}}');Animate(this.className)">
                 <div class="spin_class">
                   <button class="spin_btt"></button>
                 </div>
