@@ -47,7 +47,7 @@
 			<hr>
 
 			<!-- FORM -->
-			  <form onsubmit="return tryCheckout()" method="post" class="form_inputs" style="float: left; color: black;">
+			  <form onsubmit="return tryCheckout()" method="post" class="form_inputs" style="float: left; color: black;" id="inputs_form">
 				{% csrf_token %}
 				{{form|crispy}}
 			  </form>
@@ -72,6 +72,30 @@
 
 				<div style="padding-right: 100px;"></div>
 
+                <!-- PAYMENT -->
+				<form id="payment-form">
+				  <div class="form-row">
+					<!--
+					  Using a label with a for attribute that matches the ID of the
+					  Element container enables the Element to automatically gain focus
+					  when the customer clicks on the label.
+					-->
+					<h2>
+					  <label for="ideal-bank-element">
+					  </label>
+					</h2>
+
+					<hr>
+
+					<div id="ideal-bank-element">
+					  <!-- A Stripe Element will be inserted here. -->
+					</div>
+				  </div>
+
+				  <!-- Used to display form errors. -->
+				  <div id="error-message" role="alert"></div>
+				</form>
+
                 <!-- TOTAL -->
     			<div class="col-lg-4 mt-5 cart-wrap ftco-animate" style="float: left; min-width: 300px;">
     				<div class="cart-total mb-3">
@@ -94,14 +118,16 @@
     						<span id="total_basket">€0.00</span>
     					</p>
     				</div>
-    				<p class="order_btt"><a class="btn btn-primary py-3 px-4" onclick="tryCheckout()">Ga naar afrekenen </a></p>
+					<input type="submit" value="Ga naar afrekenen" class="btn btn-primary py-3 px-4 order_btt" form="inputs_form"/>
     			</div>
     		</div>
 			</div>
 		</section>
 
-  <br><br>
+	<br><br>
 
-	<script>var total = totalAmount()</script>
+	<script>
+		var total = totalAmount()
+	</script>
 
 {% endblock %}

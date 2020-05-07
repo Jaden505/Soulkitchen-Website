@@ -1,6 +1,7 @@
 function displayPrices(sum) {
     document.getElementById('total_basket').innerHTML = '€' + sum
     document.getElementById('subtotal').innerHTML = '€' + sum
+    document.getElementById('discount').innerHTML = '€0.00'
 }
 
 function displayDiscountPrices(sum, discount_sum, discount_price) {

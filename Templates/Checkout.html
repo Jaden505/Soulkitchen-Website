@@ -4,42 +4,4 @@
 
 {% block content %}
 
-<form id="payment-form">
-
-  <div class="form-row">
-    <!--
-      Using a label with a for attribute that matches the ID of the
-      Element container enables the Element to automatically gain focus
-      when the customer clicks on the label.
-    -->
-    <h2>
-      <label for="ideal-bank-element">
-        Checkout
-      </label>
-    </h2>
-
-    <hr>
-
-    <div id="ideal-bank-element">
-      <!-- A Stripe Element will be inserted here. -->
-    </div>
-  </div>
-
-  <button>Bevestig betaling</button>
-
-  <!-- Used to display form errors. -->
-  <div id="error-message" role="alert"></div>
-</form>
-
-<script>
-  Payment('{{payment}}', '{{public_key}}')
-</script>
-
-<!--  <form onsubmit="return tryCheckout()" method="post" class="form_inputs">-->
-<!--    <h1>Info</h1> <br>-->
-<!--    {% csrf_token %}-->
-<!--    {{form|crispy}}-->
-<!--    <button type="submit" class="btn btn-primary">Checkout</button>-->
-<!--  </form>-->
-
 {% endblock %}

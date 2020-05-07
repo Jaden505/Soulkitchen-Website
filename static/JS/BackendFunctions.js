@@ -89,7 +89,7 @@ function totalAmount() {
     }
 
     else {
-    displayPrices(sum)
+        displayPrices(sum)
     }
 
     return sum
@@ -104,27 +104,27 @@ function emptyBasket() {
     updateBasket()
 }
 
-function tryCheckout() {
-    var result = JSON.parse(localStorage.getItem("basket"))
-    var amounts = JSON.parse(localStorage.getItem("amounts"))
-    var total = totalAmount()
-
-    if (Object.keys(result).length > 0 && Object.keys(amounts).length > 0 && total > 10) {
-        location.href = "/order/" + (total) // Goes to amount page and gives amount to checkout page
-    }
-    else {
-        location.href = "/checkout"
-    }
-    return false
-}
+//function tryCheckout() {
+//    var result = JSON.parse(localStorage.getItem("basket"))
+//    var amounts = JSON.parse(localStorage.getItem("amounts"))
+//    var total = totalAmount()
+//
+//    if (Object.keys(result).length > 0 && Object.keys(amounts).length > 0) {
+//        //location.href = "/order/" + (total) // Goes to amount page and gives amount to checkout page
+//        Payment('{{payment}}', '{{public_key}}')
+//    }
+//    else {
+//        location.href = "/order/"
+//    }
+//    return false
+//}
 
 function tryOrder() {
     var result = JSON.parse(localStorage.getItem("basket"))
     var amounts = JSON.parse(localStorage.getItem("amounts"))
-    var total = totalAmount()
 
-    if (Object.keys(result).length !== 0 && Object.keys(amounts).length !== 0 && total > 10) {
-        location.href = '/cart/' + localStorage.getItem("basket") + '/' + localStorage.getItem("amounts") + '/'
+    if (Object.keys(result).length !== 0 && Object.keys(amounts).length !== 0) {
+        location.href = "/order/"
     }
     else {
         location.href = "/menu"
@@ -183,6 +183,7 @@ function removeProduct(item) {
 }
 
 function Payment(pay_details, public_key) {
+    console.log('called')
   var stripe = Stripe(public_key);
   var elements = stripe.elements();
 
@@ -208,8 +209,9 @@ function Payment(pay_details, public_key) {
   // the `ideal-bank-element` <div>
   idealBank.mount('#ideal-bank-element');
 
-  form.addEventListener('submit', function(event) {
-  event.preventDefault();
+//window.addEventListener('load', (event) => {
+  console.log('redirect')
+//  event.preventDefault();
 
   // Redirects away from the client
   stripe.confirmIdealPayment(
@@ -221,27 +223,27 @@ function Payment(pay_details, public_key) {
       return_url: 'https://sassies-soulkitchen.herokuapp.com/confirmation/',
     }
   )
-  })
+//  })
 }
 
 function safelyParseJSON (json) {
-  // This function cannot be optimised, it's best to
-  // keep it small!
-  var parsed
+      // This function cannot be optimised, it's best to
+      // keep it small!
+      var parsed
 
-  try {
-    parsed = JSON.parse(json)
-  } catch (e) {
-    // Oh well, but whatever...
-  }
+      try {
+        parsed = JSON.parse(json)
+      } catch (e) {
+        // Oh well, but whatever...
+      }
 
-  return parsed // Could be undefined!
-}
+      return parsed // Could be undefined!
+    }
 
-function doAlotOfStuff () {
-  // ... stuff stuff stuff
-  var json = safelyParseJSON(data)
-  // Tadaa, I just got rid of an optimisation killer!
+    function doAlotOfStuff () {
+      // ... stuff stuff stuff
+      var json = safelyParseJSON(data)
+      // Tadaa, I just got rid of an optimisation killer!
 }
 
 function Animate(classname) {
@@ -265,10 +267,10 @@ function Animate(classname) {
 function couponSuccess(discount) {
     localStorage.setItem("couponcode", JSON.stringify({'couponcode': discount}))
 
-    totalAmount()
-
     document.getElementById('coupon_error').innerHTML = ''
     document.getElementById('coupon_success').innerHTML = 'Coupon added &#10004;'
+
+    totalAmount()
 }
 
 function couponError() {
