@@ -24,13 +24,11 @@ urlpatterns = [
     path('admin/', admin.site.urls, name='admin_view'),
     path('', views.home_view, name='home_view'),
     path('about/', views.about_view, name='about_view'),
-    path('checkout/', views.checkout_view, name='checkout_view'),
-    re_path(r"^order/(\d+\.\d+)$", views.amount_view),
+    # path('checkout/', views.checkout_view, name='checkout_view'),
     path('menu/', views.menu_view, name='menu_view'),
     path('order/', views.order_view, name='order_view'),
     path('order/<amount>/', views.amount_view, name='amount_view'),
     path('confirmation/', views.confirmation_view, name='confirmation_view'),
-    path('cart/<basket>/<many>/', views.basketAmount, name='basketAmount'),
 ]
 
 if settings.DEBUG:

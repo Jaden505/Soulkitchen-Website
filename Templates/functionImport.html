@@ -19,7 +19,7 @@
                 basket_display = (`
                         <!-- TR -->
                           <tr class="text-center">
-                            <td class="product-remove"><a onclick="removeProduct('${ title }')"><span class="ion-ios-close"></span></a></td>
+                            <td class="product-remove"><a onclick="removeProduct('${ title }');totalAmount()"><span class="ion-ios-close"></span></a></td>
 
                             <td class="image-prod"><div class="img" style="background-image: url('{% static 'Images/Meals/${img}' %}');"></div></td>
 
@@ -31,7 +31,7 @@
 
                             <td class="quantity">
                                 <div class="input-group mb-3">
-                                    <input type="number" name="quantity" class="quantity form-control input-number" value="${ many[title] }" min="1" max="12" onchange="changeAmount('${title}', '${price}', this.value)">
+                                    <input type="number" name="quantity" class="quantity form-control input-number" value="${ many[title] }" min="1" max="12" onchange="changeAmount('${title}', '${price}', this.value);totalAmount()">
                                 </div>
                               </td>
 
@@ -65,5 +65,20 @@
             }
         }
         couponError()
+    }
+
+    function tryCheckout() {
+        var result = JSON.parse(localStorage.getItem("basket"))
+        var amounts = JSON.parse(localStorage.getItem("amounts"))
+        var total = totalAmount()
+
+        if (Object.keys(result).length > 0 && Object.keys(amounts).length > 0) {
+            //location.href = "/order/" + (total) // Goes to amount page and gives amount to checkout page
+            Payment('{{payment}}', '{{public_key}}')
+        }
+        else {
+            location.href = "/order/"
+        }
+        return false
     }
 </script>
