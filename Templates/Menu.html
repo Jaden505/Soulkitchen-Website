@@ -67,11 +67,11 @@
         <!-- PRODUCT -->
         <div class="col-md-6 col-lg-3 ftco-animate">
           <div class="product" style="display: inline-block; min-width: 380px;">
-            <a class="img-prod" onclick="addBasket('{{product.title}}', '{{product.price}}');Notification()">
+            <a class="img-prod" onclick="addBasket('{{product.title}}', '{{product.price}}')">
               <img class="img-fluid" src="{{ product.image.url }}" alt="Colorlib Template">
             </a>
             <div class="text py-3 pb-4 px-3 text-center">
-              <h3><a onclick="addBasket('{{product.title}}', '{{product.price}}');Notification()">{{ product.title }}</a></h3>
+              <h3><a onclick="addBasket('{{product.title}}', '{{product.price}}')">{{ product.title }}</a></h3>
               <div class="d-flex">
                 <div class="pricing">
                   <p><span class="price">€{{ product.price }}</span></p>
@@ -91,18 +91,26 @@
         </div>
         <!-- END-PRODUCT -->
 
-    <script>Categorize('{{product.category}}')</script>
+    <script>
+      if (localStorage.getItem("image_urls") == null) {localStorage.setItem("image_urls", JSON.stringify({}))}
+
+      image_urls = JSON.parse(localStorage.getItem("image_urls"))
+      image_urls["{{product.title}}"] = "{{product.image.url}}"
+      localStorage.setItem("image_urls", JSON.stringify(image_urls))
+
+      Categorize('{{product.category}}')
+    </script>
   {% endfor %}
 
   {% for broodje in bvdw %}
   <!-- PRODUCT -->
   <div class="col-md-6 col-lg-3 ftco-animate">
     <div class="product" style="display: inline-block; min-width: 380px;">
-      <a class="img-prod" onclick="addBasket('{{broodje.title}}', '{{broodje.price}}');Notification()">
+      <a class="img-prod" onclick="addBasket('{{broodje.title}}', '{{broodje.price}}')">
         <img class="img-fluid" src="{{ broodje.image.url }}" alt="Colorlib Template">
       </a>
       <div class="text py-3 pb-4 px-3 text-center">
-        <h3><a onclick="addBasket('{{broodje.title}}', '{{broodje.price}}');Notification()">{{ broodje.title }}</a></h3>
+        <h3><a onclick="addBasket('{{broodje.title}}', '{{broodje.price}}')">{{ broodje.title }}</a></h3>
         <div class="d-flex">
           <div class="pricing">
             <p><span class="price">€{{ broodje.price }}</span></p>

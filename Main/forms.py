@@ -1,8 +1,8 @@
 from django import forms
 
 class UserInfo(forms.Form):
-    email = forms.EmailField()
-    address_ = forms.CharField(label='Address')
-    city = forms.CharField()
-    zip_code = forms.CharField(label='Zip')
-    confirmation_mail = forms.BooleanField(required=False)
+    email = forms.EmailField(label='Email')
+    address_ = forms.CharField(label='Adres')
+    city = forms.CharField(label='Stad')
+    zip_code = forms.CharField(label='Post code')
+    confirmation_mail = forms.BooleanField(required=False, label='Bevestegings mail')

@@ -3,7 +3,7 @@ from whitenoise.storage import CompressedManifestStaticFilesStorage
 
 class MediaStorage(S3Boto3Storage):
     location = 'media'
-    default_acl = 'public-read'
+    default_acl = None
     file_overwrite = False
 
 class WhiteNoiseStorage(CompressedManifestStaticFilesStorage):
