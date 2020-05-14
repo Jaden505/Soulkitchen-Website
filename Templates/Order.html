@@ -44,12 +44,14 @@
     		</div>
             <!-- END PRODUCTS -->
 
+				<button class="order_btt" onclick="emptyBasket()">Leeg winkelmandje</button>
+
 			<hr>
 
 			<!-- FORM -->
 			  <form onsubmit="return tryCheckout()" method="post" class="form_inputs" style="float: left; color: black;" id="inputs_form">
 				{% csrf_token %}
-				{{form|crispy}}
+				{% crispy form %}
 			  </form>
 
             <!-- COUPON -->
@@ -105,11 +107,11 @@
     						<span id="subtotal">€0.00</span>
     					</p>
     					<p class="d-flex">
-    						<span>Delivery</span>
+    						<span>Bezorgkosten</span>
     						<span>€4.00</span>
     					</p>
     					<p class="d-flex">
-    						<span>Discount</span>
+    						<span>Korting</span>
     						<span id="discount">€0.00</span>
     					</p>
     					<hr>
@@ -127,7 +129,7 @@
 	<br><br>
 
 	<script>
-		var total = totalAmount()
+		totalAmount()
 	</script>
 
 {% endblock %}

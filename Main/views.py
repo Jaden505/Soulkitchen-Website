@@ -46,16 +46,20 @@ def order_view(request):
 
     return render(request, "Order.html", {'products': products, 'bvdw': bvdw, 'coupons': coupons, 'form': form, 'payment': payment.client_secret, 'public_key': public_key})
 
-def amount_view(request, amount):
+def amount_view(request, amount, code):
     amount = round((float(amount) * 100), 0)
     amount = int(amount)
 
     request.session['amount'] = amount
+    request.session['coupon_code'] = code
 
     return redirect(order_view)
 
 def confirmation_view(request):
-    # code = ''
-    # CouponCodes.objects.filter(code=code).delete()
+    code = request.session['coupon_code']
+
+    # Remove coupon when used
+    if code != 'null':
+        CouponCodes.objects.filter(code=code).delete()
 
     return render(request, 'Confirmation.html')

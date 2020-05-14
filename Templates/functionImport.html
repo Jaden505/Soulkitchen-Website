@@ -13,15 +13,19 @@
 
             if (products[product]['fields']['title'] in result) {
                 title = products[product]['fields']['title']
-                img = products[product]['fields']['image']
                 price = products[product]['fields']['price']
+
+                image_urls = JSON.parse(localStorage.getItem("image_urls"))
+                for (var url_title in image_urls) {
+                   if (url_title == title) {img = image_urls[url_title]}
+                }
 
                 basket_display = (`
                         <!-- TR -->
                           <tr class="text-center">
-                            <td class="product-remove"><a onclick="removeProduct('${ title }');totalAmount()"><span class="ion-ios-close"></span></a></td>
+                            <td class="product-remove"><a onclick="removeProduct('${ title }');totalAmount();updateAmount()"><span class="ion-ios-close"></span></a></td>
 
-                            <td class="image-prod"><div class="img" style="background-image: url('{% static 'Images/Meals/${img}' %}');"></div></td>
+                            <td class="image-prod"><div class="img" style="background-image: url(${img})"></div></td>
 
                             <td class="product-name">
                                 <h3>${title}</h3>
@@ -31,7 +35,7 @@
 
                             <td class="quantity">
                                 <div class="input-group mb-3">
-                                    <input type="number" name="quantity" class="quantity form-control input-number" value="${ many[title] }" min="1" max="12" onchange="changeAmount('${title}', '${price}', this.value);totalAmount()">
+                                    <input type="number" name="quantity" class="quantity form-control input-number" value="${ many[title] }" min="1" max="12" onchange="changeAmount('${title}', '${price}', this.value);totalAmount();updateAmount()">
                                 </div>
                               </td>
 
@@ -68,17 +72,19 @@
     }
 
     function tryCheckout() {
-        var result = JSON.parse(localStorage.getItem("basket"))
-        var amounts = JSON.parse(localStorage.getItem("amounts"))
-        var total = totalAmount()
+        coupon_code = localStorage.getItem("couponcode")
+        total = totalAmount()
 
-        if (Object.keys(result).length > 0 && Object.keys(amounts).length > 0) {
-            //location.href = "/order/" + (total) // Goes to amount page and gives amount to checkout page
-            Payment('{{payment}}', '{{public_key}}')
+        if (total > 10) {
+                // Goes to amount url and gives amount to payment page (handled in views)
+                Payment('{{payment}}', '{{public_key}}')
         }
         else {
+            // Give notification
             location.href = "/order/"
         }
+
+        // Returns false so when function called first checks if form submitted
         return false
     }
 </script>

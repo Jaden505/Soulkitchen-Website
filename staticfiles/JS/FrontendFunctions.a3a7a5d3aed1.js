@@ -1,12 +1,12 @@
-function displayPrices(sum, subtotal) {
+function displayPrices(sum) {
     document.getElementById('total_basket').innerHTML = '€' + sum
-    document.getElementById('subtotal').innerHTML = '€' + subtotal
+    document.getElementById('subtotal').innerHTML = '€' + sum
     document.getElementById('discount').innerHTML = '€0.00'
 }
 
-function displayDiscountPrices(sub_total, discount_price, total_price) {
-    document.getElementById('total_basket').innerHTML = '€' + total_price
-    document.getElementById('subtotal').innerHTML = '€' + sub_total
+function displayDiscountPrices(sum, discount_sum, discount_price) {
+    document.getElementById('total_basket').innerHTML = '€' + discount_sum
+    document.getElementById('subtotal').innerHTML = '€' + sum
     document.getElementById('discount').innerHTML = '€' + discount_price
 }
 
