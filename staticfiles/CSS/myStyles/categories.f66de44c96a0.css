@@ -1,0 +1,33 @@
+/* CATEGORIES */
+.radio-toolbar input[type="radio"] {
+  display: none;
+}
+
+.radio-toolbar label {
+  display: inline-block;
+  padding: 6px 17px;
+  font-family: Arial;
+  font-size: 24px;
+  cursor: pointer;
+}
+
+.radio-toolbar input[type="radio"]:checked+label {
+  background-color: #82AE47;
+  color: white;
+    border-radius: 10px;
+}
+
+.cat_name {
+      font-family: Arial, Helvetica, sans-serif;
+      font-size: 30px;
+      background-color: #82AE47;
+      color: white;
+      box-shadow: 0 3px 6px 0 rgba(0,0,0,0.2),0 6px 20px 0 rgba(0,0,0,0.2);
+      padding-left:2em;
+      font-weight: bold;
+}
+
+#categories {
+    padding-left: 200px;
+    padding-right: 200px;
+}

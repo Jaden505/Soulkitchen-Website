@@ -1,0 +1,61 @@
+/* BASIC STYLING */
+#basket > div {
+      text-align: center;
+      margin: auto;
+      min-width: 60%;
+}
+
+#total {
+    text-align: center;
+    color: #82AE47;
+}
+
+i:hover {
+    cursor: pointer;
+}
+
+.form_inputs {
+    width: 40%;
+}
+
+button:hover {
+    cursor: pointer;
+}
+
+a:hover {
+    cursor: pointer;
+}
+
+#ideal-bank-element > div {
+    max-width: 200px;
+}
+
+/* NAVBAR & BASKET DISPLAY */
+@media screen and (max-width: 1000px) {
+    #cart_amount {
+        color: grey;
+    }
+}
+@media screen and (max-width: 500px) {
+    tr {
+      display: block;
+    }
+    td.price, td.quantity {
+      float: left;
+    }
+    .quantity {
+        bottom: 15px;
+    }
+    .trs {
+      display: none;
+    }
+    .separator_line {
+        border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+    }
+    .table tbody tr td {
+        border-bottom: 0px solid rgba(0, 0, 0, 0.05) !important;
+    }
+    .toast-header {
+        border-bottom: 0px solid rgba(0, 0, 0, 0.05) !important;
+    }
+}

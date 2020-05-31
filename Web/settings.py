@@ -24,7 +24,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = os.environ.get('DJANGO_SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
 ALLOWED_HOSTS = ['sassies-soulkitchen.herokuapp.com']
 
@@ -74,7 +74,7 @@ TEMPLATES = [
 ]
 
 
-#WSGI_APPLICATION = 'Web.wsgi.application'
+WSGI_APPLICATION = 'Web.wsgi.application'
 
 # Database
 # https://docs.djangoproject.com/en/3.0/ref/settings/#databases

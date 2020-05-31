@@ -4,13 +4,21 @@ function displayPrices(sum, subtotal) {
     document.getElementById('discount').innerHTML = '€0.00'
 }
 
-function displayDiscountPrices(sub_total, discount_price, total_price) {
+function displayDiscountPrices(sub_total, discount_price, total_price, coupon) {
     document.getElementById('total_basket').innerHTML = '€' + total_price
     document.getElementById('subtotal').innerHTML = '€' + sub_total
     document.getElementById('discount').innerHTML = '€' + discount_price
 
     document.getElementById('coupon_error').innerHTML = ''
     document.getElementById('coupon_success').innerHTML = 'Coupon added &#10004;'
+
+    document.getElementById('coupon_input').placeholder = Object.keys(coupon)[0]
+}
+
+function couponErrorDisplay() {
+    document.getElementById('coupon_success').innerHTML = ''
+    document.getElementById('coupon_error').innerHTML = 'Invalid coupon code'
+    document.getElementById('coupon_input').placeholder = ''
 }
 
 function updateCartAmount(amount) {document.getElementById('cart_amount').innerHTML = amount}
@@ -53,3 +61,4 @@ function displayCategory() {
 
     }
 }
+

@@ -47,10 +47,16 @@ function changeAmount(item, price, amount) {
     var result = JSON.parse(localStorage.getItem("basket"))
     var amounts = JSON.parse(localStorage.getItem("amounts"))
 
-    result[item] = result[item] * amount / (amounts[item])
-    amounts[item] = amount
+    if (item in amounts && amounts[item] > amount) {
+        result[item] = result[item] * amount / currency(amount).add(1)
+        amounts[item] -= 1
+    }
+    else if (item in amounts && amounts[item] < amount) {
+        result[item] = result[item] * amount / (amount-1)
+        amounts[item] += 1
+    }
 
-    if (amounts[item] < 1) {
+    if (amounts[item] === 0) {
         delete result[item]
         delete amounts[item]
     }
@@ -63,8 +69,6 @@ function changeAmount(item, price, amount) {
 }
 
 function removeProduct(item) {
-    console.log(item)
-
     var result = JSON.parse(localStorage.getItem("basket"))
     var amounts = JSON.parse(localStorage.getItem("amounts"))
 
@@ -87,7 +91,7 @@ function totalAmount() {
     var coupon = JSON.parse(localStorage.getItem("couponcode"))
 
     if (coupon !== null) {
-        var discount = coupon['couponcode'] / 100
+        var discount = 1- (coupon['couponcode'] / 100)
         var discount_price = currency(sub_total).multiply(discount)
         var total_price = currency(sub_total).subtract(discount_price).add(shipping_costs)
         var total = total_price
@@ -111,7 +115,6 @@ function emptyBasket() {
     localStorage.setItem("amounts", string_dict)
 
     updateBasket()
-    updateAmount()
 }
 
 // UPDATES
@@ -123,9 +126,7 @@ function updateBasket() {
     var prices = Object.values(result)
     var amounts = Object.values(many)
 
-    var basket_products_amounts = amounts.reduce((a,b) => a + b)
-    console.log(amounts)
-    console.log(many, result)
+    var basket_products_amounts = amounts.reduce((a,b) => a + b, 0)
 
     //Round up the price 2 decimals
     prices.forEach(function(part, index, arr) {
@@ -133,7 +134,6 @@ function updateBasket() {
     });
 
     // HTML ELEMENTS
-    console.log(basket_products_amounts)
     updateCartAmount(basket_products_amounts)
 
     try {
@@ -225,8 +225,8 @@ function safelyParseJSON (json) {
       // Tadaa, I just got rid of an optimisation killer!
 }
 
-function Animate() {
-    btt = document.getElementsByClassName('spin_btt')[0]
+function Animate(classname) {
+    btt = document.getElementsByClassName(classname)[0].children[0].children[0]
 
     $( btt ).addClass( "onclic", 250, validate() );
 
@@ -246,6 +246,9 @@ function Animate() {
 function couponSuccess(discount) {
     localStorage.setItem("couponcode", JSON.stringify({'couponcode': discount}))
 
+    document.getElementById('coupon_error').innerHTML = ''
+    document.getElementById('coupon_success').innerHTML = 'Coupon added &#10004;'
+
     totalAmount()
 }
 
@@ -256,12 +259,4 @@ function couponError() {
     document.getElementById('coupon_error').innerHTML = 'Invalid coupon code'
 
     totalAmount()
-}
-
-function Notification() {
-     close = document.getElementById("close");
-     close.addEventListener('click', function() {
-       note = document.getElementById("note");
-       note.style.display = 'none';
-     }, false);
 }

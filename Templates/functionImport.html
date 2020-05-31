@@ -2,12 +2,24 @@
 
 <!-- LOOPS AND DISPLAYS PRODUCTS IN SHOPPING CART -->
 <script>
+    function removeChangedProducts(products, result) {
+        var titles = []
+
+        for (product in products) {
+            titles.push(products[product]['fields']['title'])
+        }
+
+        for (item in result) {
+            if (titles.includes(item) == false) {removeProduct(item)}
+        }
+    }
+
     function createProducts(products) {
         var result = JSON.parse(localStorage.getItem("basket"))
         var many = JSON.parse(localStorage.getItem("amounts"))
         var holder = document.querySelectorAll(".products_holder")[0]
 
-        products = safelyParseJSON(products)
+        holder.innerHTML = ''
 
         for (product in products) {
 
@@ -23,7 +35,7 @@
                 basket_display = (`
                         <!-- TR -->
                           <tr class="text-center">
-                            <td class="product-remove"><a onclick="removeProduct('${ title }');totalAmount();updateAmount()"><span class="ion-ios-close"></span></a></td>
+                            <td class="product-remove"><a onclick="removeProduct('${ title }');totalAmount();updateAmount();updateBasket()"><span class="ion-ios-close"></span></a></td>
 
                             <td class="image-prod"><div class="img" style="background-image: url(${img})"></div></td>
 
@@ -43,28 +55,33 @@
                                 €${currency(result[title])}
                             </td>
                           </tr>
+
+                          <div class="separator_line"></div>
+
                           <!-- END TR-->
                   `)
 
           holder.innerHTML += basket_display
-          }
+            }
         }
     }
 
     function Create() {
-        var holder = document.querySelectorAll(".products_holder")[0]
-        holder.innerHTML = ''
+        var bvdw = safelyParseJSON('{{ bvdw|escapejs }}')
+        var products = safelyParseJSON('{{ products|escapejs }}')
+        var all_products = products.concat(bvdw)
 
-        holder.innerHTML = ''
-        createProducts('{{ bvdw|escapejs }}')
-        createProducts('{{ products|escapejs }}')
+        var result = JSON.parse(localStorage.getItem("basket"))
+
+        removeChangedProducts(all_products, result)
+        createProducts(all_products)
     }
 
     function checkCodes(input_code) {
         codes = safelyParseJSON('{{ coupons|escapejs }}')
         for (code in codes) {
             if (codes[code]['fields']['code'] == input_code) {
-                couponSuccess(codes[code]['fields']['discount'])
+                couponSuccess(input_code, codes[code]['fields']['discount'])
                 return
             }
         }
@@ -77,7 +94,8 @@
 
         if (total > 10) {
                 // Goes to amount url and gives amount to payment page (handled in views)
-                Payment('{{payment}}', '{{public_key}}')
+
+                setTimeout(function(){ Payment('{{payment}}', '{{public_key}}') }, 3000);
         }
         else {
             // Give notification

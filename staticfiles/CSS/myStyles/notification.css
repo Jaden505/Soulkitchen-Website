@@ -1,0 +1,47 @@
+/* NOTIFICATION */
+.note {
+  display: block;
+  position: absolute;
+  left: -9999px;
+}
+
+.note:focus-within {
+  border: 1px solid lightgrey;
+  position:fixed;
+  width: 100%;
+  z-index:100;
+  top: 100px;
+  margin-right: 0px;
+  animation: appear 350ms ease-in 1;
+  max-width: 30%;
+  display: block;
+}
+
+.redirect-cart {
+  border: 1px solid lightgrey;
+  padding: .5em 1em;
+  border-radius: 1px;
+}
+
+.keep-shopping {
+  background: #ddaa00;
+  color: white;
+  padding: .5em 1em;
+  border-radius: 1px;
+}
+
+.redirect-cart:hover {
+    cursor: pointer;
+}
+
+.keep-shopping:hover {
+    cursor: pointer;
+}
+
+@keyframes appear {
+  0%{
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+}
+

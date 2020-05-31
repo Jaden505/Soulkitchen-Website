@@ -123,51 +123,6 @@
 		</div>
 	</section>
 
-  <!-- PRODUCTEN -->
-  <section class="ftco-section">
-  	<div class="container">
-			<div class="row justify-content-center mb-3 pb-3">
-        <div class="col-md-12 heading-section text-center ftco-animate">
-          <h2 class="mb-4">Onze producten</h2>
-          <span class="subheading">Top producten</span>
-        </div>
-      </div>
-  	</div>
-  	<div class="container">
-  		<div class="row">
-	  {% for product in products %}
-
-		  <!-- PRODUCT -->
-			<div class="col-md-6 col-lg-3 ftco-animate">
-  				<div class="product">
-					<a class="img-prod" onclick="addBasket('{{product.title}}', '{{product.price}}')">
-					  <img class="img-fluid" src="{{ product.image.url }}" alt="Colorlib Template">
-					</a>
-  					<div class="text py-3 pb-4 px-3 text-center">
-  						<h3><a href="/menu/">{{ product.title }}</a></h3>
-  						<div class="d-flex">
-  							<div class="pricing">
-                 				 <p><span class="price">€{{ product.price }}</span></p>
-	    					</div>
-    					</div>
-    					<div class="bottom-area d-flex px-3">
-    						<div class="m-auto d-flex">
-    							<a href="/menu/" class="buy-now d-flex justify-content-center align-items-center mx-1">
-    								<span><i class="ion-ios-cart"></i></span>
-    							</a>
-  							</div>
-  						</div>
-  					</div>
-  				</div>
-  			</div>
-		  <!-- END PRODUCT -->
-
-	  {% endfor %}
-
-  		</div>
-  	</div>
-  </section>
-
   <!-- BROODJE VAN DE WEEK
 	<section class="ftco-section img">
   	<div class="container">

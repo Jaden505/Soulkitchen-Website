@@ -36,15 +36,20 @@ def order_view(request):
 
     stripe.api_key = settings.STRIPE_SECRET_KEY
     public_key = settings.STRIPE_PUBLIC_KEY
-    amount = request.session['amount']
 
-    payment = stripe.PaymentIntent.create(
-        amount=amount,
-        currency='eur',
-        payment_method_types=['ideal'],
-    )
+    try:
+        amount = request.session['amount']
 
-    return render(request, "Order.html", {'products': products, 'bvdw': bvdw, 'coupons': coupons, 'form': form, 'payment': payment.client_secret, 'public_key': public_key})
+        payment = stripe.PaymentIntent.create(
+            amount=amount,
+            currency='eur',
+            payment_method_types=['ideal'],
+        )
+
+        return render(request, "Order.html", {'products': products, 'bvdw': bvdw, 'coupons': coupons, 'form': form, 'payment': payment.client_secret, 'public_key': public_key})
+
+    except KeyError:
+        return render(request, "Order.html", {'products': products, 'bvdw': bvdw, 'coupons': coupons, 'form': form})
 
 def amount_view(request, amount, code):
     amount = round((float(amount) * 100), 0)

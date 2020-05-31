@@ -2,7 +2,6 @@
 {% load static %}
 
 {% block content %}
-
   <!-- HEAD IMG SHOW -->
   <div class="hero-wrap hero-bread" style="background-image: url('{% static 'Images/Eettent.jpg' %}');">
     <div class="container">
@@ -17,7 +16,7 @@
   <!-- HEAD IMG SHOW END -->
 
   <!-- CATEGORIES -->
-  <section class="ftco-section">
+  <section class="ftco-section" style="padding-bottom: 0px;">
     <div class="container">
       <div class="row justify-content-center">
         <div class="col-md-10 mb-5 text-center">
@@ -40,9 +39,10 @@
           </ul>
         </div>
       </div>
+    </div>
   </section>
 
-  <div id="categories">
+  <div id="categories" style="padding: 10%;">
       <div id="bvdw" style="width: 100%;">
           <p class="cat_name">Broodje van de week</p>
       </div>
@@ -62,16 +62,24 @@
   </div>
   <!-- END CATEGORIES -->
 
+    <!-- NOTIFICATION -->
+    <dialog class="note" tabindex="0" style="outline:none; border:1px solid #ccc;">
+      <p>Toegevoegd aan winkelmandje!</p>
+
+      <label class="keep-shopping" onclick="hideNotificationDisplay()">Verder kijken</label>
+      <label class="redirect-cart"><a href="/order/" style="color: black;">Bestellen</a></label>
+    </dialog>
+
   <div class="row">
   {% for product in products %}
         <!-- PRODUCT -->
         <div class="col-md-6 col-lg-3 ftco-animate">
-          <div class="product" style="display: inline-block; min-width: 380px;">
-            <a class="img-prod" onclick="addBasket('{{product.title}}', '{{product.price}}')">
-              <img class="img-fluid" src="{{ product.image.url }}" alt="Colorlib Template">
+          <div class="product" style="display: inline-block;">
+            <a class="img-prod" onclick="addBasket('{{product.title}}', '{{product.price}}');Animate('{{product.title}}');showNotificationDisplay()">
+              <img class="img-fluid" src="{{ product.image.url }}" alt="Colorlib Template" style="height: 15vh; width: auto;">
             </a>
             <div class="text py-3 pb-4 px-3 text-center">
-              <h3><a onclick="addBasket('{{product.title}}', '{{product.price}}')">{{ product.title }}</a></h3>
+              <h3><a onclick="addBasket('{{product.title}}', '{{product.price}}');Animate('{{product.title}}');showNotificationDisplay()" class="title">{{ product.title }}</a></h3>
               <div class="d-flex">
                 <div class="pricing">
                   <p><span class="price">€{{ product.price }}</span></p>
@@ -79,9 +87,9 @@
               </div>
               <div class="bottom-area d-flex">
                 <div class="m-auto d-flex">
-                  <a class="{{product.title}}" onclick="addBasket('{{product.title}}', '{{product.price}}');Animate(this.className)">
-                    <div class="spin_class">
-                      <button class="spin_btt"></button>
+                  <a class="{{product.title}}" onclick="addBasket('{{product.title}}', '{{product.price}}');Animate('{{product.title}}');showNotificationDisplay()">
+                    <div class="spin_class" style="background-color: white;">
+                      <button class="spin_btt" style="text-decoration:none; outline:none;"></button>
                     </div>
                   </a>
                 </div>
@@ -103,36 +111,38 @@
   {% endfor %}
 
   {% for broodje in bvdw %}
-  <!-- PRODUCT -->
-  <div class="col-md-6 col-lg-3 ftco-animate">
-    <div class="product" style="display: inline-block; min-width: 380px;">
-      <a class="img-prod" onclick="addBasket('{{broodje.title}}', '{{broodje.price}}')">
-        <img class="img-fluid" src="{{ broodje.image.url }}" alt="Colorlib Template">
-      </a>
-      <div class="text py-3 pb-4 px-3 text-center">
-        <h3><a onclick="addBasket('{{broodje.title}}', '{{broodje.price}}')">{{ broodje.title }}</a></h3>
-        <div class="d-flex">
-          <div class="pricing">
-            <p><span class="price">€{{ broodje.price }}</span></p>
-          </div>
-        </div>
-        <div class="bottom-area d-flex px-3">
-          <div class="m-auto d-flex">
-            <a class="{{broodje.title}}" onclick="addBasket('{{broodje.title}}', '{{broodje.price}}');Animate(this.className)">
-                <div class="spin_class">
-                  <button class="spin_btt"></button>
-                </div>
-            </a>
-          </div>
-        </div>
+
+  <!-- BROODJE VAN DE WEEK -->
+  <div class="store-offer-item shadow-box product" id="product_bvdw">
+    <div class="store-thumb-link">
+      <div class="offer-image">
+          <img src="{{ broodje.image.url }}">
       </div>
     </div>
+    <div class="latest-coupon">
+      <h3 class="coupon-title" style="color: #87AE42;">Nu {{ broodje.title }} voor maar €{{ broodje.price }}</h3>
+      <div class="coupon-des">
+        Dit is de aanbieding van de week. <span id="des-more12" class="des-more">... <a role="button" data-toggle="collapse" href="#seemore12" aria-expanded="false" aria-controls="seemore12">More <i class="glyphicon glyphicon-menu-down"></i></a></span>
+        <div class="coupon-des-full collapse" id="seemore12">Elke week hebben we een nieuwe aanbieding van wat volgens de klaten ons besten product is.</div>
+      </div>
+    </div>
+    <div class="coupon-detail coupon-button-type">
+      <a class="coupon-deal coupon-button" data-aff-url="https://google.com" onclick="addBasket('{{broodje.title}}', '{{broodje.price}}');showNotificationDisplay()" style="color: white;">Voeg toe <i class="shop icon"></i></a>
+    </div>
   </div>
-  </div>
-  <!-- END-PRODUCT -->
 
-    <script>Categorize('bvdw')</script>
+    <script>
+      if (localStorage.getItem("image_urls") == null) {localStorage.setItem("image_urls", JSON.stringify({}))}
+
+      image_urls = JSON.parse(localStorage.getItem("image_urls"))
+      image_urls["{{broodje.title}}"] = "{{broodje.image.url}}"
+      localStorage.setItem("image_urls", JSON.stringify(image_urls))
+
+      Categorize('bvdw')
+    </script>
   {% endfor %}
+
+  </div>
 
   <br><br><br><br>
 

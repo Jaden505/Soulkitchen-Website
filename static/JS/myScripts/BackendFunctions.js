@@ -47,16 +47,10 @@ function changeAmount(item, price, amount) {
     var result = JSON.parse(localStorage.getItem("basket"))
     var amounts = JSON.parse(localStorage.getItem("amounts"))
 
-    if (item in amounts && amounts[item] > amount) {
-        result[item] = result[item] * amount / currency(amount).add(1)
-        amounts[item] -= 1
-    }
-    else if (item in amounts && amounts[item] < amount) {
-        result[item] = result[item] * amount / (amount-1)
-        amounts[item] += 1
-    }
+    result[item] = result[item] * amount / (amounts[item])
+    amounts[item] = Number(amount)
 
-    if (amounts[item] === 0) {
+    if (amounts[item] < 1) {
         delete result[item]
         delete amounts[item]
     }
@@ -78,8 +72,6 @@ function removeProduct(item) {
     // Update global basket
     localStorage.setItem("basket", JSON.stringify(result))
     localStorage.setItem("amounts", JSON.stringify(amounts))
-
-    updateBasket()
 }
 
 // TOTALS
@@ -91,12 +83,12 @@ function totalAmount() {
     var coupon = JSON.parse(localStorage.getItem("couponcode"))
 
     if (coupon !== null) {
-        var discount = 1- (coupon['couponcode'] / 100)
+        var discount = (Object.values(coupon)[0]) / 100
         var discount_price = currency(sub_total).multiply(discount)
-        var total_price = currency(sub_total).subtract(discount_sum).add(shipping_costs)
+        var total_price = currency(sub_total).subtract(discount_price).add(shipping_costs)
         var total = total_price
 
-        displayDiscountPrices(sub_total, discount_price, total_price)
+        displayDiscountPrices(sub_total, discount_price, total_price, coupon)
     }
     else {
         var sum = sub_total.add(shipping_costs)
@@ -115,6 +107,7 @@ function emptyBasket() {
     localStorage.setItem("amounts", string_dict)
 
     updateBasket()
+    updateAmount()
 }
 
 // UPDATES
@@ -136,6 +129,7 @@ function updateBasket() {
     // HTML ELEMENTS
     updateCartAmount(basket_products_amounts)
 
+    // When on order page create/update products
     try {
         Create()
     }
@@ -205,49 +199,9 @@ function Payment(pay_details, public_key) {
   });
 }
 
-function safelyParseJSON (json) {
-      // This function cannot be optimised, it's best to
-      // keep it small!
-      var parsed
-
-      try {
-        parsed = JSON.parse(json)
-      } catch (e) {
-        // Oh well, but whatever...
-      }
-
-      return parsed // Could be undefined!
-    }
-
-    function doAlotOfStuff () {
-      // ... stuff stuff stuff
-      var json = safelyParseJSON(data)
-      // Tadaa, I just got rid of an optimisation killer!
-}
-
-function Animate(classname) {
-    btt = document.getElementsByClassName(classname)[0].children[0].children[0]
-
-    $( btt ).addClass( "onclic", 250, validate() );
-
-  function validate() {
-    setTimeout(function() {
-      $( btt ).removeClass( "onclic" );
-      $( btt ).addClass( "validate", 450, callback() );
-    }, 0 );
-  }
-    function callback() {
-      setTimeout(function() {
-        $( btt ).removeClass( "validate" );
-      }, 1250 );
-    }
-  }
-
-function couponSuccess(discount) {
-    localStorage.setItem("couponcode", JSON.stringify({'couponcode': discount}))
-
-    document.getElementById('coupon_error').innerHTML = ''
-    document.getElementById('coupon_success').innerHTML = 'Coupon added &#10004;'
+function couponSuccess(input_code, discount) {
+    var dict = {[input_code]: discount}
+    localStorage.setItem("couponcode", JSON.stringify(dict))
 
     totalAmount()
 }
@@ -255,8 +209,7 @@ function couponSuccess(discount) {
 function couponError() {
     localStorage.setItem("couponcode", null)
 
-    document.getElementById('coupon_success').innerHTML = ''
-    document.getElementById('coupon_error').innerHTML = 'Invalid coupon code'
+    couponErrorDisplay()
 
     totalAmount()
 }

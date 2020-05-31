@@ -8,6 +8,9 @@ function displayDiscountPrices(sub_total, discount_price, total_price) {
     document.getElementById('total_basket').innerHTML = '€' + total_price
     document.getElementById('subtotal').innerHTML = '€' + sub_total
     document.getElementById('discount').innerHTML = '€' + discount_price
+
+    document.getElementById('coupon_error').innerHTML = ''
+    document.getElementById('coupon_success').innerHTML = 'Coupon added &#10004;'
 }
 
 function updateCartAmount(amount) {document.getElementById('cart_amount').innerHTML = amount}

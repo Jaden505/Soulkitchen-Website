@@ -42,91 +42,14 @@
 }
 
 .cat_name {
-  font-family: Arial, Helvetica, sans-serif;
-  font-size: 30px;
-  background-color: #82AE47;
-  color: white;
-  box-shadow: 0 3px 6px 0 rgba(0,0,0,0.2),0 6px 20px 0 rgba(0,0,0,0.2);
-  padding-left:2em;
+      font-family: Arial, Helvetica, sans-serif;
+      font-size: 30px;
+      background-color: #82AE47;
+      color: white;
+      box-shadow: 0 3px 6px 0 rgba(0,0,0,0.2),0 6px 20px 0 rgba(0,0,0,0.2);
+      padding-left:2em;
+      font-weight: bold;
 }
-
-/*
-.cat_name {
-  font-family: Arial, Helvetica, sans-serif;
-  font-size: 30px;
-  box-shadow: 0 3px 6px 0 rgba(0,0,0,0.2),0 6px 20px 0 rgba(0,0,0,0.2);
-  padding-left:2em;
-  background-color: #e6e1dd;
-  color: #204a56;
-}
-/*
-
-/* DROPDOWN BASKET */
-.dropdown-content {
-  position: sticky;
-  float: right;
-  display: none;
-  z-index: 20000;
-  left: 0;
-  top: 55px;
-  max-width: 350px;
-  max-height: 450px;
-  overflow: auto;
-
-  background-color: #fefefe;
-  margin: auto;
-  padding: 0;
-  border: 1px solid #888;
-  width: 80%;
-  box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2),0 6px 20px 0 rgba(0,0,0,0.19);
-  -webkit-animation-name: animatetop;
-  -webkit-animation-duration: 0.4s;
-  animation-name: animatetop;
-  animation-duration: 0.4s
-}
-
-@-webkit-keyframes animatetop {
-  from {top:-300px; opacity:0}
-  to {top:0; opacity:1}
-}
-
-@keyframes animatetop {
-  from {top:-300px; opacity:0}
-  to {top:0; opacity:1}
-}
-
-.close {
-  color: white;
-  float: right;
-  font-size: 28px;
-  font-weight: bold;
-}
-
-.close:hover,
-.close:focus {
-  color: #000;
-  text-decoration: none;
-  cursor: pointer;
-}
-
-.basket-header {
-  padding: 2px 16px;
-  background-color: #82AE47;
-  color: white;
-}
-
-.basket-header > h2 {
-  color: white;
-}
-
-#basket {padding: 2px 16px;}
-
-.dropdown-footer {
-  padding: 2px 16px;
-  background-color: #82AE47;
-  color: white;
-}
-
 
 /* BASIC STYLING */
 #categories {
@@ -192,8 +115,8 @@ a:hover {
   width: 130px;
   border-radius: 40px;
   background: #fff;
-  border: 2px solid #82AE47;
-  color: #82AE47;
+  border: 2px solid #ddaa00;
+  color: #ddaa00;
   letter-spacing: 1px;
   text-shadow: 0;
   font-size: 12px;
@@ -202,7 +125,7 @@ a:hover {
 }
 .spin_btt:hover {
   color: white;
-  background: #82AE47;
+  background: #ddaa00;
 }
 .spin_btt:active {
   letter-spacing: 2px;
@@ -220,18 +143,20 @@ a:hover {
   -webkit-animation: rotating 2s 0.25s linear infinite;
           animation: rotating 2s 0.25s linear infinite;
 }
+
 .onclic:after {
   content: "";
 }
+
 .onclic:hover {
-  color: #82AE47;
+  color: #ddaa00;
   background: white;
 }
 
 .validate {
   font-size: 13px;
   color: white;
-  background: #82AE47;
+  background: #ddaa00;
   display: block;
 }
 .validate:after {
@@ -259,4 +184,52 @@ a:hover {
     -webkit-transform: rotate(360deg);
             transform: rotate(360deg);
   }
+}
+
+/* NOTIFICATION */
+#note {
+    position: sticky;
+    z-index: 101;
+    top: 0;
+    left: 0;
+    right: 0;
+    background: #fde073;
+    text-align: center;
+    line-height: 3;
+    overflow: hidden;
+    -webkit-box-shadow: 0 0 5px black;
+    -moz-box-shadow:    0 0 5px black;
+    box-shadow:         0 0 5px black;
+    display: none;
+}
+
+@-webkit-keyframes slideDown {
+    0%, 100% { -webkit-transform: translateY(-50px); }
+    10%, 90% { -webkit-transform: translateY(0px); }
+}
+@-moz-keyframes slideDown {
+    0%, 100% { -moz-transform: translateY(-50px); }
+    10%, 90% { -moz-transform: translateY(0px); }
+}
+
+.cssanimations.csstransforms #note {
+    -webkit-transform: translateY(-50px);
+    -webkit-animation: slideDown 2.5s 1.0s 1 ease forwards;
+    -moz-transform:    translateY(-50px);
+    -moz-animation:    slideDown 2.5s 1.0s 1 ease forwards;
+}
+
+.cssanimations.csstransforms #close {
+  display: none;
+}
+
+@media screen and (max-width: 1200px) {
+    .trs {
+        float: left;
+        padding-left: 150px;
+     }
+     .products_holder {
+        display: inline-block;
+        float: left;
+     }
 }
