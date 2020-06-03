@@ -81,67 +81,39 @@
 	<section class="ftco-section ftco-category ftco-no-pt">
 		<div class="container">
 			<div class="row">
-				<div class="col-md-8">
+				<div class="col-md-8" style="margin-left: 2%;">
 					<div class="row">
-						<div class="col-md-6 order-md-last align-items-stretch d-flex">
-							<div class="category-wrap-2 ftco-animate img align-self-stretch d-flex">
-								<div class="text text-center">
-									<h2>Broodjes</h2>
-									<p>Altijd lekker</p>
-									<p><a href="/menu/" class="btn btn-primary">Nu bestellen</a></p>
-								</div>
-							</div>
-						</div>
+
 						<div class="col-md-6">
-								<div class="category-wrap ftco-animate img mb-4 d-flex align-items-end" style="background-image: url('{% static 'Images/Meals/PomRijst.jpg' %}'); box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);">
+								<div class="category-wrap ftco-animate img mb-4 d-flex align-items-end" style="background-image: url('{% static 'Images/Meals/PomRijst.jpg' %}'); box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19); margin-left: 50%;">
 								<div class="text px-3 py-1">
 									<h2 class="mb-0"><a href="/menu/">Surinaamse kip</a></h2>
 								</div>
 							</div>
-							<div class="category-wrap ftco-animate img d-flex align-items-end" style="background-image: url('{% static 'Images/Meals/BroodjeKip.jpg' %}'); box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);">
+							<div class="category-wrap ftco-animate img d-flex align-items-end" style="background-image: url('{% static 'Images/Meals/BroodjeKip.jpg' %}'); box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19); margin-left: 50%;">
 								<div class="text px-3 py-1">
 									<h2 class="mb-0"><a href="/menu/">Broodjes</a></h2>
 								</div>
 							</div>
 						</div>
-					</div>
-				</div>
 
-				<div class="col-md-4">
-					<div class="category-wrap ftco-animate img mb-4 d-flex align-items-end" style="background-image: url('{% static 'Images/Meals/Drinken.jpg' %}'); box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);">
+				<div class="col-md-6">
+					<div class="category-wrap ftco-animate img mb-4 d-flex align-items-end" style="background-image: url('{% static 'Images/Meals/Drinken.jpg' %}'); box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19); margin-left: 50%;">
 						<div class="text px-3 py-1">
 							<h2 class="mb-0"><a href="/menu/">drinken</a></h2>
 						</div>
 					</div>
-					<div class="category-wrap ftco-animate img d-flex align-items-end" style="background-image: url('{% static 'Images/Meals/Peper.jpg' %}'); box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);">
+					<div class="category-wrap ftco-animate img d-flex align-items-end" style="background-image: url('{% static 'Images/Meals/Peper.jpg' %}'); box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19); margin-left: 50%;">
 						<div class="text px-3 py-1">
 							<h2 class="mb-0"><a href="/menu/">Extra's</a></h2>
 						</div>
 					</div>
 				</div>
+
+                </div>
 			</div>
 		</div>
 	</section>
-
-  <!-- BROODJE VAN DE WEEK
-	<section class="ftco-section img">
-  	<div class="container">
-		{% for broodje in bvdw %}
-			<div class="row justify-content-end" style="padding-right: 100px;">
-			<a href="/menu/">
-				<img class="img-fluid" src="{{ broodje.image.url }}" alt="Broodje van de week" style="max-width: 400px; height: auto;">
-			</a>
-			<div class="col-md-6 heading-section ftco-animate deal-of-the-day ftco-animate" style="background-color: #f5f5f0;">
-			  <h2 class="mb-4">Broodje van de week</h2>
-			  <p>Ons broodje van de week, is onze lekkerste en meest verkochten product van de week.</p>
-			  <h3><a href="/menu/">{{ broodje.title }}</a></h3>
-			  <span class="price">Nu voor maar €{{ broodje.price }}</span>
-			</div>
-		  </div>
-	  {% endfor %}
-  	</div>
-  </section>
-	-->
 
   <section class="ftco-section testimony-section">
     <div class="container">

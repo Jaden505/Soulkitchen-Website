@@ -12,7 +12,7 @@
 }
 
 .radio-toolbar input[type="radio"]:checked+label {
-  background-color: #82AE47;
+  background-color: #ddaa00;
   color: white;
     border-radius: 10px;
 }
