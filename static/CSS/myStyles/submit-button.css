@@ -12,6 +12,10 @@
     background: white;
     background-color: white;
     padding: 15px;
+
+    -webkit-transition: background 0.3s, border-radius 0.3s;
+    transition: background 0.3s, border-radius 0.3s;
+
     border-radius: 50px;
     border: 1px solid #ddaa00;
 }
