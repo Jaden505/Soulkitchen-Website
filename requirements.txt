@@ -25,7 +25,6 @@ gunicorn==20.0.4
 idna==2.9
 invoke==1.4.1
 jmespath==0.9.5
-mod-wsgi==4.7.1
 paramiko==2.7.1
 Pillow==7.0.0
 prettytable==0.7.2
