@@ -20,6 +20,28 @@
     border: 1px solid #ddaa00;
 }
 
+.back_btt {
+    color: white;
+    background: lightgrey;
+    padding: 15px;
+    border-radius: 50px;
+    border: 1px solid lightgrey;
+}
+
+.back_btt:hover {
+    cursor: pointer;
+    color: lightgrey;
+    background: white;
+    background-color: white;
+    padding: 15px;
+
+    -webkit-transition: background 0.3s, border-radius 0.3s;
+    transition: background 0.3s, border-radius 0.3s;
+
+    border-radius: 50px;
+    border: 1px solid lightgrey;
+}
+
 /* SUBMIT BUTTON */
 .spin_class {
   position: absolute;

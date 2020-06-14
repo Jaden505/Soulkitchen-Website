@@ -1,0 +1,113 @@
+{% extends "Base.html" %}
+{% load static %}
+{% load crispy_forms_tags %}
+
+{% block content %}
+
+    <!-- HEAD IMG SHOW -->
+    <div class="hero-wrap hero-bread" style="background-image: url('{% static 'Images/Eettent.jpg' %}');">
+      <div class="container">
+        <div class="row no-gutters slider-text align-items-center justify-content-center">
+          <div class="col-md-9 ftco-animate text-center">
+            <h1 class="mb-0 bread">Bevesteging</h1>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- PRODUCTS -->
+    <section class="ftco-section ftco-cart">
+			<div class="container">
+				<div class="row">
+    			<div class="col-md-12 ftco-animate">
+    				<div class="cart-list">
+	    				<table class="table">
+						    <thead class="thead-primary">
+							  <tr class="trs">
+								<th>&nbsp;</th>
+						        <th>Product</th>
+						        <th class="price-tag">Prijs</th>
+						        <th>Aantal</th>
+						        <th>Totaal</th>
+						      </tr>
+						    </thead>
+						    <tbody class="products_holder">
+
+							  {% include 'functionImport.html' %}
+
+						    </tbody>
+						  </table>
+					  </div>
+    			</div>
+    		</div>
+            <!-- END PRODUCTS -->
+
+			<hr>
+
+                <!-- PAYMENT -->
+				<form id="payment-form">
+				  <div class="form-row">
+					<!--
+					  Using a label with a for attribute that matches the ID of the
+					  Element container enables the Element to automatically gain focus
+					  when the customer clicks on the label.
+					-->
+					<h2>
+					  <label for="ideal-bank-element">
+					  </label>
+					</h2>
+
+					<hr>
+
+					<div id="ideal-bank-element">
+					  <!-- A Stripe Element will be inserted here. -->
+					</div>
+				  </div>
+
+				  <!-- Used to display form errors. -->
+				  <div id="error-message" role="alert"></div>
+				</form>
+
+				<div class="cart-total mb-3">
+					<h3>Gegevens</h3>
+					<p class="d-flex">
+						{% for field in data %}
+							<p>{{ field }}</p>
+						{% endfor %}
+					</p>
+				</div>
+
+                <!-- TOTAL -->
+				<div class="cart-total mb-3">
+					<h3>Kosten</h3>
+					<p class="d-flex">
+						<span>Subtotaal</span>
+						<span id="subtotal">€0.00</span>
+					</p>
+					<p class="d-flex">
+						<span>Bezorgkosten</span>
+						<span>€4.00</span>
+					</p>
+					<p class="d-flex">
+						<span>Korting</span>
+						<span id="discount">€0.00</span>
+					</p>
+					<hr>
+					<p class="d-flex total-price">
+						<span>Total</span>
+						<span id="total_basket">€0.00</span>
+					</p>
+				</div>
+				<input class="back_btt" value="Terug" type="submit" onclick="location.href=/order/" style="outline:0;"/>
+				<input type="submit" value="Ga naar afrekenen" class="order_btt" onclick="Payment('{{payment}}', '{{public_key}}')" style="outline:0;"/>
+    		</div>
+		</section>
+
+	<br><br>
+
+	<script>
+		totalAmount()
+	</script>
+
+{% endblock %}
+

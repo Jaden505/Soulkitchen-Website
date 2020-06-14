@@ -88,13 +88,17 @@ function totalAmount() {
         var total_price = currency(sub_total).subtract(discount_price).add(shipping_costs)
         var total = total_price
 
-        displayDiscountPrices(sub_total, discount_price, total_price, coupon)
+            try {displayDiscountPrices(sub_total, discount_price, total_price, coupon)}
+            catch {// pass
+            }
     }
     else {
         var sum = sub_total.add(shipping_costs)
         var total = sum
 
-        displayPrices(sum, sub_total)
+        try {displayPrices(sum, sub_total)}
+        catch {// pass
+         }
     }
 
     return total
@@ -126,6 +130,8 @@ function updateBasket() {
         arr[index] = currency(arr[index])
     });
 
+    updateAmount()
+
     // HTML ELEMENTS
     updateCartAmount(basket_products_amounts)
 
@@ -139,29 +145,29 @@ function updateBasket() {
 }
 
 function updateAmount() {
-    coupon_code = localStorage.getItem("couponcode")
+    coupon_code = JSON.parse(localStorage.getItem("couponcode"))
+    if (coupon_code != null) {
+        coupon_code = Object.keys(coupon_code)[0]
+    }
+
     total = totalAmount()
-    window.location.replace = "/order/" + (total) + '/' + (coupon_code) + '/'
+
+    // Sends encrypted data to view
+    var xhr = new XMLHttpRequest();
+    xhr.open("POST", '/order/' + btoa(total) + '/' + btoa(coupon_code) + '/', true);
+    xhr.setRequestHeader('Content-Type', 'application/json');
+    xhr.send(JSON.stringify({
+        'Total': btoa(total),
+        'Coupon': btoa(coupon_code)
+    }));
 }
 
-// OTHERS
-var counter = 0
-function Categorize(category) {
-    if (category === '1') {category = 'broodjes'}
-    else if (category === '2') {category = 'drinken'}
-    else if (category === '3') {category = 'extras'}
-    else if (category === 'bvdw') {category = 'bvdw'}
-
-    sortProductsCategory(category, counter)
-    counter++
-}
-
+// PAYMENTS
 function Payment(pay_details, public_key) {
   var stripe = Stripe(public_key);
   var elements = stripe.elements();
 
   var options = {
-  // Custom styling can be passed to options when creating an Element
   style: {
     base: {
       padding: '12px 2px',
@@ -174,17 +180,13 @@ function Payment(pay_details, public_key) {
   },
   };
 
-  // Create an instance of the idealBank Element
   var idealBank = elements.create('idealBank', options);
   var form = document.getElementById('payment-form');
 
-  // Add an instance of the idealBank Element into
-  // the `ideal-bank-element` <div>
   idealBank.mount('#ideal-bank-element');
 
   idealBank.on('ready', function(event) {
 
-      // Redirects away from the client
       stripe.confirmIdealPayment(
         pay_details,
         {
@@ -197,6 +199,36 @@ function Payment(pay_details, public_key) {
       )
 
   });
+}
+
+function goPayment() {
+    coupon_code = localStorage.getItem("couponcode")
+    total = totalAmount()
+
+    if (total > 10) {
+            // Goes to amount url and gives amount to payment page (handled in views)
+            window.location.href = '/order/' + btoa(total) + '/' + btoa(coupon_code) + '/'
+    }
+    else {
+        // Give notification
+        window.location.href = "/order/"
+    }
+
+    // Returns false so when function called first checks if form submitted
+    return false
+}
+
+
+// OTHERS
+var counter = 0
+function Categorize(category) {
+    if (category === '1') {category = 'broodjes'}
+    else if (category === '2') {category = 'drinken'}
+    else if (category === '3') {category = 'extras'}
+    else if (category === 'bvdw') {category = 'bvdw'}
+
+    sortProductsCategory(category, counter)
+    counter++
 }
 
 function couponSuccess(input_code, discount) {

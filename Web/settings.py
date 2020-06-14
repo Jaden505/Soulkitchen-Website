@@ -131,6 +131,8 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.0/howto/static-files/
 
+ACCOUNT_SIGNUP_FORM_CLASS = 'Main.forms.UserInfo'
+
     # STATIC & MEDIA
 STATIC_URL = '/static/'
 
