@@ -166,7 +166,7 @@ DEFAULT_FILE_STORAGE = 'Web.custom_storages.MediaStorage'
 
 AWS_S3_SIGNATURE_VERSION = 's3v4'
 
-AWS_S3_HOST = 's3.eu-central-1.amazonaws.com'
+AWS_S3_HOST = 's3.eu-west-3.amazonaws.com'
 
 AWS_REGION = os.environ.get('AWS_REGION')
 
