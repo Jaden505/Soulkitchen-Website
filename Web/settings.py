@@ -24,7 +24,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = os.environ.get('DJANGO_SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
 ALLOWED_HOSTS = ['sassies-soulkitchen.herokuapp.com']
 
@@ -166,7 +166,7 @@ DEFAULT_FILE_STORAGE = 'Web.custom_storages.MediaStorage'
 
 AWS_S3_SIGNATURE_VERSION = 's3v4'
 
-AWS_S3_HOST = 's3.eu-west-3.amazonaws.com'
+AWS_S3_HOST = 's3.eu-central-1.amazonaws.com'
 
 AWS_REGION = os.environ.get('AWS_REGION')
 
