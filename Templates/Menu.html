@@ -75,7 +75,7 @@
         <div class="col-md-6 col-lg-3 ftco-animate">
           <div class="product" style="display: inline-block;">
             <a class="img-prod" onclick="addBasket('{{product.title}}', '{{product.price}}');Animate('{{product.title}}');showNotificationDisplay()">
-              <img class="img-fluid" src="{{ product.image.url }}" alt="Colorlib Template" style="height: 15vh; width: auto;">
+              <img class="img-fluid" src="{{ product.image.url }}" alt="Colorlib Template" style="height: 200px; width: auto;">
             </a>
             <div class="text py-3 pb-4 px-3 text-center">
               <h3><a onclick="addBasket('{{product.title}}', '{{product.price}}');Animate('{{product.title}}');showNotificationDisplay()" class="title">{{ product.title }}</a></h3>
@@ -121,8 +121,9 @@
     <div class="latest-coupon">
       <h3 class="coupon-title" style="color: #87AE42;">Nu {{ broodje.title }} voor maar €{{ broodje.price }}</h3>
       <div class="coupon-des">
-        Dit is de aanbieding van de week. <span id="des-more12" class="des-more">... <a role="button" data-toggle="collapse" href="#seemore12" aria-expanded="false" aria-controls="seemore12">More <i class="glyphicon glyphicon-menu-down"></i></a></span>
-        <div class="coupon-des-full collapse" id="seemore12">Elke week hebben we een nieuwe aanbieding van wat volgens de klaten ons besten product is.</div>
+        Dit is de aanbieding van de week. <span id="des-more12" class="des-more">... </span>
+          <div class="coupon-des-full collapse" id="seemore12">Elke week hebben we een nieuwe aanbieding van wat volgens de klaten ons besten product is.</div>
+          <a role="button" data-toggle="collapse" href="#seemore12" aria-expanded="false" aria-controls="seemore12">Meer <i class="glyphicon glyphicon-menu-down"></i></a>
       </div>
    </div>
     <div class="coupon-detail coupon-button-type">
