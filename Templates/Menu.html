@@ -66,29 +66,32 @@
       <p>Toegevoegd aan winkelmandje!</p>
 
       <label class="keep-shopping" onclick="hideNotificationDisplay()">Verder kijken</label>
-      <label class="redirect-cart"><a href="/order/" style="color: black;">Bestellen</a></label>
+      <a href="/order/" style="color: black;"><label class="redirect-cart">Bestellen</label></a>
     </dialog>
 
   <div class="row">
   {% for product in products %}
         <!-- PRODUCT -->
         <div class="col-md-6 col-lg-3 ftco-animate">
-          <div class="product" style="display: inline-block;">
-            <a class="img-prod" onclick="addBasket('{{product.title}}', '{{product.price}}');Animate('{{product.title}}');showNotificationDisplay()">
-              <img class="img-fluid" src="{{ product.image.url }}" alt="Colorlib Template" style="height: 200px; width: auto;">
+          <div class="product" style="display: inline-block; cursor: pointer;">
+            <a class="img-prod">
+              <img class="img-fluid" src="{{ product.image.url }}" alt="Colorlib Template">
             </a>
             <div class="text py-3 pb-4 px-3 text-center">
-              <h3><a onclick="addBasket('{{product.title}}', '{{product.price}}');Animate('{{product.title}}');showNotificationDisplay()" class="title">{{ product.title }}</a></h3>
-              <div class="d-flex">
+
+              <h3><a class="title">{{ product.title }}</a></h3>
+
+                <div class="d-flex">
                 <div class="pricing">
                   <p><span class="price">€{{ product.price }}</span></p>
                 </div>
               </div>
+
               <div class="bottom-area d-flex">
                 <div class="m-auto d-flex">
-                  <a class="{{product.title}}" onclick="addBasket('{{product.title}}', '{{product.price}}');Animate('{{product.title}}');showNotificationDisplay()">
+                  <a class="{{product.title}}">
                     <div class="spin_class" style="background-color: white;">
-                      <button class="spin_btt" style="text-decoration:none; outline:none;"></button>
+                      <button class="spin_btt" onclick="addBasket('{{product.title}}', '{{product.price}}');Animate('{{product.title}}');showNotificationDisplay()" style="text-decoration:none; outline:none;"></button>
                     </div>
                   </a>
                 </div>
@@ -143,7 +146,5 @@
   {% endfor %}
 
   </div>
-
-  <br><br><br><br>
 
 {% endblock %}

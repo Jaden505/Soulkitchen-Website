@@ -11,8 +11,7 @@
 }
 
 .product {
-    min-width: 150px;
-    max-width: 380px;
+    max-width: 500px;
     overflow: hidden;
 }
 

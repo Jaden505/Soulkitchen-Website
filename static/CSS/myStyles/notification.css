@@ -13,20 +13,20 @@
   top: 100px;
   margin-right: 0px;
   animation: appear 350ms ease-in 1;
-  max-width: 30%;
+  max-width: 400px;
   display: block;
 }
 
 .redirect-cart {
   border: 1px solid lightgrey;
-  padding: .5em 1em;
+  padding: .7em 3em;
   border-radius: 1px;
 }
 
 .keep-shopping {
   background: #ddaa00;
   color: white;
-  padding: .5em 1em;
+  padding: .7em 3em;
   border-radius: 1px;
 }
 
