@@ -21,7 +21,10 @@ function couponErrorDisplay() {
     document.getElementById('coupon_input').placeholder = ''
 }
 
-function updateCartAmount(amount) {document.getElementById('cart_amount').innerHTML = amount}
+function updateCartAmount(amount) {
+    document.querySelectorAll('.cart_amount')[0].innerHTML = amount
+    document.querySelectorAll('.cart_amount')[1].innerHTML = amount
+}
 
 function sortProductsCategory(category, counter) {
     products = document.getElementsByClassName('product')

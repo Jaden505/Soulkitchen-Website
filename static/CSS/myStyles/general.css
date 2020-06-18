@@ -42,22 +42,22 @@ a:hover {
 
 /* NAVBAR & BASKET DISPLAY */
 @media screen and (max-width: 1000px) {
-    #cart_amount {
+    .cart_amount {
         color: grey;
     }
     .nav-link {
         font-size: 25px !important; font-family: 'Lucida Console', Courier, monospace !important;
     }
-    .f20 {
-        font-size: 30px !important;
-    }
-    .f25 {
-        font-size: 35px !important;
-    }
     #whitespace {
         padding: 50px;
     }
+    #menu_cart {
+        position: relative;
+        bottom: 10px;
+        font-size: 12px;
+    }
 }
+
 @media screen and (max-width: 500px) {
     tr {
       display: block;

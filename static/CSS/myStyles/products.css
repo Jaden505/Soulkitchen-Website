@@ -23,7 +23,8 @@
     .product {
         max-width: 50%;
     }
-    * {
-        padding: 0px;
+    .store-offer-item .latest-coupon {
+      max-width: 50%;
+      margin-left: 0px;
     }
 }
