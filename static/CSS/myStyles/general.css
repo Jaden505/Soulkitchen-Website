@@ -54,6 +54,9 @@ a:hover {
     .f25 {
         font-size: 35px !important;
     }
+    #whitespace {
+        padding: 50px;
+    }
 }
 @media screen and (max-width: 500px) {
     tr {

@@ -18,3 +18,12 @@
 #product_bvdw {
      max-width: 100%;
 }
+
+@media screen and (max-width: 1000px) {
+    .product {
+        max-width: 50%;
+    }
+    * {
+        padding: 0px;
+    }
+}

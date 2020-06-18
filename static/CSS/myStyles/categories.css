@@ -28,6 +28,18 @@
 }
 
 #categories {
-    padding-left: 200px;
-    padding-right: 200px;
+    padding: 10%;
+}
+
+.categ_dis {
+    margin-left: 50%;
+}
+
+@media screen and (max-width: 1000px) {
+    #categories {
+        padding: 0%;
+    }
+    .categ_dis {
+        margin-left: 0%;
+    }
 }
