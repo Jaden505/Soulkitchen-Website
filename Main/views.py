@@ -2,11 +2,11 @@ from django.shortcuts import render, redirect
 from .models import AddProduct, Broodje_vdw, CouponCodes
 from .forms import *
 import stripe
-from Web import settings
 import logging
 from django.core import serializers
 from django.views.decorators.csrf import csrf_exempt
 import base64
+from Web import settings
 
 # Create your views here.
 
