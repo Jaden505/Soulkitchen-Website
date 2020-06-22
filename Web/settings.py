@@ -44,7 +44,6 @@ INSTALLED_APPS = [
     'stripe',
     'crispy_forms',
     'storages',
-    "sslserver",
 ]
 
 MIDDLEWARE = [
