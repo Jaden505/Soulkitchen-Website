@@ -167,20 +167,7 @@ function Payment(pay_details, public_key) {
   var stripe = Stripe(public_key);
   var elements = stripe.elements();
 
-  var options = {
-  style: {
-    base: {
-      padding: '12px 2px',
-      color: '#32325d',
-      fontSize: '18px',
-      '::placeholder': {
-        color: '#aab7c4'
-      },
-    },
-  },
-  };
-
-  var idealBank = elements.create('idealBank', options);
+  var idealBank = elements.create('idealBank');
   var form = document.getElementById('payment-form');
 
   idealBank.mount('#ideal-bank-element');
