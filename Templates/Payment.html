@@ -5,15 +5,15 @@
 {% block content %}
 
     <!-- HEAD IMG SHOW -->
-    <div class="hero-wrap hero-bread" style="background-image: url('{% static 'Images/Eetkraam.jpg' %}');">
-      <div class="container">
-        <div class="row no-gutters slider-text align-items-center justify-content-center">
-          <div class="col-md-9 ftco-animate text-center">
-            <h1 class="mb-0 bread">Bevesteging</h1>
-          </div>
+  <div class="hero-wrap hero-bread" style="background-color: lightgrey; padding: 50px;">
+    <div class="container">
+      <div class="row no-gutters slider-text align-items-center justify-content-center">
+        <div class="col-md-9 ftco-animate text-center">
+            <img src="{% static 'Images/Logo.png' %}" width="300px" height="auto" style="left: 50%;">
         </div>
       </div>
     </div>
+  </div>
 
     <!-- PRODUCTS -->
     <section class="ftco-section ftco-cart">
@@ -76,6 +76,12 @@
 						{% endfor %}
 					</p>
 				</div>
+
+					<!-- DELIVER -->
+					<div class="cart-total mb-3">
+						<h3>Bezorging</h3>
+						<li>Donderdag</li>
+					</div>
 
                 <!-- TOTAL -->
 				<div class="cart-total mb-3">

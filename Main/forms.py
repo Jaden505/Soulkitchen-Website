@@ -6,4 +6,3 @@ class UserInfo(forms.Form):
     address = forms.CharField(label='Adres', max_length=100)
     city = forms.CharField(label='Stad', max_length=100)
     zip_code = forms.CharField(label='Post code', max_length=100)
-

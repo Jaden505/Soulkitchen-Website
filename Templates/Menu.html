@@ -3,11 +3,11 @@
 
 {% block content %}
   <!-- HEAD IMG SHOW -->
-  <div class="hero-wrap hero-bread" style="background-image: url('{% static 'Images/Eetkraam.jpg' %}');">
+  <div class="hero-wrap hero-bread" style="background-color: lightgrey; padding: 50px;">
     <div class="container">
       <div class="row no-gutters slider-text align-items-center justify-content-center">
         <div class="col-md-9 ftco-animate text-center">
-          <h1 class="mb-0 bread">Menu</h1>
+            <img src="{% static 'Images/Logo.png' %}" width="300px" height="auto" style="left: 50%;">
         </div>
       </div>
     </div>
@@ -74,6 +74,16 @@
         <!-- PRODUCT -->
         <div class="col-md-6 col-lg-3 ftco-animate">
           <div class="product" style="display: inline-block; cursor: pointer;">
+              {% if product.spiciness_category == "2" %}
+                    <img src="{% static 'Images/spicy.jpg' %}" width="30px" style="float: right;" alt="Pittig">
+              {% endif %}
+              {% if product.spiciness_category == "3" %}
+                    <img src="{% static 'Images/extra_spicy.jpg' %}" width="30px" style="float: right;" alt="Extra pittig">
+              {% endif %}
+              {% if product.vegan == True %}
+                    <img src="{% static 'Images/vegan.jpg' %}" width="30px" style="float: right;" alt="Vega">
+              {% endif %}
+
             <a class="img-prod">
               <img class="img-fluid" src="{{ product.image.url }}" alt="Colorlib Template">
             </a>
@@ -116,6 +126,15 @@
 
   <!-- BROODJE VAN DE WEEK -->
   <div class="store-offer-item shadow-box product" id="product_bvdw">
+            {% if broodje.spiciness_category == "2" %}
+                    <img src="{% static 'Images/spicy.jpg' %}" width="30px" style="float: right;" alt="Pittig">
+              {% endif %}
+              {% if broodje.spiciness_category == "3" %}
+                    <img src="{% static 'Images/extra_spicy.jpg' %}" width="30px" style="float: right;" alt="Extra pittig">
+              {% endif %}
+              {% if broodje.vegan == True %}
+                    <img src="{% static 'Images/vegan.jpg' %}" width="30px" style="float: right;" alt="Vega">
+              {% endif %}
     <div class="store-thumb-link">
       <div class="offer-image">
           <img src="{{ broodje.image.url }}">

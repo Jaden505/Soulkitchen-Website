@@ -5,15 +5,15 @@
 {% block content %}
 
     <!-- HEAD IMG SHOW -->
-    <div class="hero-wrap hero-bread" style="background-image: url('{% static 'Images/Eetkraam.jpg' %}');">
-      <div class="container">
-        <div class="row no-gutters slider-text align-items-center justify-content-center">
-          <div class="col-md-9 ftco-animate text-center">
-            <h1 class="mb-0 bread">Winkelmandje</h1>
-          </div>
+  <div class="hero-wrap hero-bread" style="background-color: lightgrey; padding: 50px;">
+    <div class="container">
+      <div class="row no-gutters slider-text align-items-center justify-content-center">
+        <div class="col-md-9 ftco-animate text-center">
+            <img src="{% static 'Images/Logo.png' %}" width="300px" height="auto" style="left: 50%;">
         </div>
       </div>
     </div>
+  </div>
 
     <!-- PRODUCTS -->
     <section class="ftco-section ftco-cart">
@@ -70,6 +70,21 @@
     			</div>
 
 				<div style="padding-right: 100px;" id="whitespace"></div>
+
+				<!-- DELIVER -->
+				<div class="col-lg-4 mt-5 cart-wrap ftco-animate" style="float: left; min-width: 300px; bottom: 50px;">
+					<div class="col-lg-4 mt-5 cart-wrap ftco-animate">
+						<div class="cart-total mb-3" style="float: left; min-width: 300px;">
+							<h3>Bezorging</h3>
+							<p>Bij bezorging op donderdag bestel dan vóór woensdag 12:00 uur.</p>
+							<p>Bij bezorging op vrijdag bestel dan vóór donderdag 12:00 uur.</p>
+							<input type="radio" id="donderdag" name="dag" checked>
+							<label for="donderdag">Donderdag</label><br>
+							<input type="radio" id="vrijdag" name="dag">
+							<label for="vrijdag">Vrijdag</label><br>
+						</div>
+					</div>
+    			</div>
 
                 <!-- TOTAL -->
     			<div class="col-lg-4 mt-5 cart-wrap ftco-animate" style="float: left; min-width: 300px;">
