@@ -65,3 +65,11 @@ function displayCategory() {
     }
 }
 
+function displayDayData() {
+    var day = JSON.parse(localStorage.getItem("day"))
+
+    if (day == null) {localStorage.setItem("day", JSON.stringify('Donderdag'))}
+
+    document.getElementById("day_confirm").innerHTML =  day
+}
+

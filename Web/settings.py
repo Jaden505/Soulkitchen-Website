@@ -24,7 +24,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = os.environ.get('DJANGO_SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
 ALLOWED_HOSTS = ['sassies-soulkitchen.herokuapp.com']
 
@@ -172,8 +172,8 @@ AWS_REGION = 'eu-west-3'
 AWS_S3_REGION_NAME = 'eu-west-3'
 
     # STRIPE
-STRIPE_SECRET_KEY = os.environ.get('STRIPE_SECRET_KEY')
-STRIPE_PUBLIC_KEY = os.environ.get('STRIPE_PUBLIC_KEY')
+STRIPE_SECRET_KEY = os.environ.get('STRIPE_SECRET_KEY_PROD')
+STRIPE_PUBLIC_KEY = os.environ.get('STRIPE_PUBLIC_KEY_PROD')
 
     # Logs error if there is one
 try:

@@ -26,7 +26,7 @@ urlpatterns = [
     path('about/', views.about_view, name='about_view'),
     path('menu/', views.menu_view, name='menu_view'),
     path('order/', views.order_view, name='order_view'),
-    path('order/<amount>/<code>/', views.amount_view, name='amount_view'),
+    path('order/<amount>/<code>/<cart>/', views.amount_view, name='amount_view'),
     path('confirmation/', views.confirmation_view, name='confirmation_view'),
     path('payment/', views.payment_view, name='payment_view'),
 ]

@@ -7,6 +7,7 @@ from django.core import serializers
 from django.views.decorators.csrf import csrf_exempt
 import base64
 from Web import settings
+import re, smtplib, ssl
 
 # Create your views here.
 
@@ -38,6 +39,7 @@ def order_view(request):
 
     if request.method == 'POST':
         form = UserInfo(request.POST)
+
         if form.is_valid():
             request.session['data'] = [form.cleaned_data.get("email"), form.cleaned_data.get("address"),
                                        form.cleaned_data.get("city"), form.cleaned_data.get("zip_code")]
@@ -54,16 +56,20 @@ def order_view(request):
     return render(request, "Order.html", {'products': products, 'bvdw': bvdw, 'coupons': coupons, 'form': form})
 
 @csrf_exempt
-def amount_view(request, amount, code):
+def amount_view(request, amount, code, cart):
     # Decode string
     amount = (base64.b64decode(amount)).decode('utf-8')
     code = (base64.b64decode(code)).decode('utf-8')
+    cart = ((base64.b64decode(cart)).decode('utf-8'))
 
     amount = round((float(amount) * 100), 0)
     amount = int(amount)
 
+    cart = re.sub('[{}""]', '', cart)
+
     request.session['amount'] = amount
     request.session['coupon_code'] = code
+    request.session['cart'] = cart
 
     return redirect(order_view)
 
@@ -72,6 +78,7 @@ def payment_view(request):
         return redirect(order_view)
 
     data = request.session['data']
+    cart = request.session['cart']
 
     json_serializer = serializers.get_serializer("json")()
     products = json_serializer.serialize(AddProduct.objects.all().order_by('id')[:5], ensure_ascii=False)
@@ -90,6 +97,7 @@ def payment_view(request):
         amount=amount,
         currency='eur',
         payment_method_types=['ideal'],
+        description=cart,
     )
 
     return render(request, "Payment.html", {'products': products, 'bvdw': bvdw, 'coupons': coupons,
@@ -98,6 +106,7 @@ def payment_view(request):
 
 def confirmation_view(request):
     code = request.session['coupon_code']
+    data = request.session['data']
 
     # Remove coupon when used
     if code != 'null':

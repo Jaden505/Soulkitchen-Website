@@ -78,10 +78,10 @@
 							<h3>Bezorging</h3>
 							<p>Bij bezorging op donderdag bestel dan vóór woensdag 12:00 uur.</p>
 							<p>Bij bezorging op vrijdag bestel dan vóór donderdag 12:00 uur.</p>
-							<input type="radio" id="donderdag" name="dag" checked>
-							<label for="donderdag">Donderdag</label><br>
-							<input type="radio" id="vrijdag" name="dag">
-							<label for="vrijdag">Vrijdag</label><br>
+							<input type="radio" id="donderdag" name="dag" onclick="setDayData('Donderdag')" checked>
+							<label for="donderdag" onclick="setDayData('Donderdag')">Donderdag</label><br>
+							<input type="radio" id="vrijdag" name="dag" onclick="setDayData('Vrijdag')">
+							<label for="vrijdag" onclick="setDayData('Vrijdag')">Vrijdag</label><br>
 						</div>
 					</div>
     			</div>
@@ -108,6 +108,7 @@
     						<span id="total_basket">€0.00</span>
     					</p>
     				</div>
+	  				<span class="popuptext" id="myPopup">Minimaal €10.00</span>
 					<input type="submit" value="Ga naar bevesteging" class="order_btt" form="inputs_form" style="outline:0;"/>
     			</div>
     		</div>
@@ -117,6 +118,7 @@
 	<br><br>
 
 	<script>
+		setDayData('Donderdag')
 		totalAmount()
 	</script>
 

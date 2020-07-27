@@ -65,11 +65,8 @@ function displayCategory() {
     }
 }
 
-function displayDayData() {
-    var day = JSON.parse(localStorage.getItem("day"))
-
-    if (day == null) {localStorage.setItem("day", JSON.stringify('Donderdag'))}
-
-    document.getElementById("day_confirm").innerHTML =  day
+function checkDeliveryOption() {
+    form_choose = document.getElementById("day_choose")
+    form_inputs = form_choose.getElementsByTagName("input")
+    form_inputs[2].checked = true;
 }
-

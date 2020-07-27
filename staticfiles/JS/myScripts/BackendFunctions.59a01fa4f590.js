@@ -101,6 +101,13 @@ function totalAmount() {
          }
     }
 
+    console.log(document.getElementById("myPopup"), total)
+
+      if (total < 10 && document.getElementById("myPopup") != null) {
+        var popup = document.getElementById("myPopup");
+        popup.classList.toggle("show");
+      }
+
     return total
 }
 
@@ -151,11 +158,10 @@ function updateAmount() {
     }
 
     total = totalAmount()
-    cart_products = localStorage.getItem("basket")
 
     // Sends encrypted data to view
     var xhr = new XMLHttpRequest();
-    xhr.open("POST", '/order/' + btoa(total) + '/' + btoa(coupon_code) + '/' + btoa(cart_products) + '/', true);
+    xhr.open("POST", '/order/' + btoa(total) + '/' + btoa(coupon_code) + '/', true);
     xhr.setRequestHeader('Content-Type', 'application/json');
     xhr.send(JSON.stringify({
         'Total': btoa(total),

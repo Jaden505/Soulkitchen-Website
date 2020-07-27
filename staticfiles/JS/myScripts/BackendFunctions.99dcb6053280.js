@@ -151,11 +151,10 @@ function updateAmount() {
     }
 
     total = totalAmount()
-    cart_products = localStorage.getItem("basket")
 
     // Sends encrypted data to view
     var xhr = new XMLHttpRequest();
-    xhr.open("POST", '/order/' + btoa(total) + '/' + btoa(coupon_code) + '/' + btoa(cart_products) + '/', true);
+    xhr.open("POST", '/order/' + btoa(total) + '/' + btoa(coupon_code) + '/', true);
     xhr.setRequestHeader('Content-Type', 'application/json');
     xhr.send(JSON.stringify({
         'Total': btoa(total),
@@ -175,18 +174,37 @@ function Payment(pay_details, public_key) {
 
   idealBank.on('ready', function(event) {
 
-        stripe
-          .confirmIdealPayment(pay_details, {
-
-            payment_method: {
-              ideal: idealBank,
-            },
-            // Return URL where the customer should be redirected after the authorization.
-            return_url: window.location.href,
-          })
+      stripe.confirmIdealPayment(
+        pay_details,
+        {
+          payment_method: {
+            ideal: idealBank,
+          },
+          return_url: 'https://sassies-soulkitchen.herokuapp.com/confirmation/',
+          // return_url: 'http://127.0.0.1:8000/confirmation/',
+        }
+      )
 
   });
 }
+
+function goPayment() {
+    coupon_code = localStorage.getItem("couponcode")
+    total = totalAmount()
+
+    if (total > 10) {
+            // Goes to amount url and gives amount to payment page (handled in views)
+            window.location.href = '/order/' + btoa(total) + '/' + btoa(coupon_code) + '/'
+    }
+    else {
+        // Give notification
+        window.location.href = "/order/"
+    }
+
+    // Returns false so when function called first checks if form submitted
+    return false
+}
+
 
 // OTHERS
 var counter = 0
@@ -213,9 +231,5 @@ function couponError() {
     couponErrorDisplay()
 
     totalAmount()
-}
-
-function setDayData(day) {
-    localStorage.setItem("day", JSON.stringify(day))
 }
 
