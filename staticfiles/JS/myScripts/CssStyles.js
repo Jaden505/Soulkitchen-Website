@@ -33,9 +33,11 @@ function Animate(classname) {
 }
 
 function hideNotificationDisplay() {
-    document.querySelector('.note').blur()
+    //document.querySelector('.note').blur()
+    document.querySelector('.note').style.cssText = "  display: block; position: absolute; left: -9999px;"
 }
 
 function showNotificationDisplay() {
-    document.querySelector('.note').focus({preventScroll:true})
+    //document.querySelector('.note').focus({preventScroll:true})
+    document.querySelector('.note').style.cssText = "  border: 1px solid lightgrey; position:fixed; width: 100%; z-index:100; top: 100px; margin-right: 0px; animation: appear 350ms ease-in 1; max-width: 400px; display: block;"
 }
