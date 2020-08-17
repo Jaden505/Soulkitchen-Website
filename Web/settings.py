@@ -26,7 +26,10 @@ SECRET_KEY = os.environ.get('DJANGO_SECRET_KEY')
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
 
-ALLOWED_HOSTS = ['sassies-soulkitchen.herokuapp.com']
+# Redirect to https
+SECURE_SSL_REDIRECT = True
+
+ALLOWED_HOSTS = ['sassies-soulkitchen.herokuapp.com', 'sassies-soulkitchen.com']
 
 # Application definition
 
