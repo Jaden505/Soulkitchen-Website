@@ -182,7 +182,7 @@ function Payment(pay_details, public_key) {
               ideal: idealBank,
             },
             // Return URL where the customer should be redirected after the authorization.
-            return_url: window.location.href,
+            return_url: 'https://www.sassies-soulkitchen.com/confirmation/',
           })
 
   });
