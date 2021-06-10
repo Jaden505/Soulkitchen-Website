@@ -11,7 +11,7 @@ closure==20191111
 colorama==0.4.3
 cryptography==2.9
 dj-database-url==0.5.0
-Django==3.0.7
+Django==3.1.12
 django-appconf==1.0.4
 django-classy-tags==1.0.0
 django-crispy-forms==1.9.0
